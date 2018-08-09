@@ -10,16 +10,15 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
-    "@nuxtjs/pwa": "^2.0.8",
-    "fullpage-vue": "^1.7.5",
-    "got": "^9.0.0",
     "micro": "^9.3.2",
-    "nuxt-edge": "^2.0.0-25552561.fceb30b",
-    "r2": "^2.0.1",
-    "vue-no-ssr": "^0.2.2",
-    "vueisotope": "^3.1.2"
+    "nuxt-edge": "^2.0.0-25552561.fceb30b"
   },
   "devDependencies": {
+    "r2": "^2.0.1",
+    "vue-no-ssr": "^0.2.2",
+    "vueisotope": "^3.1.2",
+    "fullpage-vue": "^1.7.5",
+    "@nuxtjs/pwa": "^2.0.8",
     "babel-eslint": "^8.2.6",
     "eslint": "^5.2.0",
     "eslint-loader": "^2.1.0",
