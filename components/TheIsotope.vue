@@ -1,19 +1,19 @@
 <template lang="pug">
 NoSsr
   isotope(:options="option" :list="list")
-    nuxt-link(ref="cpt" tag="div" v-for="(l, index) in list" :key="l.id" :to="'/' + l.slug")
+    nuxt-link(ref="cpt" tag="div" v-for="(l, index) in list" :key="l.id" :to="'/' + cat(l.categories) +'/'+ l.slug")
       .gutter
-      .c
+      .c(v-if="!l.acf.hide")
         .overlay
           h3(v-if="l.title.rendered" v-html="l.title.rendered")
-        //- svg.iconPlay(v-if="l.acf.gallery_images[0].vimeo" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24")
-        //-   path(d="M8 5v14l11-7z" fill="#ffffff")
-        //-   path(d="M0 0h24v24H0z" fill="none")
+        svg.iconPlay(v-if="l.acf.gallery_images[0].vimeo && $route.path !== '/film'" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24")
+          path(d="M8 5v14l11-7z" fill="#ffffff")
+          path(d="M0 0h24v24H0z" fill="none")
         img(v-if="l.better_featured_image" :src="l.better_featured_image.media_details.sizes.w360.source_url" :alt="l.better_featured_image.alt_text")
         svg.placeholder(v-if="l.better_featured_image" :height="l.better_featured_image.media_details.sizes.w360.height" :viewBox="'0 0 ' +  l.better_featured_image.media_details.sizes.w360.width + ' ' + l.better_featured_image.media_details.sizes.w360.height" :width="l.better_featured_image.media_details.sizes.w360.width" xmlns="http://www.w3.org/2000/svg")
           path(:d="'M0 0h' + l.better_featured_image.media_details.sizes.w360.width + 'v' + l.better_featured_image.media_details.sizes.w360.height + 'H0z'" fill="#F2F2F2")
-      pre {{cat(l.categories)}}
-
+      //- pre(v-if="!l.acf.hide").
+      //-   {{cat(l.categories)}}
 </template>
 
 <script>

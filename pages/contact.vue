@@ -6,7 +6,7 @@ div(v-html="contact.content.rendered")
 import r2 from 'r2'
 export default {
   async asyncData () {
-     const res = await r2('https://cms.detlefschneider.com/wp-json/wp/v2/pages/17').response
+     const res = await r2(`https://${process.env.CMS}/wp-json/wp/v2/pages/17`).response
      const contact = await res.json()
      return { contact }
   }

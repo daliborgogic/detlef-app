@@ -1,14 +1,14 @@
 <template lang="pug">
 header
-  nuxt-link(to="/" @click.native="setFilter('all')") DETLEF SCHNEIDER #[span(v-if="loading") Filtering....]
+  nuxt-link.link(to="/") DETLEF SCHNEIDER
   nav
-    span.button(@click="setFilter(5)") Film
+    nuxt-link.link(to="/film") Film
     span.dash
-    span.button(@click="setFilter(3)") Fashion
+    nuxt-link.link(to="/fashion") Fashion
     span.dash
-    span.button(@click="setFilter(2)") Advertising
+    nuxt-link.link(to="/advertising") Advertising
     span.dash
-    span.button(@click="setFilter(4)") Sports
+    nuxt-link.link(to="/sports") Sports
     span.dash
     nuxt-link.link(to="/about") About
     span.dash
@@ -17,43 +17,13 @@ header
     nuxt-link.link(to="/contact") Contact
 </template>
 
-<script>
-  import r2 from 'r2'
-export default {
-  data () {
-    return {
-      loading: false
-    }
-  },
-  methods: {
-    async setFilter (value) {
-      this.loading = true
-
-      this.$router.push('/')
-      let url
-      if (value === 'all') {
-         url = `https://cms.detlefschneider.com/wp-json/wp/v2/posts/?&per_page=20`
-      } else {
-         url = `https://cms.detlefschneider.com/wp-json/wp/v2/posts/?categories=${value}&per_page=100`
-
-      }
-
-      const res = await r2(url).response
-
-
-      const list = await res.json()
-      this.$store.commit('setPosts', list)
-        window.scroll(0, 0)
-       this.loading = false
-    }
-  }
-}
-</script>
 
 <style lang="stylus" scoped>
 header
-  position sticky
+  position fixed
   top 0
+  left 0
+  width 100%
   background-color transparent
   height 64px
   display flex

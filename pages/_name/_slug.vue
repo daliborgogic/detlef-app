@@ -11,14 +11,10 @@ export default {
   // validate({ params }) {
   //   return !isNaN(+params.slug)
   // },
-  async asyncData({ params, error }) {
-    try {
-      const res = await r2(`https://cms.detlefschneider.com/wp-json/wp/v2/posts?slug=${params.slug}`).response
-      const post = await res.json() || []
-      return { post }
-    } catch (e) {
-      error({ message: 'Post not found', statusCode: 404 })
-    }
+  async asyncData({ params }) {
+    const res = await r2(`https://${process.env.CMS}/wp-json/wp/v2/posts?slug=${params.slug}`).response
+    const post = await res.json()
+    return { post }
   }
 }
 </script>

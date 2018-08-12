@@ -18,5 +18,5 @@ $ npm run build
 $ npm start
 
 #  process manager 
-$ pm2 start npm --name "detlef" -- run start
+$ pm2 start process.json --env production
 ```

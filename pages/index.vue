@@ -11,17 +11,21 @@ export default {
   name: 'Index',
   components: { TheIsotope },
 
-  computed: {
-    list () {
-      return this.$store.state.posts
+  async asyncData () {
+    const a = await r2(`https://${process.env.CMS}/wp-json/acf/v3/pages/40`).response
+    const b = await a.json()
+    const { featured = [] } = b.acf
+
+    let params = []
+
+    for (let f in featured) {
+      params +='include[]=' + featured[f] + '&'
     }
-  },
 
-  async asyncData ({store}) {
-    const res = await r2(`https://${process.env.CMS}/wp-json/wp/v2/posts?per_page=20`).response
-    const list = await res.json()
+    const c = await r2(`https://${process.env.CMS}/wp-json/wp/v2/posts?${params}`).response
+    const list = await c.json()
 
-    store.commit('setPosts', list)
+    return { list }
   }
 }
 </script>
