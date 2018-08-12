@@ -69,7 +69,7 @@ export default {
           })
         },{
         root: this.$refs.div[0],
-        rootMargin: '-64px',
+        rootMargin: '0px',
         threshold: [0],
       })
 
