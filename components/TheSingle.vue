@@ -3,7 +3,7 @@
   section(v-for="(p, index) in post[0].acf.gallery_images" v-if="p.image_visibility"  :data-slide="index" :id="index")
     //- pre {{p}}
     .s(v-if="p.img")
-      img(:src="p.img.url")
+      img(:datasrc="p.img.url")
       svg(:height="p.img.height" :viewBox="'0 0 ' +  p.img.width + ' ' + p.img.height" :width="p.img.width" xmlns="http://www.w3.org/2000/svg")
         path(:d="'M0 0h' + p.img.width + 'v' + p.img.height + 'H0z'" fill="#f2f2f2")
     .s(v-else)
@@ -29,6 +29,13 @@ export default {
     }
   },
 
+  data () {
+    return {
+      slides: 0,
+      observer: null
+    }
+  },
+
   computed: {
     count () {
       return this.post[0].acf.gallery_images.length
@@ -36,38 +43,36 @@ export default {
   },
 
   mounted () {
-
-    // https://developers.google.com/web/updates/2016/04/intersectionobserver
+    let self = this
+    const slides = [...self.$refs.div.getElementsByTagName('section')]
+    this.slides = slides.length - 1
     if (typeof IntersectionObserver === 'undefined') {
       console.warn(`IntersectionObserver API is not available in your browser.`)
-      // import(/* webpackChunkName: "intersection-observer" */ 'intersection-observer')
+
+      import('intersection-observer')
     } else  {
       setTimeout(() => {
-          const slides = [...this.$refs.div.getElementsByTagName('section')]
-        this.slides = slides.length - 1
-        console.log(slides)
-        const observer =  new IntersectionObserver(entries => {
+        self.observer =  new IntersectionObserver(entries =>{
           entries.forEach(change => {
             if (change.isIntersecting === true) {
               const count = change.target.getAttribute('data-slide')
+
               if (slides.length - count !== 1) {
-                // this.$refs.img[count].setAttribute('srcset', this.$refs.img[count].getAttribute('data-srcset'))
-                // this.$refs.img[count].setAttribute('src', this.$refs.img[count].getAttribute('data-src'))
-              }
-              this.scrollIt(
-                change.target,
-                300,
-                'easeOutQuad',
-                () => console.log(`Just finished scrolling to ${window.pageYOffset}px`)
-              )
+                const image = change.target.getElementsByTagName('img')[0]
+                image.setAttribute('src', image.getAttribute('datasrc'))
+                }
+
+              self.scrollIt(change.target, 300, 'easeOutQuad')
+              self.observer.unobserve(change.target)
             }
           })
         },{
-          root: this.$refs.div[0], //
-          rootMargin: '-40px',
-          threshold: [0],
-        })
-        slides.forEach(slide => observer.observe(slide))
+        root: this.$refs.div[0],
+        rootMargin: '-64px',
+        threshold: [0],
+      })
+
+        slides.forEach(slide => self.observer.observe(slide))
       }, 1000)
     }
     // this.$refs.a[0].setAttribute('tabindex', 0)
@@ -83,6 +88,11 @@ export default {
       // }
 
     // }
+  },
+
+  destroyed() {
+    // console.log('observer destroyed')
+    this.observer.disconnect()
   },
 
   methods:{
@@ -122,12 +132,6 @@ export default {
         requestAnimationFrame(scroll)
       }
       scroll()
-      // this.scrollIt(
-      //   el,
-      //   300,
-      //   'easeOutQuad',
-      //   () => console.log(`Just finished scrolling to ${window.pageYOffset}px`)
-      // )
     }
   }
 }
@@ -163,6 +167,7 @@ img
   display flex
   align-items center
   text-align center
+
   max-width 500px
   margin 0 auto
   >>> .content p

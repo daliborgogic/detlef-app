@@ -1,5 +1,5 @@
 <template lang="pug">
-header
+header(ref="header")
   nuxt-link.link(to="/") DETLEF SCHNEIDER
   nav
     nuxt-link.link(to="/film") Film
@@ -16,6 +16,17 @@ header
     span.dash
     nuxt-link.link(to="/contact") Contact
 </template>
+
+
+<script>
+export default {
+  mounted () {
+    setTimeout(() => {
+      this.$refs.header.classList.add('loaded')
+    }, 3000)
+  }
+}
+</script>
 
 
 <style lang="stylus" scoped>
@@ -46,6 +57,10 @@ header
     span
       color #999
       font-size 14px
+.loaded
+  opacity: 0.1
+  &:hover
+    opacity 1
 nav
   .link
     font-size 14px
