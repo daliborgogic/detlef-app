@@ -63,7 +63,8 @@ export default {
                 }
 
               self.scrollIt(change.target, 300, 'easeOutQuad')
-              self.observer.unobserve(change.target)
+              // Need to observe
+              // self.observer.unobserve(change.target)
             }
           })
         },{

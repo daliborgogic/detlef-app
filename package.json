@@ -19,7 +19,6 @@
     "r2": "^2.0.1",
     "vue-no-ssr": "^0.2.2",
     "vueisotope": "^3.1.2",
-    "fullpage-vue": "^1.7.5",
     "babel-eslint": "^8.2.6",
     "eslint": "^5.2.0",
     "eslint-loader": "^2.1.0",

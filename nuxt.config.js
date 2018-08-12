@@ -16,8 +16,7 @@ module.exports = {
   ],
 
   plugins: [
-    { src: '~/plugins/isotope', ssr: false },
-    { src: '~/plugins/scroll', ssr: false }
+    { src: '~/plugins/isotope', ssr: false }
   ],
 
   modules: [['@nuxtjs/pwa', {
