@@ -11,6 +11,12 @@ export default {
   name: 'Index',
   components: { TheIsotope },
 
+  head () {
+    return {
+      titleTemplate: `${this.capitalize(this.$route.params.name)} — Detlef Schneider — Photographer`
+    }
+  },
+
   async asyncData ({params}) {
     let b
     switch(params.name) {
@@ -30,6 +36,12 @@ export default {
     const res = await r2(`https://${process.env.CMS}/wp-json/wp/v2/posts?categories=${b}&per_page=100`).response
     const list = await res.json() || []
     return {list}
+  },
+
+  methods: {
+    capitalize (string) {
+      return string.charAt(0).toUpperCase() + string.slice(1)
+    }
   }
 }
 </script>
