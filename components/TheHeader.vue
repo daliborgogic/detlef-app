@@ -63,7 +63,7 @@ header
     opacity 1
 nav
   .link
-    font-size 14px
+    font-size 16px
     margin-right 0.5vw
     // color #999
     &:hover
