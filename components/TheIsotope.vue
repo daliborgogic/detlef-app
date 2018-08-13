@@ -1,5 +1,5 @@
 <template lang="pug">
-no-ssr(placeholder="Loading...")
+no-ssr
   isotope(:options="option" :list="list")
     nuxt-link(tag="div" v-for="(l, index) in list" :key="l.id" :to="'/' + cat(l.categories) +'/'+ l.slug")
       .gutter
@@ -17,7 +17,6 @@ no-ssr(placeholder="Loading...")
 </template>
 
 <script>
-
 export default {
   // name: 'Isotope',
   props: {
@@ -49,7 +48,7 @@ export default {
         entries.forEach(change => {
           if (change.isIntersecting === true) {
             change.target.setAttribute('src', change.target.getAttribute('datasrc'))
-            // this.observer.unobserve(change)
+            self.observer.unobserve(change.target)
           }
         })
       })
