@@ -19,7 +19,7 @@ div
   letter-spacing 0.2px
   line-height 1.3
   max-width 680px
-  margin 0 auto
+  margin 64px auto 25vh auto
   >>> h1
     font-size 23px
   >>> h1
