@@ -11,6 +11,12 @@ export default {
   name: 'Index',
   components: { TheIsotope },
 
+  head () {
+    return {
+      titleTemplate: 'Detlef Schneider — Photographer'
+    }
+  },
+
   async asyncData () {
     const a = await r2(`https://${process.env.CMS}/wp-json/acf/v3/pages/40`).response
     const b = await a.json()

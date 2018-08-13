@@ -1,16 +1,16 @@
 <template lang="pug">
 .div(ref="div")
-  section(v-for="(p, index) in post[0].acf.gallery_images" v-if="p.image_visibility"  :data-slide="index" :id="index")
+  section(v-for="(p, index) in post[0].acf.gallery_images" v-if="p.image_visibility"  :data-slide="index")
     //- pre {{p}}
     .s(v-if="p.img")
-      img(:datasrc="p.img.url")
+      img(:src="p.img.url")
       svg(:height="p.img.height" :viewBox="'0 0 ' +  p.img.width + ' ' + p.img.height" :width="p.img.width" xmlns="http://www.w3.org/2000/svg")
         path(:d="'M0 0h' + p.img.width + 'v' + p.img.height + 'H0z'" fill="#f2f2f2")
     .s(v-else)
-      .videoContainer()
+      .videoContainer(ref="videoContainer")
         iframe(ref="video" :src="'https://player.vimeo.com/video/'+p.vimeo+'?color=ffffff&byline=0&portrait=0'" width="100%"  frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
 
-  section(:data-slide="count" :id="count")
+  section(:data-slide="count")
     .back
       div
         .content(v-if="post[0].content.rendered" v-html="post[0].content.rendered")
@@ -36,6 +36,12 @@ export default {
     }
   },
 
+  head () {
+    return {
+      title: this.post[0].title.rendered
+    }
+  },
+
   computed: {
     count () {
       return this.post[0].acf.gallery_images.length
@@ -45,6 +51,13 @@ export default {
   mounted () {
     let self = this
     const slides = [...self.$refs.div.getElementsByTagName('section')]
+
+    // slides.forEach(slide => {
+      // slide.style.height = self.wh() + 'px'
+      // const im = slide.getElementsByTagName('img')[0]
+      // im.setAttribute('src', im.getAttribute('datasrc'))
+    // })
+
     this.slides = slides.length - 1
     if (typeof IntersectionObserver === 'undefined') {
       console.warn(`IntersectionObserver API is not available in your browser.`)
@@ -58,37 +71,32 @@ export default {
               const count = change.target.getAttribute('data-slide')
 
               if (slides.length - count !== 1) {
-                const image = change.target.getElementsByTagName('img')[0]
-                image.setAttribute('src', image.getAttribute('datasrc'))
-                }
+                // const image = change.target.getElementsByTagName('img')[0]
+                // image.setAttribute('src', image.getAttribute('datasrc'))
+              }
 
-              self.scrollIt(change.target, 300, 'easeOutQuad')
+              self.scrollIt(change.target, 500, 'easeInQuad')
               // Need to observe
               // self.observer.unobserve(change.target)
             }
           })
         },{
-        root: this.$refs.div[0],
-        rootMargin: '0px',
-        threshold: [0],
-      })
+          root: this.$refs.div[0],
+          rootMargin: '-32px',
+          threshold: [0],
+        })
 
         slides.forEach(slide => self.observer.observe(slide))
       }, 1000)
     }
-    // this.$refs.a[0].setAttribute('tabindex', 0)
-    // if (this.$refs.a) {
-      // let sefl = this
-      // const { videoParent } = sefl.$refs
-      // console.log(sefl.$refs.video)
-      // if (videoParent) {
-      //   let videoParentHeight = videoParent.clientHeight || 0
-      //   console.log({videoParentHeight})
-      //   const iframe = this.$refs.video
-      //   iframe.setAttribute('height', videoParentHeight)
-      // }
 
-    // }
+
+    // ToDo: On resize set height
+    if (self.$refs.videoContainer) {
+      let videoParentHeight =  self.$refs.videoContainer[0].clientHeight || 0
+      const iframe = self.$refs.video[0]
+      iframe.setAttribute('height', videoParentHeight)
+    }
   },
 
   destroyed() {
@@ -97,6 +105,9 @@ export default {
   },
 
   methods:{
+    wh () {
+      return window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight
+    },
     scrollIt (destination, duration = 200, easing = 'linear', callback) {
       const easings = {
         easeInQuad(t) {
@@ -109,7 +120,7 @@ export default {
       const start = window.pageYOffset
       const startTime = 'now' in window.performance ? performance.now() : new Date().getTime()
       const documentHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight)
-      const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight
+      const windowHeight = this.wh()
       const destinationOffset = typeof destination === 'number' ? destination : destination.offsetTop
       const destinationOffsetToScroll = Math.round(documentHeight - destinationOffset < windowHeight ? documentHeight - windowHeight : destinationOffset)
       if ('requestAnimationFrame' in window === false) {
@@ -148,10 +159,10 @@ export default {
 section
   padding-top 64px
   padding-bottom 64px
-  height 100%
+
 .s
   width 100%
-  height 100%
+  height calc(100vh - 128px)
   position relative
 img
 svg
@@ -162,15 +173,22 @@ img
   position absolute
   top 0
   left 50%
-  transform: translateX(-50%);
+  transform translateX(-50%)
+// svg
+//   path
+//     fill tomato
 .back
-  height 100%
+  height calc(100vh - 128px)
   display flex
   align-items center
   text-align center
-
   max-width 500px
   margin 0 auto
+  h3
+    font-weight 400
+  // flex-grow 1
+  > div
+    width 100%
   >>> .content p
     margin 0
     font-size 23px

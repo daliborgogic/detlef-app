@@ -1,5 +1,5 @@
 <template lang="pug">
-NoSsr
+no-ssr(placeholder="Loading...")
   isotope(:options="option" :list="list")
     nuxt-link(tag="div" v-for="(l, index) in list" :key="l.id" :to="'/' + cat(l.categories) +'/'+ l.slug")
       .gutter
@@ -17,11 +17,9 @@ NoSsr
 </template>
 
 <script>
-import NoSsr from 'vue-no-ssr'
 
 export default {
   // name: 'Isotope',
-  components: { NoSsr },
   props: {
     list: {
       type: Array,
