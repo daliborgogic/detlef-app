@@ -33,7 +33,7 @@ export default {
         b = 5
     }
 
-    const res = await r2(`https://${process.env.CMS}/wp-json/wp/v2/posts?categories=${b}&per_page=100`).response
+    const res = await r2(`https://${process.env.CMS}/wp-json/wp/v2/posts?categories=${b}&hide=1&per_page=100`).response
     const list = await res.json() || []
     return {list}
   },

@@ -7,14 +7,12 @@ no-ssr
         //- (v-if="!l.acf.hide")
         .overlay
           h3(v-if="l.title.rendered" v-html="l.title.rendered")
-        svg.iconPlay(v-if="l.acf.gallery_images[0].vimeo && $route.path !== '/film'" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24")
+        svg.iconPlay(v-if="l.acf.gallery_images[0].vimeo && $route.path !== '/film'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
           path(d="M8 5v14l11-7z" fill="#ffffff")
           path(d="M0 0h24v24H0z" fill="none")
         img(ref="img" v-if="l.better_featured_image" :datasrc="l.better_featured_image.media_details.sizes.w360.source_url" :alt="l.better_featured_image.alt_text")
         svg.placeholder(v-if="l.better_featured_image" :height="l.better_featured_image.media_details.sizes.w360.height" :viewBox="'0 0 ' +  l.better_featured_image.media_details.sizes.w360.width + ' ' + l.better_featured_image.media_details.sizes.w360.height" :width="l.better_featured_image.media_details.sizes.w360.width" xmlns="http://www.w3.org/2000/svg")
           path(:d="'M0 0h' + l.better_featured_image.media_details.sizes.w360.width + 'v' + l.better_featured_image.media_details.sizes.w360.height + 'H0z'" fill="#F2F2F2")
-      //- pre(v-if="!l.acf.hide").
-      //-   {{cat(l.categories)}}
 </template>
 
 <script>
@@ -55,7 +53,9 @@ export default {
       })
 
       self.$nextTick(() => {
-        self.$refs.img.forEach(slide => self.observer.observe(slide))
+        if (self.$refs.img) {
+          self.$refs.img.forEach(slide => self.observer.observe(slide))
+        }
       })
     }
   },
@@ -66,22 +66,22 @@ export default {
 
   methods: {
     cat (val) {
-      let b
+      let slug
       val.map(x => {
         if (x === 2) {
-          b = 'advertising'
+          slug = 'advertising'
         }
         if (x === 3) {
-          b = 'fashion'
+          slug = 'fashion'
         }
         if (x === 4) {
-          b = 'sports'
+          slug = 'sports'
         }
         if (x === 5) {
-          b = 'film'
+          slug = 'film'
         }
       })
-      return b
+      return slug
     }
 
   }
@@ -102,9 +102,11 @@ svg
   &:hover .iconPlay
     opacity 0
 .iconPlay
+  width 32px
+  height 32px
   position absolute
-  top calc(50% - 12px)
-  left calc(50% - 12px)
+  top calc(50% - 16px)
+  left calc(50% - 16px)
   z-index 1
 img
 .overlay
