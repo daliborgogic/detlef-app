@@ -3,7 +3,8 @@ no-ssr
   isotope(:options="option" :list="list")
     nuxt-link(tag="div" v-for="(l, index) in list" :key="l.id" :to="'/' + cat(l.categories) +'/'+ l.slug")
       .gutter
-      .c(v-if="!l.acf.hide")
+      .c
+        //- (v-if="!l.acf.hide")
         .overlay
           h3(v-if="l.title.rendered" v-html="l.title.rendered")
         svg.iconPlay(v-if="l.acf.gallery_images[0].vimeo && $route.path !== '/film'" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24")
@@ -60,15 +61,13 @@ export default {
   },
 
   destroyed() {
-    // console.log('observer destroyed')
     this.observer.disconnect()
   },
 
   methods: {
-    // Temp
     cat (val) {
-      const a = val.map(x => {
-        let b
+      let b
+      val.map(x => {
         if (x === 2) {
           b = 'advertising'
         }
@@ -81,11 +80,10 @@ export default {
         if (x === 5) {
           b = 'film'
         }
-        return b
       })
-      // console.log(a)
-      return a
+      return b
     }
+
   }
 }
 </script>
