@@ -1,17 +1,6 @@
 <template lang="pug">
 header(ref="header")
-  nuxt-link.link(to="/" @click.native="fetaured()")
-    | DETLEF SCHNEIDER
-    svg.loading(v-if="loading" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;")
-      rect(x="17.5" y="27.2046" width="1" height="45.5909" fill="#000000")
-        animate(attributeName="y" calcMode="spline" values="18;30;30" keyTimes="0;0.5;1" dur="1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.2s" repeatCount="indefinite")
-        animate(attributeName="height" calcMode="spline" values="64;40;40" keyTimes="0;0.5;1" dur="1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.2s" repeatCount="indefinite")
-      rect(x="42.5" y="26.0665" width="10" height="47.867" fill="#000000")
-        animate(attributeName="y" calcMode="spline" values="20.999999999999996;30;30" keyTimes="0;0.5;1" dur="1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.1s" repeatCount="indefinite")
-        animate(attributeName="height" calcMode="spline" values="58.00000000000001;40;40" keyTimes="0;0.5;1" dur="1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.1s" repeatCount="indefinite")
-      rect(x="67.5" y="24" width="10" height="52" fill="#000000")
-        animate(attributeName="y" calcMode="spline" values="24;30;30" keyTimes="0;0.5;1" dur="1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="0s" repeatCount="indefinite")
-        animate(attributeName="height" calcMode="spline" values="52;40;40" keyTimes="0;0.5;1" dur="1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="0s" repeatCount="indefinite")
+  nuxt-link.link(to="/" @click.native="fetaured()") DETLEF SCHNEIDER #[span.loading(v-if="loading") Loading...]
   nav
     span.link(@click="category(5)") Film
     span.dash
@@ -124,9 +113,8 @@ nav
   cursor pointer
   color #000
 .loading
+  font-size 16px
   margin-left 8px
-  margin-top -2px
   width 30px
   height auto
-  vertical-align middle
 </style>
