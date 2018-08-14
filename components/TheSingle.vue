@@ -1,6 +1,6 @@
 <template lang="pug">
 .div(ref="div")
-  section(v-for="(p, index) in post[0].acf.gallery_images" v-if="p.image_visibility"  :data-slide="index")
+  section(v-for="(p, index) in post[0].acf.gallery_images" v-if="p.image_visibility"  :data-slide="index" :key="index")
     //- pre {{p}}
     .s(v-if="p.img")
       img(:src="p.img.url")

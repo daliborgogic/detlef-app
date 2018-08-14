@@ -1,7 +1,7 @@
 <template lang="pug">
 no-ssr
   isotope(:options="option" :list="list")
-    nuxt-link(tag="div" v-for="(l, index) in list" :key="l.id" :to="'/' + l.slug")
+    nuxt-link(tag="div" v-for="(l, index) in list" :key="index" :to="'/' + l.slug")
       .gutter
       .c
         .overlay
