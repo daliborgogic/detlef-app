@@ -6,16 +6,19 @@
     a(v-if="contact.acf.facebook" :href="contact.acf.facebook")
       svg.logo(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430.113 430.114")
         path(d="M158.081 83.3v59.218h-43.385v72.412h43.385v215.183h89.122V214.936h59.805s5.601-34.721 8.316-72.685H247.54V92.74c0-7.4 9.717-17.354 19.321-17.354h48.557V.001h-66.021C155.878-.004 158.081 72.48 158.081 83.3z")
+
     //- Instagram
     a(v-if="contact.acf.instagram" :href="contact.acf.instagram")
       svg.logo(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 504.4 504.4")
         path(d="M296.8 219.8c-10-14-26.4-23.2-44.8-23.2s-34.8 9.2-44.8 23.2c-6.4 9.2-10.4 20.4-10.4 32.4 0 30.4 24.8 55.2 55.2 55.2 30.4 0 55.2-24.8 55.2-55.2 0-12-4-23.2-10.4-32.4z")
         path(d="M331.6 220.2c4 8 6.4 20.8 6.4 32 0 47.2-38.4 86-86 86s-86-38.4-86-86c0-11.6 2.4-24 6.4-32H124v128.4c0 16.8 14.8 31.6 31.6 31.6h192.8c16.8 0 31.6-14.8 31.6-31.6V220.2h-48.4zM365.6 131.4h-46.4v53.2H372V131z")
         path(d="M377.6.2H126.4C56.8.2 0 57 0 126.6v251.6c0 69.2 56.8 126 126.4 126H378c69.6 0 126.4-56.8 126.4-126.4V126.6C504 57 447.2.2 377.6.2zM408 219.8v128.8c0 33.6-26 59.6-59.6 59.6H155.6c-33.6 0-59.6-26-59.6-59.6V155.8c0-33.6 26-59.6 59.6-59.6h192.8c33.6 0 59.6 26 59.6 59.6v64z")
+
     //- Linkedin
     a(v-if="contact.acf.linkedin" :href="contact.acf.linkedin")
       svg.logo(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430.117 430.117")
         path(d="M430.117 261.543V420.56h-92.188V272.193c0-37.271-13.334-62.707-46.703-62.707-25.473 0-40.632 17.142-47.301 33.724-2.432 5.928-3.058 14.179-3.058 22.477V420.56h-92.219s1.242-251.285 0-277.32h92.21v39.309c-.187.294-.43.611-.606.896h.606v-.896c12.251-18.869 34.13-45.824 83.102-45.824 60.673-.001 106.157 39.636 106.157 124.818zM52.183 9.558C20.635 9.558 0 30.251 0 57.463c0 26.619 20.038 47.94 50.959 47.94h.616c32.159 0 52.159-21.317 52.159-47.94-.606-27.212-20-47.905-51.551-47.905zM5.477 420.56h92.184V143.24H5.477v277.32z")
+
     //- Vimeo
     a(v-if="contact.acf.vimeo" :href="contact.acf.vimeo")
       svg.logo(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430.118 430.118")
@@ -24,11 +27,13 @@
 
 <script>
 import r2 from 'r2'
+
 export default {
   async asyncData () {
-     const res = await r2(`https://${process.env.CMS}/wp-json/wp/v2/pages/17`).response
-     const contact = await res.json()
-     return { contact }
+    const res = await r2(`https://${process.env.CMS}/wp-json/wp/v2/pages/17`).response
+    const contact = await res.json()
+
+    return { contact }
   }
 }
 </script>

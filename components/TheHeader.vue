@@ -1,14 +1,14 @@
 <template lang="pug">
 header(ref="header")
-  nuxt-link.link(to="/") DETLEF SCHNEIDER
+  nuxt-link.link(to="/" @click.native="fetaured()") DETLEF SCHNEIDER #[span {{count}}]
   nav
-    nuxt-link.link(to="/film") Film
+    span.link(@click="category(5)") Film
     span.dash
-    nuxt-link.link(to="/fashion") Fashion
+    span.link(@click="category(3)") Fashion
     span.dash
-    nuxt-link.link(to="/advertising") Advertising
+    span.link(@click="category(2)") Advertising
     span.dash
-    nuxt-link.link(to="/sports") Sports
+    span.link(@click="category(4)") Sports
     span.dash
     nuxt-link.link(to="/about") About
     span.dash
@@ -19,11 +19,31 @@ header(ref="header")
 
 
 <script>
+import r2 from 'r2'
+
 export default {
+  computed: {
+    count () {
+      return this.$store.state.posts.length
+    }
+  },
+
   mounted () {
     setTimeout(() => {
-      this.$refs.header.classList.add('loaded')
+      // this.$refs.header.classList.add('loaded')
     }, 3000)
+  },
+
+  methods: {
+    async fetaured () {
+      this.$store.dispatch('nuxtServerInit')
+    },
+    async category (value) {
+      const res = await r2(`https://${process.env.CMS}/wp-json/wp/v2/posts?categories=${value}&hide=1&per_page=100`).response
+      const posts = await res.json()
+      this.$router.push('/')
+      this.$store.commit('setPosts',  posts)
+    }
   }
 }
 </script>
@@ -65,6 +85,7 @@ nav
   .link
     font-size 16px
     margin-right 0.5vw
+    cursor pointer
     // color #999
     &:hover
       color #000
