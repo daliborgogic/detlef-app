@@ -15,7 +15,7 @@
       div
         .content(v-if="post[0].content.rendered" v-html="post[0].content.rendered")
         h3(v-else v-html="post[0].title.rendered")
-        nuxt-link(to="/") Back to Overview
+        nuxt-link(to="/" @click.native="featured()") Back to Overview
 </template>
 
 <script>
@@ -105,6 +105,9 @@ export default {
   },
 
   methods:{
+    featured () {
+      this.$store.dispatch('nuxtServerInit')
+    },
     wh () {
       return window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight
     },
