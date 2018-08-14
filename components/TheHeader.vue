@@ -1,6 +1,17 @@
 <template lang="pug">
 header(ref="header")
-  nuxt-link.link(to="/" @click.native="fetaured()") DETLEF SCHNEIDER #[span {{count}}]
+  nuxt-link.link(to="/" @click.native="fetaured()")
+    | DETLEF SCHNEIDER
+    svg.loading(v-if="loading" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;")
+      rect(x="17.5" y="27.2046" width="1" height="45.5909" fill="#000000")
+        animate(attributeName="y" calcMode="spline" values="18;30;30" keyTimes="0;0.5;1" dur="1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.2s" repeatCount="indefinite")
+        animate(attributeName="height" calcMode="spline" values="64;40;40" keyTimes="0;0.5;1" dur="1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.2s" repeatCount="indefinite")
+      rect(x="42.5" y="26.0665" width="10" height="47.867" fill="#000000")
+        animate(attributeName="y" calcMode="spline" values="20.999999999999996;30;30" keyTimes="0;0.5;1" dur="1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.1s" repeatCount="indefinite")
+        animate(attributeName="height" calcMode="spline" values="58.00000000000001;40;40" keyTimes="0;0.5;1" dur="1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.1s" repeatCount="indefinite")
+      rect(x="67.5" y="24" width="10" height="52" fill="#000000")
+        animate(attributeName="y" calcMode="spline" values="24;30;30" keyTimes="0;0.5;1" dur="1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="0s" repeatCount="indefinite")
+        animate(attributeName="height" calcMode="spline" values="52;40;40" keyTimes="0;0.5;1" dur="1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="0s" repeatCount="indefinite")
   nav
     span.link(@click="category(5)") Film
     span.dash
@@ -23,6 +34,9 @@ import r2 from 'r2'
 
 export default {
   computed: {
+    loading () {
+      return this.$store.state.loading
+    },
     count () {
       return this.$store.state.posts.length
     }
@@ -39,10 +53,12 @@ export default {
       this.$store.dispatch('nuxtServerInit')
     },
     async category (value) {
+      this.$store.commit('setLoading', true)
       const res = await r2(`https://${process.env.CMS}/wp-json/wp/v2/posts?categories=${value}&hide=1&per_page=100`).response
       const posts = await res.json()
       this.$router.push('/')
       this.$store.commit('setPosts',  posts)
+      this.$store.commit('setLoading', false)
     }
   }
 }
@@ -107,4 +123,10 @@ nav
 .button
   cursor pointer
   color #000
+.loading
+  margin-left 8px
+  margin-top -2px
+  width 30px
+  height auto
+  vertical-align middle
 </style>
