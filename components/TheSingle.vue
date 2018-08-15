@@ -120,6 +120,7 @@ export default {
       const windowHeight = this.wh()
       const destinationOffset = typeof destination === 'number' ? destination : destination.offsetTop
       const destinationOffsetToScroll = Math.round(documentHeight - destinationOffset < windowHeight ? documentHeight - windowHeight : destinationOffset)
+
       if ('requestAnimationFrame' in window === false) {
         window.scroll(0, destinationOffsetToScroll)
         if (callback) {
@@ -127,6 +128,7 @@ export default {
         }
         return
       }
+
       function scroll() {
         const now = 'now' in window.performance ? performance.now() : new Date().getTime()
         const time = Math.min(1, ((now - startTime) / duration))

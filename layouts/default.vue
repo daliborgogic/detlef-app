@@ -10,7 +10,9 @@ import TheHeader from '@/components/TheHeader'
 export default {
   components: { TheHeader },
 
-  beforeMount () { this.loadFont() },
+  beforeMount () {
+    this.loadFont()
+  },
 
   methods: {
     // CSS Font Loading Module Level 3

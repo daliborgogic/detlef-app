@@ -11,11 +11,11 @@
   },
   "dependencies": {
     "@nuxtjs/pwa": "^2.0.8",
-    "intersection-observer": "^0.5.0",
     "micro": "^9.3.2",
     "nuxt-edge": "^2.0.0-25552561.fceb30b"
   },
   "devDependencies": {
+    "intersection-observer": "^0.5.0",
     "r2": "^2.0.1",
     "vueisotope": "^3.1.2",
     "babel-eslint": "^8.2.6",

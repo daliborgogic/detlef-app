@@ -16,30 +16,77 @@ no-ssr
 </template>
 
 <script>
-const timeout = ms => new Promise(res => setTimeout(res, ms))
-
 export default {
   data () {
     return {
+      sortOption: 'original-order',
+      // filterOption: 'featured',
       option:  {
         masonry: {
           gutter: '.gutter',
+          layout: 'masonry',
           horizontalOrder: true,
           transitionDuration: 0
+        },
+        getFilterData: {
+          filter: 'featured',
+          featured: (el) => {
+            return !!el.acf.featured
+          },
+          film: (el) => {
+            return !!el.categories.includes(5)
+          },
+          fashion: (el) => {
+            return !!el.categories.includes(3)
+          },
+          advertising: (el) => {
+            return !!el.categories.includes(2)
+          },
+          sports: (el) => {
+            return !!el.categories.includes(4)
+          }
         }
       }
     }
   },
 
   computed: {
+    filterOption () {
+      return this.$store.state.category
+    },
     list () {
       return this.$store.state.posts
     }
   },
 
-  async updated () {
-    await timeout(200)
-    this.$refs.a.iso.reloadItems()
+  watch: {
+    filterOption (option) {
+      let a = option
+      switch(option) {
+        case(2):
+          a = 'advertising'
+          break
+        case(3):
+          a = 'fashion'
+          break
+        case(4):
+          a = 'sports'
+          break
+        case(5):
+          a = 'film'
+          break
+      }
+      // this.filter('film')
+      this.$refs.a.filter(a)
+      console.log('###########', a)
+    }
+  },
+
+
+  methods: {
+    filter (key) {
+      this.$refs.a.filter(key)
+    }
   }
 }
 </script>

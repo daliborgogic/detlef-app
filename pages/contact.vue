@@ -43,7 +43,7 @@ export default {
   font-size 23px
   line-height 1.3
   max-width 330px
-  margin 64px auto 25vh auto
+  margin 128px auto 25vh auto
 .content
   >>> h1
     font-size 23px
