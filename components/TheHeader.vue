@@ -1,15 +1,16 @@
 <template lang="pug">
 header(ref="header")
-  nuxt-link.link(to="/") DETLEF SCHNEIDER
+  nuxt-link.link(to="/" @click.native="category('featured')") DETLEF SCHNEIDER v7 #[span.loading(v-if="loading") Loading...]
   nav
-    nuxt-link.link(to="/film") Film
-    span.dash
-    nuxt-link.link(to="/fashion") Fashion
-    span.dash
-    nuxt-link.link(to="/advertising") Advertising
-    span.dash
-    nuxt-link.link(to="/sports") Sports
-    span.dash
+    span(v-if="$route.name === 'index'")
+      span.link(@click="category(5)") Film
+      span.dash
+      span.link(@click="category(3)") Fashion
+      span.dash
+      span.link(@click="category(2)") Advertising
+      span.dash
+      span.link(@click="category(4)") Sports
+      span.dash
     nuxt-link.link(to="/about") About
     span.dash
     nuxt-link.link(to="/privacy") Privacy
@@ -19,11 +20,24 @@ header(ref="header")
 
 
 <script>
+const timeout = ms => new Promise(res => setTimeout(res, ms))
+
 export default {
-  mounted () {
-    setTimeout(() => {
-      this.$refs.header.classList.add('loaded')
-    }, 3000)
+  computed: {
+    loading () {
+      return this.$store.state.loading
+    }
+  },
+
+  async mounted () {
+    await timeout(3000)
+    // this.$refs.header.classList.add('loaded')
+  },
+
+  methods: {
+    category (value) {
+      this.$store.commit('setCategory', value)
+    }
   }
 }
 </script>
@@ -65,6 +79,7 @@ nav
   .link
     font-size 16px
     margin-right 0.5vw
+    cursor pointer
     // color #999
     &:hover
       color #000
@@ -86,4 +101,9 @@ nav
 .button
   cursor pointer
   color #000
+.loading
+  font-size 16px
+  margin-left 8px
+  width 30px
+  height auto
 </style>

@@ -1,6 +1,6 @@
 <template lang="pug">
 .div(ref="div")
-  section(v-for="(p, index) in post[0].acf.gallery_images" v-if="p.image_visibility"  :data-slide="index")
+  section(v-for="(p, index) in post[0].acf.gallery_images" v-if="p.image_visibility"  :data-slide="index" :key="index")
     //- pre {{p}}
     .s(v-if="p.img")
       img(:src="p.img.url")
@@ -15,10 +15,11 @@
       div
         .content(v-if="post[0].content.rendered" v-html="post[0].content.rendered")
         h3(v-else v-html="post[0].title.rendered")
-        nuxt-link(to="/") Back to Overview
+        nuxt-link(to="/" @click.native="featured()") Back to Overview
 </template>
 
 <script>
+import('intersection-observer')
 export default {
   props: {
     post: {
@@ -58,23 +59,16 @@ export default {
       // im.setAttribute('src', im.getAttribute('datasrc'))
     // })
 
-    this.slides = slides.length - 1
-    if (typeof IntersectionObserver === 'undefined') {
-      console.warn(`IntersectionObserver API is not available in your browser.`)
+    // this.slides = slides.length - 1
+    // if (typeof IntersectionObserver === 'undefined') {
+    //   console.warn(`IntersectionObserver API is not available in your browser.`)
 
-      import('intersection-observer')
-    } else  {
+
+    // } else  {
       setTimeout(() => {
         self.observer =  new IntersectionObserver(entries =>{
           entries.forEach(change => {
             if (change.isIntersecting === true) {
-              const count = change.target.getAttribute('data-slide')
-
-              if (slides.length - count !== 1) {
-                // const image = change.target.getElementsByTagName('img')[0]
-                // image.setAttribute('src', image.getAttribute('datasrc'))
-              }
-
               self.scrollIt(change.target, 500, 'easeInQuad')
               // Need to observe
               // self.observer.unobserve(change.target)
@@ -82,13 +76,13 @@ export default {
           })
         },{
           root: this.$refs.div[0],
-          rootMargin: '-32px',
+          rootMargin: '-32px 0px -32px 0px',
           threshold: [0],
         })
 
         slides.forEach(slide => self.observer.observe(slide))
       }, 1000)
-    }
+    // }
 
 
     // ToDo: On resize set height
@@ -105,6 +99,9 @@ export default {
   },
 
   methods:{
+    featured () {
+      this.$store.dispatch('nuxtServerInit')
+    },
     wh () {
       return window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight
     },
@@ -123,6 +120,7 @@ export default {
       const windowHeight = this.wh()
       const destinationOffset = typeof destination === 'number' ? destination : destination.offsetTop
       const destinationOffsetToScroll = Math.round(documentHeight - destinationOffset < windowHeight ? documentHeight - windowHeight : destinationOffset)
+
       if ('requestAnimationFrame' in window === false) {
         window.scroll(0, destinationOffsetToScroll)
         if (callback) {
@@ -130,6 +128,7 @@ export default {
         }
         return
       }
+
       function scroll() {
         const now = 'now' in window.performance ? performance.now() : new Date().getTime()
         const time = Math.min(1, ((now - startTime) / duration))

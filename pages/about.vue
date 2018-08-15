@@ -4,11 +4,13 @@ div(v-html="about.content.rendered")
 
 <script>
 import r2 from 'r2'
+
 export default {
   async asyncData () {
-     const res = await r2(`https://${process.env.CMS}/wp-json/wp/v2/pages/2`).response
-     const about = await res.json()
-     return { about }
+    const res = await r2(`https://${process.env.CMS}/wp-json/wp/v2/pages/2`).response
+    const about = await res.json()
+
+    return { about }
   }
 }
 </script>
@@ -19,7 +21,7 @@ div
   letter-spacing 0.2px
   line-height 1.3
   max-width 680px
-  margin 64px auto 25vh auto
+  margin 128px auto 25vh auto
   >>> h1
     font-size 23px
   >>> h1

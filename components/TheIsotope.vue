@@ -1,89 +1,92 @@
 <template lang="pug">
 no-ssr
-  isotope(:options="option" :list="list")
-    nuxt-link(tag="div" v-for="(l, index) in list" :key="l.id" :to="'/' + cat(l.categories) +'/'+ l.slug")
+  isotope(ref="a" :options="option" :list="list")
+    nuxt-link(tag="div" v-for="(l, index) in list" :key="index" :to="'/' + l.slug")
       .gutter
       .c
-        //- (v-if="!l.acf.hide")
         .overlay
           h3(v-if="l.title.rendered" v-html="l.title.rendered")
         svg.iconPlay(v-if="l.acf.gallery_images[0].vimeo && $route.path !== '/film'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
           path(d="M8 5v14l11-7z" fill="#ffffff")
           path(d="M0 0h24v24H0z" fill="none")
-        img(ref="img" v-if="l.better_featured_image" :datasrc="l.better_featured_image.media_details.sizes.w360.source_url" :alt="l.better_featured_image.alt_text")
-        svg.placeholder(v-if="l.better_featured_image" :height="l.better_featured_image.media_details.sizes.w360.height" :viewBox="'0 0 ' +  l.better_featured_image.media_details.sizes.w360.width + ' ' + l.better_featured_image.media_details.sizes.w360.height" :width="l.better_featured_image.media_details.sizes.w360.width" xmlns="http://www.w3.org/2000/svg")
-          path(:d="'M0 0h' + l.better_featured_image.media_details.sizes.w360.width + 'v' + l.better_featured_image.media_details.sizes.w360.height + 'H0z'" fill="#F2F2F2")
+        span(v-if="l.better_featured_image")
+          img(ref="img" :src="l.better_featured_image.media_details.sizes.w360.source_url" :alt="l.better_featured_image.alt_text")
+          svg.placeholder(:height="l.better_featured_image.media_details.sizes.w360.height" :viewBox="'0 0 ' +  l.better_featured_image.media_details.sizes.w360.width + ' ' + l.better_featured_image.media_details.sizes.w360.height" :width="l.better_featured_image.media_details.sizes.w360.width" xmlns="http://www.w3.org/2000/svg")
+            path(:d="'M0 0h' + l.better_featured_image.media_details.sizes.w360.width + 'v' + l.better_featured_image.media_details.sizes.w360.height + 'H0z'" fill="#F2F2F2")
 </template>
 
 <script>
 export default {
-  // name: 'Isotope',
-  props: {
-    list: {
-      type: Array,
-      default () {
-        return {}
-      }
-    }
-  },
-
   data () {
     return {
-      observer: null,
+      sortOption: 'original-order',
+      // filterOption: 'featured',
       option:  {
         masonry: {
-           gutter: '.gutter'
+          gutter: '.gutter',
+          layout: 'masonry',
+          horizontalOrder: true,
+          transitionDuration: 0
+        },
+        getFilterData: {
+          filter: 'featured',
+          featured: (el) => {
+            return !!el.acf.featured
+          },
+          film: (el) => {
+            return !!el.categories.includes(5)
+          },
+          fashion: (el) => {
+            return !!el.categories.includes(3)
+          },
+          advertising: (el) => {
+            return !!el.categories.includes(2)
+          },
+          sports: (el) => {
+            return !!el.categories.includes(4)
+          }
         }
       }
     }
   },
-  mounted () {
-    let self  = this
-    if (typeof IntersectionObserver === 'undefined') {
-      console.warn(`IntersectionObserver API is not available in your browser.`)
-      import('intersection-observer')
-    } else  {
-      self.observer =  new IntersectionObserver(entries => {
-        entries.forEach(change => {
-          if (change.isIntersecting === true) {
-            change.target.setAttribute('src', change.target.getAttribute('datasrc'))
-            self.observer.unobserve(change.target)
-          }
-        })
-      })
 
-      self.$nextTick(() => {
-        if (self.$refs.img) {
-          self.$refs.img.forEach(slide => self.observer.observe(slide))
-        }
-      })
+  computed: {
+    filterOption () {
+      return this.$store.state.category
+    },
+    list () {
+      return this.$store.state.posts
     }
   },
 
-  destroyed() {
-    this.observer.disconnect()
+  watch: {
+    filterOption (option) {
+      let a = option
+      switch(option) {
+        case(2):
+          a = 'advertising'
+          break
+        case(3):
+          a = 'fashion'
+          break
+        case(4):
+          a = 'sports'
+          break
+        case(5):
+          a = 'film'
+          break
+      }
+      // this.filter('film')
+      this.$refs.a.filter(a)
+      console.log('###########', a)
+    }
   },
+
 
   methods: {
-    cat (val) {
-      let slug
-      val.map(x => {
-        if (x === 2) {
-          slug = 'advertising'
-        }
-        if (x === 3) {
-          slug = 'fashion'
-        }
-        if (x === 4) {
-          slug = 'sports'
-        }
-        if (x === 5) {
-          slug = 'film'
-        }
-      })
-      return slug
+    filter (key) {
+      this.$refs.a.filter(key)
     }
-
   }
 }
 </script>
