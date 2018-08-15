@@ -1,15 +1,16 @@
 <template lang="pug">
 header(ref="header")
-  nuxt-link.link(to="/" @click.native="fetaured()") DETLEF SCHNEIDER #[span.loading(v-if="loading") Loading...]
+  nuxt-link.link(@click.native="fetaured()" to="/") DETLEF SCHNEIDER v3 #[span.loading(v-if="loading") Loading...]
   nav
-    span.link(@click="category(5)") Film
-    span.dash
-    span.link(@click="category(3)") Fashion
-    span.dash
-    span.link(@click="category(2)") Advertising
-    span.dash
-    span.link(@click="category(4)") Sports
-    span.dash
+    span(v-if="$route.name === 'index'")
+      span.link(@click="category(5)") Film
+      span.dash
+      span.link(@click="category(3)") Fashion
+      span.dash
+      span.link(@click="category(2)") Advertising
+      span.dash
+      span.link(@click="category(4)") Sports
+      span.dash
     nuxt-link.link(to="/about") About
     span.dash
     nuxt-link.link(to="/privacy") Privacy
@@ -20,33 +21,35 @@ header(ref="header")
 
 <script>
 import r2 from 'r2'
+const timeout = ms => new Promise(res => setTimeout(res, ms))
 
 export default {
   computed: {
     loading () {
       return this.$store.state.loading
-    },
-    count () {
-      return this.$store.state.posts.length
     }
   },
 
-  mounted () {
-    setTimeout(() => {
-      // this.$refs.header.classList.add('loaded')
-    }, 3000)
+  async mounted () {
+    await timeout(3000)
+    this.$refs.header.classList.add('loaded')
   },
 
   methods: {
     async fetaured () {
-      this.$store.dispatch('nuxtServerInit')
+      this.$store.commit('setLoading', true)
+      const featured = await r2(`https://${process.env.CMS}/wp-json/wp/v2/posts?featured=1`).response
+      const posts = await featured.json()
+      this.$store.commit('setPosts', posts)
+      this.$store.commit('setLoading', false)
     },
+
     async category (value) {
+      // this.$store.commit('setPosts', [])
       this.$store.commit('setLoading', true)
       const res = await r2(`https://${process.env.CMS}/wp-json/wp/v2/posts?categories=${value}&hide=1&per_page=100`).response
       const posts = await res.json()
-      this.$router.push('/')
-      this.$store.commit('setPosts',  posts)
+      this.$store.commit('setPosts', posts)
       this.$store.commit('setLoading', false)
     }
   }

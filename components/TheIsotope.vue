@@ -1,6 +1,6 @@
 <template lang="pug">
 no-ssr
-  isotope(:options="option" :list="list")
+  isotope(ref="a" :options="option" :list="list")
     nuxt-link(tag="div" v-for="(l, index) in list" :key="index" :to="'/' + l.slug")
       .gutter
       .c
@@ -9,19 +9,23 @@ no-ssr
         svg.iconPlay(v-if="l.acf.gallery_images[0].vimeo && $route.path !== '/film'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
           path(d="M8 5v14l11-7z" fill="#ffffff")
           path(d="M0 0h24v24H0z" fill="none")
-        img(ref="img" v-if="l.better_featured_image" :src="l.better_featured_image.media_details.sizes.w360.source_url" :alt="l.better_featured_image.alt_text")
-        svg.placeholder(v-if="l.better_featured_image" :height="l.better_featured_image.media_details.sizes.w360.height" :viewBox="'0 0 ' +  l.better_featured_image.media_details.sizes.w360.width + ' ' + l.better_featured_image.media_details.sizes.w360.height" :width="l.better_featured_image.media_details.sizes.w360.width" xmlns="http://www.w3.org/2000/svg")
-          path(:d="'M0 0h' + l.better_featured_image.media_details.sizes.w360.width + 'v' + l.better_featured_image.media_details.sizes.w360.height + 'H0z'" fill="#F2F2F2")
+        span(v-if="l.better_featured_image")
+          img(ref="img" :src="l.better_featured_image.media_details.sizes.w360.source_url" :alt="l.better_featured_image.alt_text")
+          svg.placeholder(:height="l.better_featured_image.media_details.sizes.w360.height" :viewBox="'0 0 ' +  l.better_featured_image.media_details.sizes.w360.width + ' ' + l.better_featured_image.media_details.sizes.w360.height" :width="l.better_featured_image.media_details.sizes.w360.width" xmlns="http://www.w3.org/2000/svg")
+            path(:d="'M0 0h' + l.better_featured_image.media_details.sizes.w360.width + 'v' + l.better_featured_image.media_details.sizes.w360.height + 'H0z'" fill="#F2F2F2")
 </template>
 
 <script>
+const timeout = ms => new Promise(res => setTimeout(res, ms))
+
 export default {
-  // name: 'Isotope',
   data () {
     return {
       option:  {
         masonry: {
-           gutter: '.gutter'
+          gutter: '.gutter',
+          horizontalOrder: true,
+          transitionDuration: 0
         }
       }
     }
@@ -31,6 +35,11 @@ export default {
     list () {
       return this.$store.state.posts
     }
+  },
+
+  async updated () {
+    await timeout(200)
+    this.$refs.a.iso.reloadItems()
   }
 }
 </script>

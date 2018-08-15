@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   TheHeader
-  nuxt
+  nuxt(keep-alive)
 </template>
 
 <script>
