@@ -5,16 +5,23 @@ TheSingle(:post="post")
 <script>
 import r2 from 'r2'
 import TheSingle from '@/components/TheSingle'
-
 export default {
   components: { TheSingle },
-  // validate({ params }) {
-  //   return !isNaN(+params.slug)
-  // },
+
   async asyncData({ params }) {
     const res = await r2(`https://${process.env.CMS}/wp-json/wp/v2/posts?slug=${params.slug}`).response
-    const post = await res.json()
-    return { post }
+    const posts = await res.json()
+    const mapPosts = posts.map(post => {
+      const { id, title, content, acf  } = post
+
+      return {
+        id,
+        title: title.rendered,
+        content: content.rendered,
+        images: acf.gallery_images
+      }
+    })
+    return { post: mapPosts }
   }
 }
 </script>

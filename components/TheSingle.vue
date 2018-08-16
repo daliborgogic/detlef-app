@@ -1,9 +1,12 @@
 <template lang="pug">
 .div(ref="div")
-  section(v-for="(p, index) in post[0].acf.gallery_images" v-if="p.image_visibility"  :data-slide="index" :key="index")
-    //- pre {{p}}
+  section(v-for="(p, index) in post[0].images" v-if="p.image_visibility"  :data-slide="index" :key="index")
+
     .s(v-if="p.img")
-      img(:src="p.img.url")
+      img(
+        :src="p.img.url"
+        :srcset="p.img.sizes.w360 + ' 360w, ' + p.img.sizes.w720 + ' 720w, ' + p.img.url + ' 2000w'"
+      )
       svg(:height="p.img.height" :viewBox="'0 0 ' +  p.img.width + ' ' + p.img.height" :width="p.img.width" xmlns="http://www.w3.org/2000/svg")
         path(:d="'M0 0h' + p.img.width + 'v' + p.img.height + 'H0z'" fill="#f2f2f2")
     .s(v-else)
@@ -13,8 +16,8 @@
   section(:data-slide="count")
     .back
       div
-        .content(v-if="post[0].content.rendered" v-html="post[0].content.rendered")
-        h3(v-else v-html="post[0].title.rendered")
+        .content(v-if="post[0].content" v-html="post[0].content")
+        h3(v-else v-html="post[0].title")
         nuxt-link(to="/" @click.native="featured()") Back to Overview
 </template>
 
@@ -39,13 +42,13 @@ export default {
 
   head () {
     return {
-      title: this.post[0].title.rendered
+      title: this.post[0].title
     }
   },
 
   computed: {
     count () {
-      return this.post[0].acf.gallery_images.length
+      return this.post[0].images.length
     }
   },
 

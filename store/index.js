@@ -26,7 +26,22 @@ const createStore = () => {
       async nuxtServerInit ({ commit }, { req }) {
         const featured = await r2(`https://${process.env.CMS}/wp-json/wp/v2/posts?per_page=100`).response
         const posts = await featured.json()
-        commit('setPosts', posts)
+
+        const mapPosts = posts.map(post => {
+          const { id, title, slug, content, acf, better_featured_image } = post
+
+          return {
+            id,
+            title: title.rendered,
+            slug: slug,
+            content: content.rendered,
+            featured: acf.featured,
+            categories: post.categories,
+            featuredImage: better_featured_image.media_details.sizes,
+            images: acf.gallery_images
+          }
+        })
+        commit('setPosts', mapPosts)
 
         let privacy = null
         if (req.headers.cookie) {

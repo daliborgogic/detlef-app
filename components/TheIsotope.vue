@@ -6,19 +6,23 @@ no-ssr
        .grid-sizer
       .c
         .overlay
-          h3(v-if="l.title.rendered" v-html="l.title.rendered")
-        svg.iconPlay(v-if="l.acf.gallery_images[0].vimeo && $route.path !== '/film'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+          h3(v-if="l.title" v-html="l.title")
+        svg.iconPlay(v-if="l.images[0].vimeo && filterOption !== 5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
           path(d="M8 5v14l11-7z" fill="#ffffff")
           path(d="M0 0h24v24H0z" fill="none")
-        span(v-if="l.better_featured_image")
+        span(v-if="l.featuredImage")
           img(
             ref="img"
-            :src="l.better_featured_image.media_details.sizes.w360.source_url"
-            :srcset="l.better_featured_image.media_details.sizes.w360.source_url 1x, l.better_featured_image.media_details.sizes.w720.source_url 2x"
-            :alt="l.better_featured_image.alt_text"
-          )
-          svg.placeholder(:height="l.better_featured_image.media_details.sizes.w360.height" :viewBox="'0 0 ' +  l.better_featured_image.media_details.sizes.w360.width + ' ' + l.better_featured_image.media_details.sizes.w360.height" :width="l.better_featured_image.media_details.sizes.w360.width" xmlns="http://www.w3.org/2000/svg")
-            path(:d="'M0 0h' + l.better_featured_image.media_details.sizes.w360.width + 'v' + l.better_featured_image.media_details.sizes.w360.height + 'H0z'" fill="#F2F2F2")
+            :src="l.featuredImage.w360.source_url"
+            :srcset="srcset(l.featuredImage)"
+            :alt="l.featuredImage.alt_text")
+          svg.placeholder(
+            :height="l.featuredImage.w360.height"
+            :viewBox="'0 0 ' +  l.featuredImage.w360.width + ' ' + l.featuredImage.w360.height"
+            :width="l.featuredImage.w360.width" xmlns="http://www.w3.org/2000/svg")
+            path(
+              :d="'M0 0h' + l.featuredImage.w360.width + 'v' + l.featuredImage.w360.height + 'H0z'"
+              fill="#F2F2F2")
 </template>
 
 <script>
@@ -36,10 +40,10 @@ export default {
           columnWidth: '.grid-sizer',
           percentPosition: true
         },
-        filter: 'featured',
+        filter: '',
         getFilterData: {
           featured: el => {
-            return !!el.acf.featured
+            return !!el.featured
           },
           film: el => {
             return !!el.categories.includes(5)
@@ -90,14 +94,13 @@ export default {
     }
   },
 
-  mounted () {
-    // this.filter('featured')
-    console.log(this.$refs.a)
-  },
-
   methods: {
     filter (key) {
       this.$refs.a.filter(key)
+    },
+    srcset (value) {
+      const {w360, w720} = value
+      return `${w360.source_url} 1x, ${w720.source_url} 2x`
     }
   }
 }
