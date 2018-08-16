@@ -3,6 +3,7 @@ no-ssr
   isotope(ref="a" :options="option" :list="list")
     nuxt-link(tag="div" v-for="(l, index) in list" :key="index" :to="'/' + l.slug")
       .gutter
+       .grid-sizer
       .c
         .overlay
           h3(v-if="l.title.rendered" v-html="l.title.rendered")
@@ -26,23 +27,25 @@ export default {
           gutter: '.gutter',
           layout: 'masonry',
           horizontalOrder: true,
-          transitionDuration: 0
+          transitionDuration: 0,
+          columnWidth: '.grid-sizer',
+          percentPosition: true
         },
+        filter: 'featured',
         getFilterData: {
-          filter: 'featured',
-          featured: (el) => {
+          featured: el => {
             return !!el.acf.featured
           },
-          film: (el) => {
+          film: el => {
             return !!el.categories.includes(5)
           },
-          fashion: (el) => {
+          fashion: el => {
             return !!el.categories.includes(3)
           },
-          advertising: (el) => {
+          advertising: el => {
             return !!el.categories.includes(2)
           },
-          sports: (el) => {
+          sports: el => {
             return !!el.categories.includes(4)
           }
         }
@@ -82,6 +85,10 @@ export default {
     }
   },
 
+  mounted () {
+    // this.filter('featured')
+    console.log(this.$refs.a)
+  },
 
   methods: {
     filter (key) {
@@ -94,6 +101,8 @@ export default {
 <style lang="stylus" scoped>
 img
 svg
+  width 100%
+  height auto
   vertical-align middle
 .c
   position relative
@@ -143,5 +152,22 @@ h3
   padding-right 20px
 .gutter
   width 30px
+.grid-sizer
+.item
+  width calc(100% / 3 - 20px)
+@media (max-width 512px)
+  .gutter
+    width 0
+  .grid-sizer
+  .item
+    width 100%
+  .c
+    margin-bottom 16px
+@media (min-width 512px) and (max-width 1024px) and (orientation portrait)
+  .gutter
+    width 16px
+  .grid-sizer
+  .item
+    width calc(50% - 8px)
 </style>
 

@@ -20,7 +20,13 @@ export default {
 
 <style lang="stylus" scoped>
 .container
-  max-width 1140px
+  max-width 1172px
   margin 0 auto 10vh auto
+  padding-left 16px
+  padding-right 16px
+// @media (max-width 512px)
+//   .container
+//     padding-left
+//     padding-right
 </style>
 

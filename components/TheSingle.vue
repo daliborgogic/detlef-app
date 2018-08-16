@@ -207,6 +207,23 @@ img
   position absolute
   top 0
   left 0
-  object-fit: cover;
+  object-fit cover
+@media (max-width 512px)
+  .div
+    top 64px
+    height auto
+    padding-left 16px
+    padding-right 16px
+  .s
+    height auto
+  img
+  svg
+    max-width none
+    max-height none
+    width 100%
+    height auto
+  section
+    padding-top 0
+    padding-bottom 16px
 </style>
 

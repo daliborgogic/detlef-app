@@ -1,6 +1,6 @@
 <template lang="pug">
 header(ref="header")
-  nuxt-link.link(to="/" @click.native="category('featured')") DETLEF SCHNEIDER v7 #[span.loading(v-if="loading") Loading...]
+  nuxt-link.link(to="/" @click.native="category('featured')") DETLEF SCHNEIDER
   nav
     span(v-if="$route.name === 'index'")
       span.link(@click="category(5)") Film
@@ -23,10 +23,8 @@ header(ref="header")
 const timeout = ms => new Promise(res => setTimeout(res, ms))
 
 export default {
-  computed: {
-    loading () {
-      return this.$store.state.loading
-    }
+  beforeMount () {
+    this.category('featured')
   },
 
   async mounted () {
@@ -54,8 +52,8 @@ header
   display flex
   align-items center
   justify-content space-between
-  padding-left 20px
-  padding-right 20px
+  padding-left 16px
+  padding-right 16px
   transition all 250ms ease-in
   // margin-bottom 16px
   // outline 1px dashed tomato
@@ -106,4 +104,16 @@ nav
   margin-left 8px
   width 30px
   height auto
+@media (max-width 512px)
+  header
+    text-align center
+    height 56px
+    a
+      width 100%
+      display block
+  nav
+    display none
+@media (min-width 512px) and (max-width 1024px) and (orientation portrait)
+  .dash
+    width 0
 </style>

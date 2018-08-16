@@ -1,14 +1,19 @@
 <template lang="pug">
 div
   TheHeader
-  nuxt(keep-alive)
+  nuxt
+  TheBreadCrumb
 </template>
 
 <script>
 import TheHeader from '@/components/TheHeader'
+import TheBreadCrumb from '@/components/TheBreadCrumb'
 
 export default {
-  components: { TheHeader },
+  components: {
+    TheHeader,
+    TheBreadCrumb
+  },
 
   beforeMount () {
     this.loadFont()

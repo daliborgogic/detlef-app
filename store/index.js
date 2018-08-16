@@ -4,8 +4,7 @@ import r2 from 'r2'
 const createStore = () => {
   return new Vuex.Store({
     state: {
-      category: 'featured',
-      loading: false,
+      category: null,
       posts: []
     },
 
@@ -15,9 +14,6 @@ const createStore = () => {
       },
       setPosts (state, value) {
         state.posts = value
-      },
-      setLoading (state, value) {
-        state.loading = value
       }
     },
 
@@ -26,7 +22,6 @@ const createStore = () => {
         const featured = await r2(`https://${process.env.CMS}/wp-json/wp/v2/posts?per_page=100`).response
         const posts = await featured.json()
         commit('setPosts', posts)
-        commit('setLoading', false)
       }
     }
   })

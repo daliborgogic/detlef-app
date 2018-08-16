@@ -5,6 +5,8 @@ div(v-html="privacy.content.rendered")
 <script>
 import r2 from 'r2'
 export default {
+  name: 'Privacy',
+
   async asyncData () {
     const res = await r2(`https://${process.env.CMS}/wp-json/wp/v2/pages/3`).response
     const privacy = await res.json()
