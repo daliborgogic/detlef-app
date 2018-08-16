@@ -6,7 +6,7 @@ const createStore = () => {
   return new Vuex.Store({
     state: {
       gotIt: null,
-      category: null,
+      category: 'featured',
       posts: []
     },
 

@@ -29,9 +29,14 @@ no-ssr
 export default {
   data () {
     return {
-      sortOption: 'original-order',
-      // filterOption: 'featured',
-      option:  {
+      sortOption: 'original-order'
+    }
+  },
+
+  computed: {
+    option () {
+      return {
+        filter: this.slug(this.$store.state.category),
         masonry: {
           gutter: '.gutter',
           layout: 'masonry',
@@ -40,7 +45,6 @@ export default {
           columnWidth: '.grid-sizer',
           percentPosition: true
         },
-        filter: '',
         getFilterData: {
           featured: el => {
             return !!el.featured
@@ -59,10 +63,7 @@ export default {
           }
         }
       }
-    }
-  },
-
-  computed: {
+    },
     filterOption () {
       return this.$store.state.category
     },
@@ -73,24 +74,7 @@ export default {
 
   watch: {
     filterOption (option) {
-      let a = option
-      switch(option) {
-        case(2):
-          a = 'advertising'
-          break
-        case(3):
-          a = 'fashion'
-          break
-        case(4):
-          a = 'sports'
-          break
-        case(5):
-          a = 'film'
-          break
-      }
-      // this.filter('film')
-      this.$refs.a.filter(a)
-      console.log('###########', a)
+      this.$refs.a.filter(this.slug(option))
     }
   },
 
@@ -101,6 +85,26 @@ export default {
     srcset (value) {
       const {w360, w720} = value
       return `${w360.source_url} 1x, ${w720.source_url} 2x`
+    },
+    slug (value) {
+      let s
+      switch(value) {
+        case(2):
+          s = 'advertising'
+          break
+        case(3):
+          s = 'fashion'
+          break
+        case(4):
+          s = 'sports'
+          break
+        case(5):
+          s = 'film'
+          break
+        default:
+          s = 'featured'
+      }
+      return s
     }
   }
 }
