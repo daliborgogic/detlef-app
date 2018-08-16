@@ -15,17 +15,19 @@
     "nuxt-edge": "^2.0.0-25552561.fceb30b"
   },
   "devDependencies": {
-    "intersection-observer": "^0.5.0",
-    "r2": "^2.0.1",
-    "vueisotope": "^3.1.2",
     "babel-eslint": "^8.2.6",
+    "cookieparser": "^0.1.0",
     "eslint": "^5.2.0",
     "eslint-loader": "^2.1.0",
     "eslint-plugin-vue": "^4.7.1",
+    "intersection-observer": "^0.5.0",
+    "js-cookie": "^2.2.0",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
+    "r2": "^2.0.1",
     "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.2"
+    "stylus-loader": "^3.0.2",
+    "vueisotope": "^3.1.2"
   },
   "eslintConfig": {
     "root": true,

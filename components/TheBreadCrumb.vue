@@ -1,5 +1,5 @@
 <template lang="pug">
-.breadcrumb
+.breadcrumb(v-if="!isGotIt")
   .container
     span.msg(v-if="$route.name !== 'privacy'") Detlef Schneider has a new #[nuxt-link(to="/privacy") Privacy Policy], effective May 25, 2018.
     span.msg(v-else)
@@ -7,10 +7,19 @@
 </template>
 
 <script>
+import Cookie from 'js-cookie'
+
 export default {
+
+  computed: {
+    isGotIt () {
+      return this.$store.state.gotIt
+    }
+  },
   methods: {
     gotIt () {
-      console.log(`trigger gotIt`)
+      this.$store.commit('setGotIt', true)
+      Cookie.set('gotIt', true)
     }
   }
 }

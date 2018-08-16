@@ -1,14 +1,19 @@
 import Vuex from 'vuex'
 import r2 from 'r2'
+import cookieparser from 'cookieparser'
 
 const createStore = () => {
   return new Vuex.Store({
     state: {
+      gotIt: null,
       category: null,
       posts: []
     },
 
     mutations: {
+      setGotIt (state, value) {
+        state.gotIt = value
+      },
       setCategory (state, value) {
         state.category = value
       },
@@ -18,10 +23,17 @@ const createStore = () => {
     },
 
     actions: {
-      async nuxtServerInit ({commit}) {
+      async nuxtServerInit ({ commit }, { req }) {
         const featured = await r2(`https://${process.env.CMS}/wp-json/wp/v2/posts?per_page=100`).response
         const posts = await featured.json()
         commit('setPosts', posts)
+
+        let privacy = null
+        if (req.headers.cookie) {
+          let parsed = cookieparser.parse(req.headers.cookie)
+          privacy = JSON.parse(parsed.gotIt)
+        }
+        commit('setGotIt', privacy)
       }
     }
   })
