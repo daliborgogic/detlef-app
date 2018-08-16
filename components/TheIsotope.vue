@@ -11,7 +11,12 @@ no-ssr
           path(d="M8 5v14l11-7z" fill="#ffffff")
           path(d="M0 0h24v24H0z" fill="none")
         span(v-if="l.better_featured_image")
-          img(ref="img" :src="l.better_featured_image.media_details.sizes.w360.source_url" :alt="l.better_featured_image.alt_text")
+          img(
+            ref="img"
+            :src="l.better_featured_image.media_details.sizes.w360.source_url"
+            :srcset="l.better_featured_image.media_details.sizes.w360.source_url 1x, l.better_featured_image.media_details.sizes.w720.source_url 2x"
+            :alt="l.better_featured_image.alt_text"
+          )
           svg.placeholder(:height="l.better_featured_image.media_details.sizes.w360.height" :viewBox="'0 0 ' +  l.better_featured_image.media_details.sizes.w360.width + ' ' + l.better_featured_image.media_details.sizes.w360.height" :width="l.better_featured_image.media_details.sizes.w360.width" xmlns="http://www.w3.org/2000/svg")
             path(:d="'M0 0h' + l.better_featured_image.media_details.sizes.w360.width + 'v' + l.better_featured_image.media_details.sizes.w360.height + 'H0z'" fill="#F2F2F2")
 </template>
