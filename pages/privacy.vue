@@ -17,8 +17,10 @@ export default {
 
 <style lang="stylus" scoped>
 div
-  max-width 680px
-  margin 64px auto 25vh auto
+  max-width 712px
+  margin 25vh auto
+  padding-left 16px
+  padding-right 16px
   >>> h1
     font-size 23px
   >>> h1

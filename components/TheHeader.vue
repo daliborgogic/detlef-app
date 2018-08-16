@@ -1,8 +1,13 @@
 <template lang="pug">
 header(ref="header")
-  nuxt-link.link(to="/" @click.native="category('featured')") DETLEF SCHNEIDER
-  nav
-    span(v-if="$route.name === 'index'")
+  nuxt-link.link(v-if="showNav" to="/" @click.native="category('featured')") DETLEF SCHNEIDER
+  nuxt-link.link(v-else to="/" @click.native="onlyCategory('featured')") DETLEF SCHNEIDER
+  svg.icon-menu(@click="toogleNav" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24")
+    path(d="M0 0h24v24H0z" fill="none")
+    path(v-if="!showNav" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z")
+    path(v-else d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z")
+  nav(:class="{navHidden: showNav}")
+    span.filter(v-if="$route.name === 'index'")
       span.link(@click="category(5)") Film
       span.dash
       span.link(@click="category(3)") Fashion
@@ -11,30 +16,44 @@ header(ref="header")
       span.dash
       span.link(@click="category(4)") Sports
       span.dash
-    nuxt-link.link(to="/about") About
+    nuxt-link.link(@click.native="toogleNav" to="/about") About
     span.dash
-    nuxt-link.link(to="/privacy") Privacy
+    nuxt-link.link(@click.native="toogleNav" to="/privacy") Privacy
     span.dash
-    nuxt-link.link(to="/contact") Contact
+    nuxt-link.link(@click.native="toogleNav" to="/contact") Contact
 </template>
 
 
 <script>
-const timeout = ms => new Promise(res => setTimeout(res, ms))
+// const timeout = ms => new Promise(res => setTimeout(res, ms))
 
 export default {
+  data () {
+    return {
+      showNav: false
+    }
+  },
+
   beforeMount () {
     this.category('featured')
   },
 
   async mounted () {
-    await timeout(3000)
+    // await timeout(3000)
     // this.$refs.header.classList.add('loaded')
   },
 
   methods: {
     category (value) {
       this.$store.commit('setCategory', value)
+      this.toogleNav()
+    },
+    onlyCategory (value) {
+      this.$store.commit('setCategory', value)
+    },
+    async toogleNav () {
+      // await timeout(300)
+      this.showNav = !this.showNav
     }
   }
 }
@@ -42,6 +61,8 @@ export default {
 
 
 <style lang="stylus" scoped>
+.icon-menu
+  display none
 header
   position fixed
   top 0
@@ -74,6 +95,7 @@ header
   &:hover
     opacity 1
 nav
+  display block
   .link
     font-size 16px
     margin-right 0.5vw
@@ -105,14 +127,32 @@ nav
   width 30px
   height auto
 @media (max-width 512px)
-  header
-    text-align center
-    height 56px
-    a
-      width 100%
-      display block
   nav
+  .dash
     display none
+  header
+    height 56px
+  .icon-menu
+    display block
+    vertical-align middle
+  .navHidden
+    display flex
+    flex-direction column
+    position fixed
+    top 56px
+    left 0
+    bottom 0
+    width 100%
+    background-color white
+    padding-left 16px
+    padding-right 16px
+  .filter
+    display flex
+    flex-direction column
+  .link
+    padding-top 8px
+    padding-bottom 8px
+    // text-align center
 @media (min-width 512px) and (max-width 1024px) and (orientation portrait)
   .dash
     width 0
