@@ -35,6 +35,7 @@ export default {
 
   data () {
     return {
+      width: '512px',
       slides: 0,
       videoContainerHeight: 0,
       observer: null
@@ -61,9 +62,15 @@ export default {
       self.observer =  new IntersectionObserver(entries =>{
         entries.forEach(change => {
           if (change.isIntersecting === true) {
-            self.scrollIt(change.target, 500, 'easeInQuad')
+
+            // https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
+            if (window.matchMedia(`(max-width: ${self.width})`).matches) {
             // Need to observe
             // self.observer.unobserve(change.target)
+            } else {
+              self.observer.unobserve(change.target)
+              self.scrollIt(change.target, 500, 'easeInQuad')
+            }
           }
         })
       },{
