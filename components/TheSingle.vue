@@ -3,10 +3,7 @@
   section(v-for="(p, index) in post[0].images" v-if="p.image_visibility"  :data-slide="index" :key="index")
 
     .s(v-if="p.img")
-      img(
-        :src="p.img.url"
-        :srcset="p.img.sizes.w360 + ' 360w, ' + p.img.sizes.w720 + ' 720w, ' + p.img.url + ' 2000w'"
-      )
+      img(ref="img" :src="p.img.url" :datasrcset="p.img.sizes.w360 + ' 360w, ' + p.img.sizes.w720 + ' 720w, ' + p.img.url + ' 2000w'")
       svg(:height="p.img.height" :viewBox="'0 0 ' +  p.img.width + ' ' + p.img.height" :width="p.img.width" xmlns="http://www.w3.org/2000/svg")
         path(:d="'M0 0h' + p.img.width + 'v' + p.img.height + 'H0z'" fill="#f2f2f2")
     .s(v-else)
@@ -54,22 +51,26 @@ export default {
     }
   },
 
-  mounted () {
-     window.addEventListener('resize', event => this.handleResize(event))
-    let self = this
-    const slides = [...self.$refs.div.getElementsByTagName('section')]
+  async mounted () {
+    window.addEventListener('resize', () => this.handleResize())
+
+    const slides = [...this.$refs.div.getElementsByTagName('section')]
+    const images = [...this.$refs.img]
+
     setTimeout(() => {
-      self.observer =  new IntersectionObserver(entries =>{
+      this.observer =  new IntersectionObserver(entries =>{
         entries.forEach(change => {
           if (change.isIntersecting === true) {
 
             // https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
-            if (window.matchMedia(`(max-width: ${self.width})`).matches) {
-            // Need to observe
-            // self.observer.unobserve(change.target)
+            if (window.matchMedia(`(max-width: ${this.width})`).matches) {
+              const image = change.target.getElementsByTagName('img')[0]
+              image.setAttribute('srcset', image.getAttribute('datasrcset'))
+              // Need to observe
             } else {
-              self.observer.unobserve(change.target)
-              self.scrollIt(change.target, 500, 'easeInQuad')
+              this.observer.unobserve(change.target)
+              this.scrollIt(change.target, 500, 'easeInQuad')
+              images.forEach(image => image.setAttribute('srcset', image.getAttribute('datasrcset')))
             }
           }
         })
@@ -79,13 +80,11 @@ export default {
         threshold: [0],
       })
 
-      slides.forEach(slide => self.observer.observe(slide))
+      slides.forEach(slide => this.observer.observe(slide))
     }, 1000)
 
     if (this.$refs.videoContainer) {
-      this.videoContainerHeight =  this.$refs.videoContainer[0].clientHeight || 0
-      const iframe = this.$refs.video[0]
-      iframe.setAttribute('height', this.videoContainerHeight)
+      this.handleResize()
     }
   },
 
@@ -95,9 +94,7 @@ export default {
   },
 
   methods:{
-    handleResize (event) {
-      console.log({event})
-      // ToDo: On resize set height
+    handleResize () {
       if (this.$refs.videoContainer) {
         this.videoContainerHeight =  this.$refs.videoContainer[0].clientHeight || 0
         const iframe = this.$refs.video[0]
