@@ -3,7 +3,7 @@
   section(v-for="(p, index) in post[0].images" v-if="p.image_visibility"  :data-slide="index" :key="index")
 
     .s(v-if="p.img")
-      img(ref="img" :src="p.img.url" :datasrcset="p.img.sizes.w360 + ' 360w, ' + p.img.sizes.w720 + ' 720w, ' + p.img.url + ' 2000w'")
+      img(ref="img" :datasrc="p.img.url" :datasrcset="p.img.sizes.w360 + ' 360w, ' + p.img.sizes.w720 + ' 720w, ' + p.img.url + ' 2000w'")
       svg(:height="p.img.height" :viewBox="'0 0 ' +  p.img.width + ' ' + p.img.height" :width="p.img.width" xmlns="http://www.w3.org/2000/svg")
         path(:d="'M0 0h' + p.img.width + 'v' + p.img.height + 'H0z'" fill="#f2f2f2")
     .s(v-else)
@@ -66,6 +66,7 @@ export default {
             if (window.matchMedia(`(max-width: ${this.width})`).matches) {
               const image = change.target.getElementsByTagName('img')[0]
               image.setAttribute('srcset', image.getAttribute('datasrcset'))
+              image.setAttribute('src', image.getAttribute('datasrc'))
               // Need to observe
             } else {
               this.observer.unobserve(change.target)
