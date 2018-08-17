@@ -16,7 +16,7 @@
           .overlay
             h3(v-if="l.title" v-html="l.title")
           svg.iconPlay(
-            v-if="l.images[0].vimeo && filterOption !== 5"
+            v-if="l.images[0].vimeo"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24")
             path(d="M8 5v14l11-7z" fill="#ffffff")
@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import('intersection-observer')
 export default {
   name: 'Index',
 
@@ -86,33 +85,39 @@ export default {
   },
 
  async mounted () {
-    await timeout(1000)
+    await this.timeout(1000)
 
     const images = [...this.$refs.img]
-    this.observer =  new IntersectionObserver(entries =>{
-      entries.forEach(change => {
-        if (change.isIntersecting === true) {
-          change.target.setAttribute('srcset', change.target.getAttribute('datasrcset'))
-          this.observer.unobserve(change.target)
-        }
-      })
-    },{
-      root: this.$refs.container[0],
-      rootMargin: '0px',
-      threshold: [0],
-    })
 
-    images.forEach(image => this.observer.observe(image))
+    if ('IntersectionObserver' in window) {
+      this.observer =  new IntersectionObserver(entries =>{
+        entries.forEach(change => {
+          if (change.isIntersecting) {
+            change.target.setAttribute('srcset', change.target.getAttribute('datasrcset'))
+            this.observer.unobserve(change.target)
+          }
+        })
+      },{
+        root: this.$refs.container[0],
+        rootMargin: '0px',
+        threshold: [0],
+      })
+
+      images.forEach(image => this.observer.observe(image))
+    } else {
+      // Not Supported
+      images.forEach(img => img.setAttribute('srcset', img.getAttribute('datasrcset')))
+    }
   },
 
   beforeDestroy () {
-    this.observer.disconnect()
+    if ('IntersectionObserver' in window) {
+      this.observer.disconnect()
+    }
   },
 
   methods: {
-    timeout (ms) {
-      new Promise(res => setTimeout(res, ms))
-    },
+    timeout (ms) { new Promise(res => setTimeout(res, ms)) },
     filter (key) { this.$refs.isotope.filter(key) },
 
     srcset (value) {

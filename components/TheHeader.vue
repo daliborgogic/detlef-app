@@ -1,12 +1,7 @@
 <template lang="pug">
 header(ref="header")
   nuxt-link.link(v-if="showNav" to="/" @click.native="category('featured')") DETLEF SCHNEIDER
-  nuxt-link.link(v-else to="/" @click.native="onlyCategory('featured')") DETLEF SCHNEIDER
-
-  svg.icon-menu(@click="toogleNav" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24")
-    path(d="M0 0h24v24H0z" fill="none")
-    path(v-if="!showNav" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z")
-    path(v-else d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z")
+  nuxt-link.link(v-else to="/" @click.native="category('toogleNav')") DETLEF SCHNEIDER
 
   nav(:class="{navHidden: showNav}")
     nuxt-link.link(to="/" @click.native="category(5)") Film
@@ -36,22 +31,16 @@ export default {
   },
 
   async mounted () {
-    // await timeout(3000)
+    // await this.timeout(3000)
     // this.$refs.header.classList.add('loaded')
   },
 
   methods: {
-    category (value) {
+    async category (value) {
       this.$store.commit('setCategory', value)
       this.toogleNav()
     },
-    onlyCategory (value) {
-      this.$store.commit('setCategory', value)
-    },
-    async toogleNav () {
-      // await timeout(300)
-      this.showNav = !this.showNav
-    }
+    toogleNav () { this.showNav = !this.showNav }
   }
 }
 </script>
@@ -147,9 +136,14 @@ nav
     display flex
     flex-direction column
   .link
-    padding-top 8px
-    padding-bottom 8px
-    // text-align center
+    width 100%
+    display block
+    text-align center
+  nav
+    padding-bottom 16px
+    & .link
+      padding-top 8px
+      padding-bottom 8px
 @media (min-width 512px) and (max-width 1024px) and (orientation portrait)
   .dash
     width 0

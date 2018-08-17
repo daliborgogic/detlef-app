@@ -13,7 +13,8 @@ module.exports = {
     },
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'theme-color', content: '#FFFFFF' }
     ]
   },
 
@@ -32,6 +33,11 @@ module.exports = {
   modules: [['@nuxtjs/pwa', {
     workbox: {
       offline: true
+    },
+    manifest: {
+      name: 'Detlef Schneider',
+      short_name: 'Detlef'
+      // display: 'fullscreen'
     }
   }]],
 

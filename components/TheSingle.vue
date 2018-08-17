@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import('intersection-observer')
 export default {
   props: {
     post: {
@@ -57,25 +56,30 @@ export default {
   },
 
   async mounted () {
+    await this.timeout(1000)
     window.addEventListener('resize', () => this.handleResize())
 
-    const slides = [...this.$refs.div.getElementsByTagName('section')]
-    const images = [...this.$refs.img]
+    if (this.$refs.videoContainer) {
+      this.handleResize()
+    }
 
-    setTimeout(() => {
+    const slides = [...this.$refs.div.getElementsByTagName('section')]
+
+    if ('IntersectionObserver' in window) {
       this.observer =  new IntersectionObserver(entries =>{
         entries.forEach(change => {
-          if (change.isIntersecting === true) {
+          if (change.isIntersecting) {
 
             // https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
-            if (window.matchMedia(`(max-width: 512px`).matches) {
-              const image = change.target.getElementsByTagName('img')[0]
-              image.setAttribute('srcset', image.getAttribute('datasrcset'))
-              // Need to observe
-            } else {
-              this.observer.unobserve(change.target)
+            if (window.matchMedia(`(min-width: 512px`).matches) {
+              // this.observer.unobserve(change.target)
               this.scrollIt(change.target, 500, 'easeInQuad')
-              images.forEach(image => image.setAttribute('srcset', image.getAttribute('datasrcset')))
+              // images.forEach(image => image.setAttribute('srcset', image.getAttribute('datasrcset')))
+            }
+
+            const image = change.target.getElementsByTagName('img')[0]
+            if (image) {
+              image.setAttribute('srcset', image.getAttribute('datasrcset'))
             }
           }
         })
@@ -86,19 +90,25 @@ export default {
       })
 
       slides.forEach(slide => this.observer.observe(slide))
-    }, 1000)
-
-    if (this.$refs.videoContainer) {
-      this.handleResize()
+    } else {
+      // Not Supported
+      slides.forEach(slide => {
+        const image = slide.getElementsByTagName('img')[0]
+        image.setAttribute('srcset', image.getAttribute('datasrcset'))
+      })
     }
+
   },
 
   beforeDestroy () {
     window.removeEventListener('resize', this.handleResize())
-    this.observer.disconnect()
+    if ('IntersectionObserver' in window) {
+      this.observer.disconnect()
+    }
   },
 
   methods:{
+    timeout (ms) { new Promise(res => setTimeout(res, ms)) },
     handleResize () {
       if (this.$refs.videoContainer) {
         this.videoContainerHeight =  this.$refs.videoContainer[0].clientHeight || 0
@@ -106,9 +116,7 @@ export default {
         iframe.setAttribute('height', this.videoContainerHeight)
       }
     },
-    featured () {
-      this.$store.dispatch('nuxtServerInit')
-    },
+    featured () { this.$store.dispatch('nuxtServerInit') },
     wh () {
       return window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight
     },

@@ -2,7 +2,7 @@
 .breadcrumb(v-if="!isGotIt")
   .container
     span.msg(v-if="$route.name !== 'privacy'") Detlef Schneider has a new #[nuxt-link(to="/privacy") Privacy Policy], effective May 25, 2018.
-    span.msg(v-else)
+    span(v-else)
     span.button(@click="gotIt") GOT IT
 </template>
 
@@ -57,4 +57,10 @@ a
     align-items baseline
     font-size 14px
     line-height 1.4
+  .container
+    text-align center
+    flex-direction column
+  .msg
+    padding-left 16px
+    padding-bottom 16px
 </style>
