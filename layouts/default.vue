@@ -1,7 +1,8 @@
 <template lang="pug">
 div
   TheHeader
-  nuxt
+  main
+    nuxt
   TheBreadCrumb
 </template>
 
