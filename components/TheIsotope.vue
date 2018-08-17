@@ -1,13 +1,23 @@
 <template lang="pug">
 no-ssr
-  isotope(ref="a" :options="option" :list="list")
-    nuxt-link(tag="div" v-for="(l, index) in list" :key="index" :to="'/' + l.slug")
+  isotope(
+    ref="a"
+    :options="option"
+    :list="list")
+    nuxt-link(
+      tag="div"
+      v-for="(l, index) in list"
+      :key="index"
+      :to="'/' + l.slug")
       .gutter
        .grid-sizer
       .c
         .overlay
           h3(v-if="l.title" v-html="l.title")
-        svg.iconPlay(v-if="l.images[0].vimeo && filterOption !== 5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+        svg.iconPlay(
+          v-if="l.images[0].vimeo && filterOption !== 5"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24")
           path(d="M8 5v14l11-7z" fill="#ffffff")
           path(d="M0 0h24v24H0z" fill="none")
         span(v-if="l.featuredImage")
@@ -28,9 +38,7 @@ no-ssr
 <script>
 export default {
   data () {
-    return {
-      sortOption: 'original-order'
-    }
+    return { sortOption: 'original-order' }
   },
 
   computed: {
@@ -46,46 +54,30 @@ export default {
           percentPosition: true
         },
         getFilterData: {
-          featured: el => {
-            return !!el.featured
-          },
-          film: el => {
-            return !!el.categories.includes(5)
-          },
-          fashion: el => {
-            return !!el.categories.includes(3)
-          },
-          advertising: el => {
-            return !!el.categories.includes(2)
-          },
-          sports: el => {
-            return !!el.categories.includes(4)
-          }
+          featured: el => { return !!el.featured },
+          film: el => { return !!el.categories.includes(5) },
+          fashion: el => { return !!el.categories.includes(3) },
+          advertising: el => { return !!el.categories.includes(2) },
+          sports: el => { return !!el.categories.includes(4) }
         }
       }
     },
-    filterOption () {
-      return this.$store.state.category
-    },
-    list () {
-      return this.$store.state.posts
-    }
+    filterOption () { return this.$store.state.category },
+    list () { return this.$store.state.posts }
   },
 
   watch: {
-    filterOption (option) {
-      this.$refs.a.filter(this.slug(option))
-    }
+    filterOption (option) { this.$refs.a.filter(this.slug(option)) }
   },
 
   methods: {
-    filter (key) {
-      this.$refs.a.filter(key)
-    },
+    filter (key) { this.$refs.a.filter(key) },
+
     srcset (value) {
       const {w360, w720} = value
       return `${w360.source_url} 1x, ${w720.source_url} 2x`
     },
+
     slug (value) {
       let s
       switch(value) {

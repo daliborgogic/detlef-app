@@ -36,6 +36,7 @@ export default {
   data () {
     return {
       slides: 0,
+      videoContainerHeight: 0,
       observer: null
     }
   },
@@ -53,55 +54,49 @@ export default {
   },
 
   mounted () {
+     window.addEventListener('resize', event => this.handleResize(event))
     let self = this
     const slides = [...self.$refs.div.getElementsByTagName('section')]
-
-    // slides.forEach(slide => {
-      // slide.style.height = self.wh() + 'px'
-      // const im = slide.getElementsByTagName('img')[0]
-      // im.setAttribute('src', im.getAttribute('datasrc'))
-    // })
-
-    // this.slides = slides.length - 1
-    // if (typeof IntersectionObserver === 'undefined') {
-    //   console.warn(`IntersectionObserver API is not available in your browser.`)
-
-
-    // } else  {
-      setTimeout(() => {
-        self.observer =  new IntersectionObserver(entries =>{
-          entries.forEach(change => {
-            if (change.isIntersecting === true) {
-              self.scrollIt(change.target, 500, 'easeInQuad')
-              // Need to observe
-              // self.observer.unobserve(change.target)
-            }
-          })
-        },{
-          root: this.$refs.div[0],
-          rootMargin: '-32px 0px -32px 0px',
-          threshold: [0],
+    setTimeout(() => {
+      self.observer =  new IntersectionObserver(entries =>{
+        entries.forEach(change => {
+          if (change.isIntersecting === true) {
+            self.scrollIt(change.target, 500, 'easeInQuad')
+            // Need to observe
+            // self.observer.unobserve(change.target)
+          }
         })
+      },{
+        root: this.$refs.div[0],
+        rootMargin: '-32px 0px -32px 0px',
+        threshold: [0],
+      })
 
-        slides.forEach(slide => self.observer.observe(slide))
-      }, 1000)
-    // }
+      slides.forEach(slide => self.observer.observe(slide))
+    }, 1000)
 
-
-    // ToDo: On resize set height
-    if (self.$refs.videoContainer) {
-      let videoParentHeight =  self.$refs.videoContainer[0].clientHeight || 0
-      const iframe = self.$refs.video[0]
-      iframe.setAttribute('height', videoParentHeight)
+    if (this.$refs.videoContainer) {
+      this.videoContainerHeight =  this.$refs.videoContainer[0].clientHeight || 0
+      const iframe = this.$refs.video[0]
+      iframe.setAttribute('height', this.videoContainerHeight)
     }
   },
 
-  destroyed() {
-    // console.log('observer destroyed')
+   beforeDestroy () {
+    window.removeEventListener('resize', this.handleResize())
     this.observer.disconnect()
   },
 
   methods:{
+    handleResize (event) {
+      console.log({event})
+      // ToDo: On resize set height
+      if (this.$refs.videoContainer) {
+        this.videoContainerHeight =  this.$refs.videoContainer[0].clientHeight || 0
+        const iframe = this.$refs.video[0]
+        iframe.setAttribute('height', this.videoContainerHeight)
+      }
+    },
     featured () {
       this.$store.dispatch('nuxtServerInit')
     },
@@ -166,7 +161,7 @@ section
   width 100%
   height calc(100vh - 128px)
   position relative
-img
+ img
 svg
   max-width 100%
   max-height 100%
@@ -206,12 +201,15 @@ img
   width:100%;
   overflow: hidden;
 
+
 .videoContainer iframe
   position absolute
   top 0
   left 0
   object-fit cover
 @media (max-width 512px)
+  .videoContainer
+    padding-bottom 56%
   .div
     top 64px
     height auto
@@ -228,5 +226,9 @@ img
   section
     padding-top 0
     padding-bottom 16px
+  .back
+    height auto
+    padding-top 56px
+    padding-bottom 56px
 </style>
 
