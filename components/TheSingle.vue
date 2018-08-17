@@ -7,7 +7,9 @@
         ref="img"
         src="p.img.url"
         :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
-        :datasrcset="p.img.sizes.w360 + ' 360w, ' + p.img.sizes.w720 + ' 720w, ' + p.img.url + ' 2000w'")
+        :datasrcset="p.img.sizes.w360 + ' 360w, ' + p.img.sizes.w720 + ' 720w, ' + p.img.url + ' 2000w'"
+        :alt="p.img.alt_text"
+      )
       svg(:height="p.img.height" :viewBox="'0 0 ' +  p.img.width + ' ' + p.img.height" :width="p.img.width" xmlns="http://www.w3.org/2000/svg")
         path(:d="'M0 0h' + p.img.width + 'v' + p.img.height + 'H0z'" fill="#f2f2f2")
     .s(v-else)
@@ -36,7 +38,6 @@ export default {
 
   data () {
     return {
-      width: '512px',
       slides: 0,
       videoContainerHeight: 0,
       observer: null
@@ -67,7 +68,7 @@ export default {
           if (change.isIntersecting === true) {
 
             // https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
-            if (window.matchMedia(`(max-width: ${this.width})`).matches) {
+            if (window.matchMedia(`(max-width: 512px`).matches) {
               const image = change.target.getElementsByTagName('img')[0]
               image.setAttribute('srcset', image.getAttribute('datasrcset'))
               // Need to observe
@@ -92,7 +93,7 @@ export default {
     }
   },
 
-   beforeDestroy () {
+  beforeDestroy () {
     window.removeEventListener('resize', this.handleResize())
     this.observer.disconnect()
   },
