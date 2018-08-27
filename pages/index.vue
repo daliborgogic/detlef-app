@@ -102,7 +102,7 @@ export default {
   width 15px
 .grid-sizer
 .item
-  width calc(100% / 3 - 10px)
+  width calc(100% / 3 - 9.99px)
 @media (max-width 512px)
   .gutter
     width 0

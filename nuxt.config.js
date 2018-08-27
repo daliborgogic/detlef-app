@@ -31,7 +31,7 @@ module.exports = {
 
   plugins: [
     { src: '~/plugins/isotope', ssr: false },
-    { src: '~/plugins/in-view', ssr: false }
+    // { src: '~/plugins/in-view', ssr: false }
   ],
 
   watch: [

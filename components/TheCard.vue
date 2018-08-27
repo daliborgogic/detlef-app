@@ -16,16 +16,16 @@
         path(d="M8 5v14l11-7z" fill="#ffffff")
         path(d="M0 0h24v24H0z" fill="none")
   span(v-if="card.featuredImage")
-  img(
-    :src="card.featuredImage.w370.source_url"
-    :alt="card.featuredImage.alt_text")
-  svg.placeholder(
-    :height="card.featuredImage.w370.height"
-    :viewBox="'0 0 ' +  card.featuredImage.w370.width + ' ' + card.featuredImage.w370.height"
-    :width="card.featuredImage.w370.width" xmlns="http://www.w3.org/2000/svg")
-    path(
-      :d="'M0 0h' + card.featuredImage.w370.width + 'v' + card.featuredImage.w370.height + 'H0z'"
-      fill="#F2F2F2")
+    img(
+      :src="card.featuredImage.w370.source_url"
+      :alt="card.featuredImage.alt_text")
+    svg.placeholder(
+      :height="card.featuredImage.w370.height"
+      :viewBox="'0 0 ' +  card.featuredImage.w370.width + ' ' + card.featuredImage.w370.height"
+      :width="card.featuredImage.w370.width" xmlns="http://www.w3.org/2000/svg")
+      path(
+        :d="'M0 0h' + card.featuredImage.w370.width + 'v' + card.featuredImage.w370.height + 'H0z'"
+        fill="#F2F2F2")
 </template>
 
 <script>

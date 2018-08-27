@@ -15,18 +15,21 @@ class Watcher {
 
   update() {
     this.toWatch.forEach(elementBinding => {
-      const { element } = elementBinding
+      const { element, settings } = elementBinding
       const rect = element.getBoundingClientRect()
       const { height, top } = rect
 
       const bottom = top + height
 
-      if (((top >= 0) && (top <= this.windowHeight)) || ((bottom >= 0) && (bottom <= this.windowHeight))) {
-        element.classList.add('partiallyInView')
-        element.classList.add('beenPartiallyInView')
-      } else {
-        if (!element.classList.contains('partiallyInView')) return
-        element.classList.remove('partiallyInView')
+      if (settings.ifPartial) {
+        if (((top >= 0) && (top <= this.windowHeight)) || ((bottom >= 0) && (bottom <= this.windowHeight))) {
+          if (typeof settings.callback === 'function') settings.callback(element)
+          element.classList.add('partiallyInView')
+          element.classList.add('beenPartiallyInView')
+        } else {
+          if (!element.classList.contains('partiallyInView')) return
+          element.classList.remove('partiallyInView')
+        }
       }
 
       if ((bottom <= this.windowHeight) && (top <= this.windowHeight) && (bottom >= 0) && (top >= 0)) {
@@ -45,8 +48,8 @@ class Watcher {
     this.update()
   }
 
-  addElement(element) {
-    this.toWatch.push({ element })
+  addElement(element, settings) {
+    this.toWatch.push({ element, settings })
   }
 }
 
