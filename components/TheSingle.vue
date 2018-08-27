@@ -3,15 +3,30 @@
   section(v-for="(p, index) in post[0].images" v-if="p.image_visibility"  :data-slide="index" :key="index")
 
     .s(v-if="p.img")
-      img(
-        ref="img"
-        :src="p.img.url"
-        :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
-        :datasrcset="p.img.sizes.w370 + ' 370w, ' + p.img.sizes.w740 + ' 740w, ' + p.img.url + ' 2000w'"
-        :alt="p.img.alt_text"
-      )
-      svg(:height="p.img.height" :viewBox="'0 0 ' +  p.img.width + ' ' + p.img.height" :width="p.img.width" xmlns="http://www.w3.org/2000/svg")
-        path(:d="'M0 0h' + p.img.width + 'v' + p.img.height + 'H0z'" fill="#f2f2f2")
+      span(v-if="p.ad")
+        a.external(:href="p.ad_link")
+          svg.iconPlay(
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24")
+            path(d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z" fill="#ffffff")
+            path(d="M0 0h24v24H0z" fill="none")
+          svg.externalPlaceholder(:width="p.img.width" :height="p.img.height" :viewBox="'0 0 ' +  p.img.width + ' ' + p.img.height" xmlns="http://www.w3.org/2000/svg")
+            path(:d="'M0 0h' + p.img.width + 'v' + p.img.height + 'H0z'" fill="#f2f2f2")
+          img.externalImg(
+            :src="p.img.url"
+            :alt="p.img.alt_text"
+            :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
+            :datasrcset="p.img.url")
+      span(v-else)
+        img(
+          ref="img"
+          :src="p.img.sizes.large"
+          :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
+          :datasrcset="p.img.sizes.w370 + ' 370w, ' + p.img.sizes.w740 + ' 740w, ' + p.img.url + ' 2000w'"
+          :alt="p.img.alt_text"
+        )
+        svg.placeholder(:height="p.img.height" :viewBox="'0 0 ' +  p.img.width + ' ' + p.img.height" :width="p.img.width" xmlns="http://www.w3.org/2000/svg")
+            path(:d="'M0 0h' + p.img.width + 'v' + p.img.height + 'H0z'" fill="#f2f2f2")
     .s(v-else)
       .videoContainer(ref="videoContainer")
         iframe(ref="video" :src="'https://player.vimeo.com/video/'+p.vimeo+'?color=ffffff&portrait=0&title=0&byline=0&portrait=0'" width="100%"  frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
@@ -56,14 +71,13 @@ export default {
   },
 
   async mounted () {
-    await this.timeout(1000)
     window.addEventListener('resize', () => this.handleResize())
 
     if (this.$refs.videoContainer) {
       this.handleResize()
     }
 
-    const slides = [...this.$refs.div.getElementsByTagName('section')]
+    const slides = [...document.getElementsByTagName('section')]
 
     if ('IntersectionObserver' in window) {
       this.observer =  new IntersectionObserver(entries =>{
@@ -108,7 +122,6 @@ export default {
   },
 
   methods:{
-    timeout (ms) { new Promise(res => setTimeout(res, ms)) },
     handleResize () {
       if (this.$refs.videoContainer) {
         this.videoContainerHeight =  this.$refs.videoContainer[0].clientHeight || 0
@@ -164,6 +177,33 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.external
+  display block
+  width 100%
+  height 100%
+  position relative
+  // &:hover .iconPlay
+  //   display none
+.externalPlaceholder
+.external
+.externalImg
+.iconPlay
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+.externalPlaceholder
+.externalImg
+  max-width 100%
+  max-height 100%
+  object-fit contain
+  display block
+.iconPlay
+  z-index 10
+  height 24px
+  vertical-align middle
+  width 24px
+
 .div
   position absolute
   top 0
@@ -173,13 +213,12 @@ export default {
 section
   padding-top 64px
   padding-bottom 64px
-
 .s
   width 100%
   height calc(100vh - 128px)
   position relative
- img
-svg
+img
+.placeholder
   max-width 100%
   max-height 100%
   vertical-align middle
@@ -188,9 +227,6 @@ img
   top 0
   left 50%
   transform translateX(-50%)
-// svg
-//   path
-//     fill tomato
 .back
   height calc(100vh - 128px)
   display flex
@@ -213,12 +249,10 @@ img
     color #000
     text-decoration none
 .videoContainer
-  position:relative;
-  height:100%;
-  width:100%;
-  overflow: hidden;
-
-
+  position relative
+  height 100%
+  width 100%
+  overflow: hidden
 .videoContainer iframe
   position absolute
   top 0
@@ -235,7 +269,7 @@ img
   .s
     height auto
   img
-  svg
+  .placeholder
     max-width none
     max-height none
     width 100%

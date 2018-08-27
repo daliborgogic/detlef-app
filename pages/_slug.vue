@@ -12,6 +12,7 @@ export default {
     const { CMS_DOMAIN } = process.env
     const res = await r2(`https://${CMS_DOMAIN}/wp-json/wp/v2/posts?slug=${params.slug}`).response
     const posts = await res.json()
+
     const mapPosts = posts.map(post => {
       const { id, title, content, acf  } = post
 
