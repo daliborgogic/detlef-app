@@ -84,6 +84,7 @@ img
   pre
     overflow-x scroll
 h3
+  color black
   margin-top 0
   margin-bottom 0
   font-size 23px
