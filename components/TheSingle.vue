@@ -286,7 +286,7 @@ img
     max-height none
   section
     padding-top 0
-    padding-bottom 16px
+    padding-bottom 32px
   .back
     height auto
     padding-top 56px

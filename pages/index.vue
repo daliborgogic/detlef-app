@@ -110,7 +110,7 @@ export default {
   .item
     width 100%
   .c
-    margin-bottom 16px
+    margin-bottom 32px
 @media (min-width 512px) and (max-width 1024px) and (orientation portrait)
   .gutter
     width 16px
