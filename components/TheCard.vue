@@ -49,7 +49,7 @@ svg
   vertical-align middle
 .c
   position relative
-  margin-bottom 30px
+  margin-bottom 45px
   // outline 1px dashed tomato
   transition opacity 250ms ease-in
   &:hover .overlay

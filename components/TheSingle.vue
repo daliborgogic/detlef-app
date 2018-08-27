@@ -5,9 +5,9 @@
     .s(v-if="p.img")
       img(
         ref="img"
-        src="p.img.url"
+        :src="p.img.url"
         :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
-        :datasrcset="p.img.sizes.w360 + ' 360w, ' + p.img.sizes.w720 + ' 720w, ' + p.img.url + ' 2000w'"
+        :datasrcset="p.img.sizes.w370 + ' 370w, ' + p.img.sizes.w740 + ' 740w, ' + p.img.url + ' 2000w'"
         :alt="p.img.alt_text"
       )
       svg(:height="p.img.height" :viewBox="'0 0 ' +  p.img.width + ' ' + p.img.height" :width="p.img.width" xmlns="http://www.w3.org/2000/svg")
