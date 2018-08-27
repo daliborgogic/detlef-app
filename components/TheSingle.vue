@@ -1,6 +1,6 @@
 <template lang="pug">
 .div(ref="div")
-  section(v-for="(p, index) in post[0].images" v-if="p.image_visibility"  :data-slide="index" :key="index")
+  section(v-for="(p, index) in post[0].images" v-if="p.image_visibility" :key="index")
 
     .s(v-if="p.img")
       span(v-if="p.ad")
@@ -122,7 +122,7 @@ export default {
   },
 
   methods:{
-    handleResize () {
+      handleResize () {
       if (this.$refs.videoContainer) {
         this.videoContainerHeight =  this.$refs.videoContainer[0].clientHeight || 0
         const iframe = this.$refs.video[0]
@@ -259,6 +259,12 @@ img
   left 0
   object-fit cover
 @media (max-width 512px)
+  .external
+  .externalImg
+    position relative
+    top auto
+    left auto
+    transform translate(0, 0)
   .videoContainer
     padding-bottom 56%
   .div
@@ -270,10 +276,14 @@ img
     height auto
   img
   .placeholder
+  .externalPlaceholder
     max-width none
     max-height none
     width 100%
     height auto
+  .externalImg
+    max-width none
+    max-height none
   section
     padding-top 0
     padding-bottom 16px
