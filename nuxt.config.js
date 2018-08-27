@@ -1,8 +1,15 @@
+require('dotenv').config()
+
+const {
+  CMS_DOMAIN,
+  APP_DOMAIN
+} = process.env
+
 module.exports = {
   env: {
-    CMS: process.env.CMS || 'cms.detlefschneider.com'
+    CMS_DOMAIN,
+    APP_DOMAIN
   },
-
   head: {
     title: '###',
     titleTemplate: (titleChunk) => {
@@ -23,23 +30,30 @@ module.exports = {
   ],
 
   plugins: [
-    { src: '~/plugins/isotope', ssr: false }
+    { src: '~/plugins/isotope', ssr: false },
+    { src: '~/plugins/in-view', ssr: false }
   ],
 
   watch: [
     '~/nuxt.config.js'
   ],
 
-  modules: [['@nuxtjs/pwa', {
-    workbox: {
-      offline: true
-    },
-    manifest: {
-      name: 'Detlef Schneider',
-      short_name: 'Detlef'
-      // display: 'fullscreen'
-    }
-  }]],
+  modules: [
+    // https://github.com/nuxt-community/dotenv-module
+    ['@nuxtjs/dotenv'],
+
+    // // https://pwa.nuxtjs.org/
+    [
+      '@nuxtjs/pwa', {
+        workbox: {},
+        manifest: {
+          name: 'Detlef Schneider',
+          short_name: 'Detlef'
+          // display: 'fullscreen'
+        }
+      }
+    ]
+  ],
 
   build: {
     parallel: true,

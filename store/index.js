@@ -6,7 +6,7 @@ const createStore = () => {
   return new Vuex.Store({
     state: {
       gotIt: null,
-      category: 'featured',
+      category: 'sticky',
       posts: []
     },
 
@@ -24,23 +24,27 @@ const createStore = () => {
 
     actions: {
       async nuxtServerInit ({ commit }, { req }) {
-        const featured = await r2(`https://${process.env.CMS}/wp-json/wp/v2/posts?per_page=100`).response
+        const { CMS_DOMAIN } = process.env
+        const featured = await r2(`https://${CMS_DOMAIN}/wp-json/wp/v2/posts?per_page=100`).response
         const posts = await featured.json()
 
         const mapPosts = posts.map(post => {
-          const { id, title, slug, content, acf, better_featured_image } = post
+          const { id, title, slug, sticky, content, acf, better_featured_image } = post
 
           return {
             id,
             title: title.rendered,
             slug: slug,
+            ad: acf.ad,
+            ad_link: acf.ad_link,
+            sticky,
             content: content.rendered,
-            featured: acf.featured,
             categories: post.categories,
             featuredImage: better_featured_image.media_details.sizes,
             images: acf.gallery_images
           }
         })
+
         commit('setPosts', mapPosts)
 
         let privacy = null

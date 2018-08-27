@@ -1,6 +1,6 @@
 <template lang="pug">
 header(ref="header")
-  nuxt-link.link(v-if="showNav" to="/" @click.native="category('featured')") DETLEF SCHNEIDER
+  nuxt-link.link(v-if="showNav" to="/" @click.native="category('sticky')") DETLEF SCHNEIDER
   nuxt-link.link(v-else to="/" @click.native="category('toogleNav')") DETLEF SCHNEIDER
 
   nav(:class="{navHidden: showNav}")

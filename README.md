@@ -4,18 +4,24 @@
 
 
 ```bash
-# install
+# Install
 $ npm i
 
-# dev
+# environment variables
+$ cat > .env << EOL
+CMS_DOMAIN=
+APP_DOMAIN=
+EOL
+
+# Dev
 $ npm run dev
 
-# build
+# Build
 $ npm run build
 
-# start
+# Start
 $ npm start
 
-#  process manager 
-$ pm2 start process.json --env production
+# Or start with process manager 
+$ pm2 start process.json
 ```

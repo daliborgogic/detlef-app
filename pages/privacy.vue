@@ -8,8 +8,10 @@ export default {
   name: 'Privacy',
 
   async asyncData () {
-    const res = await r2(`https://${process.env.CMS}/wp-json/wp/v2/pages/3`).response
+    const { CMS_DOMAIN } = process.env
+    const res = await r2(`https://${CMS_DOMAIN}/wp-json/wp/v2/pages/3`).response
     const privacy = await res.json()
+
     return { privacy }
   }
 }
