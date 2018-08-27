@@ -13,16 +13,14 @@ header(ref="header")
     nuxt-link.link(to="/" @click.native="category(4)") Sports
     span.dash
     nuxt-link.link(to="/about" @click.native="toogleNav") About
-    span.dash
-    nuxt-link.link(to="/privacy" @click.native="toogleNav") Privacy
+    //- span.dash
+    //- nuxt-link.link(to="/privacy" @click.native="toogleNav") Privacy
     span.dash
     nuxt-link.link(to="/contact" @click.native="toogleNav") Contact
 </template>
 
 
 <script>
-// const timeout = ms => new Promise(res => setTimeout(res, ms))
-
 export default {
   data () {
     return {
@@ -31,8 +29,8 @@ export default {
   },
 
   async mounted () {
-    // await this.timeout(3000)
-    // this.$refs.header.classList.add('loaded')
+    await this.timeout(3000)
+    this.$refs.header.classList.add('loaded')
   },
 
   methods: {
@@ -40,7 +38,10 @@ export default {
       this.$store.commit('setCategory', value)
       this.toogleNav()
     },
-    toogleNav () { this.showNav = !this.showNav }
+    toogleNav () { this.showNav = !this.showNav },
+    timeout (ms) {
+      new Promise(res => setTimeout(res, ms))
+    }
   }
 }
 </script>

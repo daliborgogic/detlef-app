@@ -3,17 +3,20 @@ div
   TheHeader
   main
     nuxt
+  TheFooter
   TheBreadCrumb
 </template>
 
 <script>
 import TheHeader from '@/components/TheHeader'
 import TheBreadCrumb from '@/components/TheBreadCrumb'
+import TheFooter from '@/components/TheFooter'
 
 export default {
   components: {
     TheHeader,
-    TheBreadCrumb
+    TheBreadCrumb,
+    TheFooter
   },
 
   beforeMount () {
@@ -37,5 +40,6 @@ export default {
 #__nuxt
   font-family -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif
 #__nuxt.font-loaded
+  font-size 1rem
   font-family "Custom Font"
 </style>
