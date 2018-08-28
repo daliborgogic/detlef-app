@@ -2,6 +2,8 @@
 
 > Progressive Web App
 
+[![CircleCI](https://circleci.com/gh/daliborgogic/detlef-app.svg?style=svg)](https://circleci.com/gh/daliborgogic/detlef-app)
+
 ```bash
 # Install
 $ npm i
