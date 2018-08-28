@@ -8,7 +8,6 @@
     "precommit": "npm run lint",
     "test": "ava",
     "test:verbose": "ava --verbose",
-    "prestart": "rm -rf .nuxt && npm run build",
     "start": "NODE_ENV=production node -r dotenv/config node_modules/.bin/micro -l tcp://0.0.0.0:3000",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
