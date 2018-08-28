@@ -92,15 +92,15 @@ export default {
 
 <style lang="stylus" scoped>
 .container
-  max-width 1172px
+  max-width 1260px
   margin 0 auto 10vh auto
   padding-left 16px
   padding-right 16px
 .gutter
-  width 15px
+  width 30px
 .grid-sizer
 .item
-  width calc(100% / 3 - 9.99px) // 370px
+  width calc(100% / 3 - 20px)
 @media (max-width 512px)
   .gutter
     width 0

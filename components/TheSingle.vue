@@ -7,7 +7,7 @@
         ref="img"
         :src="p.img.sizes.large"
         :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
-        :datasrcset="p.img.sizes.w370 + ' 370w, ' + p.img.sizes.w740 + ' 740w, ' + p.img.url + ' 2000w'"
+        :datasrcset="p.img.sizes.w400 + ' 400w, ' + p.img.sizes.w800 + ' 800w, ' + p.img.url + ' 2000w'"
         :alt="p.img.alt_text"
       )
       svg.placeholder(:height="p.img.height" :viewBox="'0 0 ' +  p.img.width + ' ' + p.img.height" :width="p.img.width" xmlns="http://www.w3.org/2000/svg")

@@ -24,7 +24,7 @@ export default {
       this.error = null
       this.message = null
       this.loading = true
-      console.log({email: this.email})
+
       const { APP_DOMAIN } = process.env
       const obj = {
         email: this.email
@@ -36,7 +36,7 @@ export default {
       }
       if (sub.status === 'subscribed') {
         this.message = 'Subscribed'
-        await tmeout(3000)
+        await this.timeout(3000)
         this.message = null
         this.email = null
       }
@@ -45,7 +45,7 @@ export default {
         this.message = `We sent an email to <strong>$this.email</strong>`
       }
       // title: "Forgotten Email Not Subscribed", status: 400,
-      console.log(sub)
+      // console.log(sub)
       this.loading = false
     },
     timeout (ms) { new Promise(res => setTimeout(res, ms)) }

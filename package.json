@@ -52,7 +52,7 @@
         2,
         "never"
       ],
-      "no-console": "off",
+      "no-console": "error",
       "vue/max-attributes-per-line": "off"
     }
   }

@@ -2,12 +2,6 @@
 .c
   .overlay
     h3(v-if="card.title" v-html="card.title")
-  svg.iconPlay(
-    v-if="card.ad"
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24")
-    path(d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z" fill="#ffffff")
-    path(d="M0 0h24v24H0z" fill="none")
   span(v-if="card.images")
     span(v-if="card.images[0].vimeo")
       svg.iconPlay(
@@ -17,14 +11,14 @@
         path(d="M0 0h24v24H0z" fill="none")
   span(v-if="card.featuredImage")
     img(
-      :src="card.featuredImage.w370.source_url"
+      :src="card.featuredImage.w400.source_url"
       :alt="card.featuredImage.alt_text")
     svg.placeholder(
-      :height="card.featuredImage.w370.height"
-      :viewBox="'0 0 ' +  card.featuredImage.w370.width + ' ' + card.featuredImage.w370.height"
-      :width="card.featuredImage.w370.width" xmlns="http://www.w3.org/2000/svg")
+      :height="card.featuredImage.w400.height"
+      :viewBox="'0 0 ' +  card.featuredImage.w400.width + ' ' + card.featuredImage.w400.height"
+      :width="card.featuredImage.w400.width" xmlns="http://www.w3.org/2000/svg")
       path(
-        :d="'M0 0h' + card.featuredImage.w370.width + 'v' + card.featuredImage.w370.height + 'H0z'"
+        :d="'M0 0h' + card.featuredImage.w400.width + 'v' + card.featuredImage.w400.height + 'H0z'"
         fill="#F2F2F2")
 </template>
 
@@ -49,7 +43,7 @@ svg
   vertical-align middle
 .c
   position relative
-  margin-bottom 45px
+  margin-bottom 50px
   // outline 1px dashed tomato
   transition opacity 250ms ease-in
   &:hover .overlay
@@ -94,5 +88,4 @@ h3
   text-align center
   padding-left 20px
   padding-right 20px
-
 </style>
