@@ -47,7 +47,7 @@ jobs:
             - "c3:e7:f3:53:69:3a:11:2e:a1:f6:db:15:d9:16:af:47"
       - run:
           name: Deploy over SSH
-          command: git push -q ssh://detlef@46.101.251.158:/var/repo/beta.git
+          command: ssh://$USER@$HOST "cd /home/detlef/beta && git remote add beta ssh://$USER@$HOST/var/repo/beta.git && git push beta"
 
 
 workflows:
