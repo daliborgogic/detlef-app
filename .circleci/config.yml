@@ -48,7 +48,7 @@ jobs:
       - run:
           name: Deploy over SSH
           commands:
-            - git remote add live ssh://USER@HOST/var/repo/beta.git
+            - git remote add beta ssh://USER@HOST/var/repo/beta.git
             # You're adding your github repo as the second place to push your code to
             - git push beta master
 
