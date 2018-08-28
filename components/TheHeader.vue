@@ -13,8 +13,8 @@ header(ref="header")
     nuxt-link.link(to="/" @click.native="category(4)") Sports
     span.dash
     nuxt-link.link(to="/about" @click.native="toogleNav") About
-    //- span.dash
-    //- nuxt-link.link(to="/privacy" @click.native="toogleNav") Privacy
+    span.dash
+    nuxt-link.link(to="/privacy" @click.native="toogleNav") Privacy
     span.dash
     nuxt-link.link(to="/contact" @click.native="toogleNav") Contact
 </template>

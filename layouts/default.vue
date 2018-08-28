@@ -3,20 +3,16 @@ div
   TheHeader
   main
     nuxt
-  TheFooter
   TheBreadCrumb
 </template>
 
 <script>
 import TheHeader from '@/components/TheHeader'
-import TheBreadCrumb from '@/components/TheBreadCrumb'
-import TheFooter from '@/components/TheFooter'
 
 export default {
   components: {
     TheHeader,
-    TheBreadCrumb,
-    TheFooter
+    TheBreadCrumb: () => import('@/components/TheBreadCrumb')
   },
 
   beforeMount () {

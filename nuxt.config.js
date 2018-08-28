@@ -1,15 +1,4 @@
-require('dotenv').config()
-
-const {
-  CMS_DOMAIN,
-  APP_DOMAIN
-} = process.env
-
 module.exports = {
-  env: {
-    CMS_DOMAIN,
-    APP_DOMAIN
-  },
   head: {
     title: '###',
     titleTemplate: (titleChunk) => {
@@ -40,7 +29,7 @@ module.exports = {
 
   modules: [
     // https://github.com/nuxt-community/dotenv-module
-    ['@nuxtjs/dotenv'],
+    ['@nuxtjs/dotenv',  { only: ['CMS_DOMAIN', 'APP_DOMAIN'] }],
 
     // // https://pwa.nuxtjs.org/
     [

@@ -8,9 +8,7 @@
       div(v-for="(l, index) in list" :key="index")
         .gutter
         .grid-sizer
-        a(v-if="RegExp('^https?://|^//').test(l.ad_link)" :href="l.ad_link")
-          TheCard(:card="l")
-        nuxt-link(v-else :to="'/' + l.slug")
+        nuxt-link(:to="'/' + l.slug")
           TheCard(:card="l")
 </template>
 
@@ -102,7 +100,7 @@ export default {
   width 15px
 .grid-sizer
 .item
-  width calc(100% / 3 - 9.99px)
+  width calc(100% / 3 - 9.99px) // 370px
 @media (max-width 512px)
   .gutter
     width 0

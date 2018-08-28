@@ -35,8 +35,6 @@ const createStore = () => {
             id,
             title: title.rendered,
             slug: slug,
-            ad: acf.ad,
-            ad_link: acf.ad_link,
             sticky,
             content: content.rendered,
             categories: post.categories,

@@ -2,7 +2,6 @@
 
 > Progressive Web App
 
-
 ```bash
 # Install
 $ npm i
@@ -11,6 +10,9 @@ $ npm i
 $ cat > .env << EOL
 CMS_DOMAIN=
 APP_DOMAIN=
+MAILCHIMP_API_KEY=
+MAILCHIMP_LIST_ID=
+MAILCHIMP_INSTANCE=
 EOL
 
 # Dev
