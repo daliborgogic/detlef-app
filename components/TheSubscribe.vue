@@ -1,7 +1,7 @@
 <template lang="pug">
 .subscribe
   input(type="email" placeholder="you@example.com" v-model="email")
-  .message(v-if="message") {{message}}
+  .message(v-if="message" v-html="message")
   .error(v-if="error") {{error}}
   button(@click="subscribe")
     span(v-if="loading") SUBSCRIBING
@@ -39,6 +39,10 @@ export default {
         await tmeout(3000)
         this.message = null
         this.email = null
+      }
+      if (sub.status === 'pending') {
+        this.email = null
+        this.message = `We sent an email to <strong>$this.email</strong>`
       }
       // title: "Forgotten Email Not Subscribed", status: 400,
       console.log(sub)
