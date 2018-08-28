@@ -1,9 +1,9 @@
 <template lang="pug">
 .subscribe
-  input(type="email" placeholder="you@example.com" v-model="email")
+  input(type="email" placeholder="you@example.com" v-model="email" @keyup.up="validateEmail")
   .message(v-if="message" v-html="message")
   .error(v-if="error") {{error}}
-  button(@click="subscribe")
+  button(@click="subscribe" :disabled="!validateEmail")
     span(v-if="loading") SUBSCRIBING
     span(v-else) SUBSCRIBE
 </template>
@@ -19,34 +19,45 @@ export default {
       error: null
     }
   },
+
+  computed: {
+    validateEmail () {
+      // eslint-disable-next-line  no-useless-escape
+      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return re.test(this.email)
+    }
+  },
+
   methods: {
     async subscribe () {
-      this.error = null
-      this.message = null
-      this.loading = true
-
-      const { APP_DOMAIN } = process.env
-      const obj = {
-        email: this.email
-      }
-      const request = await r2.post(`https://${APP_DOMAIN}`, {json: obj}).response
-      const sub = await request.json()
-      if (sub.title === 'Member Exists') {
-        this.error = sub.title
-      }
-      if (sub.status === 'subscribed') {
-        this.message = 'Subscribed'
-        await this.timeout(3000)
+      if(this.validateEmail) {
+        this.error = null
         this.message = null
-        this.email = null
+        this.loading = true
+
+        const { APP_DOMAIN } = process.env
+        const obj = {
+          email: this.email
+        }
+        const request = await r2.post(`https://${APP_DOMAIN}`, {json: obj}).response
+        const sub = await request.json()
+        if (sub.title === 'Member Exists') {
+          this.error = sub.title
+        }
+        if (sub.status === 'subscribed') {
+          this.message = 'Subscribed'
+          await this.timeout(3000)
+          this.message = null
+          this.email = null
+        }
+        if (sub.status === 'pending') {
+          this.email = null
+          this.message = `We sent an email to <strong>$this.email</strong>`
+        }
+        // title: "Forgotten Email Not Subscribed", status: 400,
+        // console.log(sub)
+        this.loading = false
       }
-      if (sub.status === 'pending') {
-        this.email = null
-        this.message = `We sent an email to <strong>$this.email</strong>`
-      }
-      // title: "Forgotten Email Not Subscribed", status: 400,
-      // console.log(sub)
-      this.loading = false
     },
     timeout (ms) { new Promise(res => setTimeout(res, ms)) }
   }
@@ -95,6 +106,8 @@ input
 button
   letter-spacing .15px
   font-weight 700
+  &:disabled
+    color #999
 .dash
   height 2px
   width 20px
