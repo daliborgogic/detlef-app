@@ -3,20 +3,27 @@
   input(type="email" placeholder="you@example.com" v-model="email" @keyup.up="validateEmail")
   .message(v-if="message" v-html="message")
   .error(v-if="error") {{error}}
-  button(@click="subscribe" :disabled="!validateEmail")
+  button(v-if="!resubscribe" @click="subscribe" :disabled="!validateEmail")
     span(v-if="loading") SUBSCRIBING
     span(v-else) SUBSCRIBE
+  button(v-else @click="resubscribe")
+    span(v-if="loading") RESUBSCRIBING
+    span(v-else) RESUBSCIBE?
 </template>
 
 <script>
 import r2 from 'r2'
+const { APP_DOMAIN } = process.env
+
 export default {
   data () {
     return {
       loading: false,
       email: null,
       message: null,
-      error: null
+      error: null,
+      resubscribe: false,
+      instance: null
     }
   },
 
@@ -35,7 +42,6 @@ export default {
         this.message = null
         this.loading = true
 
-        const { APP_DOMAIN } = process.env
         const obj = {
           email: this.email
         }
@@ -43,6 +49,11 @@ export default {
         const sub = await request.json()
         if (sub.title === 'Member Exists') {
           this.error = sub.title
+        }
+        if(sub.title === 'Forgotten Email Not Subscribed') {
+          this.resubscribe = true
+          this.instance = sub.instance
+          this.error = 'Member Exists, need to resubscribe'
         }
         if (sub.status === 'subscribed') {
           this.message = 'Subscribed'
@@ -54,12 +65,32 @@ export default {
           this.email = null
           this.message = `We sent an email to <strong>$this.email</strong>`
         }
-        // title: "Forgotten Email Not Subscribed", status: 400,
-        // console.log(sub)
         this.loading = false
       }
     },
     timeout (ms) { new Promise(res => setTimeout(res, ms)) }
+  },
+  async resubscribe () {
+    this.loading = true
+    const obj = {
+      email: this.email,
+      instance: this.instance
+    }
+    const request = await r2.post(`https://${APP_DOMAIN}`, {json: obj}).response
+    const sub = await request.json()
+
+    if (sub.status === 'subscribed') {
+      this.message = 'Subscribed'
+      await this.timeout(3000)
+      this.message = null
+      this.email = null
+    }
+    if (sub.status === 'pending') {
+      this.email = null
+      this.message = `We sent an email to <strong>$this.email</strong>`
+    }
+
+    this.loading = false
   }
 }
 </script>

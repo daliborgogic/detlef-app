@@ -204,7 +204,7 @@ img
   >>> .content p
     margin 0
     font-size 23px
-    line-height 1.3
+    line-height 1.4
     letter-spacing 0.171px
   a
     font-size 13px
