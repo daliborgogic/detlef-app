@@ -36,4 +36,4 @@ $ pm2 start process.json
 
 ```MAILCHIMP_LIST_ID``` individual list id.
 
-```MAILCHIMP_INSTANCE``` e.g. last part of your MailChimp API key is us6, all API endpoints for your account are available at ```https://us6.api.mailchimp.com/3.0/```.
+```MAILCHIMP_INSTANCE``` if last part of your MailChimp API key is e.g. us6, all API endpoints for your account are available at ```https://us6.api.mailchimp.com/3.0/```.
