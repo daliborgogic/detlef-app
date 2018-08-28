@@ -38,7 +38,7 @@ export default {
   letter-spacing 0.15px
   z-index 10
 .container
-  max-width 1172px
+  max-width 1260px
   margin 0 auto
   padding 16px
   display flex

@@ -1,10 +1,7 @@
 <template lang="pug">
 .container(ref="container")
   no-ssr
-    isotope(
-      ref="isotope"
-      :options="option"
-      :list="list")
+    isotope(ref="isotope" :options="option" :list="list")
       div(v-for="(l, index) in list" :key="index")
         .gutter
         .grid-sizer
@@ -94,6 +91,7 @@ export default {
 .container
   max-width 1260px
   margin 0 auto 10vh auto
+  padding-top 16px
   padding-left 16px
   padding-right 16px
 .gutter
@@ -102,6 +100,8 @@ export default {
 .item
   width calc(100% / 3 - 20px)
 @media (max-width 512px)
+  .container
+    padding-top 0
   .gutter
     width 0
   .grid-sizer

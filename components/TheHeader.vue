@@ -1,7 +1,7 @@
 <template lang="pug">
 header(ref="header")
-  nuxt-link.link(v-if="showNav" to="/" @click.native="category('sticky')") DETLEF SCHNEIDER
-  nuxt-link.link(v-else to="/" @click.native="toogleNav") DETLEF SCHNEIDER
+  nuxt-link.link(v-if="showNav" to="/" @click.native="category('sticky')") {{appName}}
+  nuxt-link.link(v-else to="/" @click.native="toogleNav") {{appName}}
 
   nav(:class="{navHidden: showNav}")
     nuxt-link.link(to="/" @click.native="category(5)") Film
@@ -24,13 +24,18 @@ header(ref="header")
 export default {
   data () {
     return {
-      showNav: false
+      showNav: false,
+      appName: process.env.APP_NAME
     }
   },
 
   async mounted () {
-    await this.timeout(3000)
-    this.$refs.header.classList.add('loaded')
+    const mq = window.matchMedia('(max-width: 512px)')
+
+    if (!mq.matches) {
+      await this.timeout(3000)
+      this.$refs.header.classList.add('loaded')
+    }
   },
 
   methods: {
@@ -72,7 +77,7 @@ header
     text-decoration none
   > a
     color #000
-    font-size 18px
+    font-size 20px
     letter-spacing 0.25px
     span
       color #999

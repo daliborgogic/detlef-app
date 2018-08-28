@@ -74,7 +74,7 @@ export default {
           if (change.isIntersecting) {
 
             // https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
-            if (window.matchMedia(`(min-width: 512px`).matches) {
+            if (window.matchMedia('(min-width: 512px)').matches) {
               // this.observer.unobserve(change.target)
               this.scrollIt(change.target, 500, 'easeInQuad')
               // images.forEach(image => image.setAttribute('srcset', image.getAttribute('datasrcset')))

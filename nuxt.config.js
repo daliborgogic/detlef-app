@@ -1,11 +1,16 @@
+const {
+  APP_NAME,
+  APP_SHORT_NAME
+} = process.env
+
 module.exports = {
   head: {
     title: '###',
-    titleTemplate: (titleChunk) => {
+    titleTemplate: (titleChunk, APP_NAME) => {
       // If undefined or blank then we don't need the hyphen
       return titleChunk
-        ? `${titleChunk} — Detlef Schneider`
-        : 'Detlef Schneider'
+        ? titleChunk + ' — ' + APP_NAME
+        : APP_NAME
     },
     meta: [
       { charset: 'utf-8' },
@@ -28,16 +33,26 @@ module.exports = {
   ],
 
   modules: [
-    // https://github.com/nuxt-community/dotenv-module
-    ['@nuxtjs/dotenv',  { only: ['CMS_DOMAIN', 'APP_DOMAIN'] }],
-
-    // // https://pwa.nuxtjs.org/
     [
+      // https://github.com/nuxt-community/dotenv-module
+      '@nuxtjs/dotenv',
+      {
+        only: [
+          'APP_NAME',
+          'CMS_DOMAIN',
+          'APP_DOMAIN'
+        ]
+      }
+    ],
+
+
+    [
+      // // https://pwa.nuxtjs.org/
       '@nuxtjs/pwa', {
         workbox: {},
         manifest: {
-          name: 'Detlef Schneider',
-          short_name: 'Detlef'
+          name: APP_NAME,
+          short_name: APP_SHORT_NAME
           // display: 'fullscreen'
         }
       }
