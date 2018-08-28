@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
     }
     const obj = {
       email_address: email,
-      status: 'subscribed'
+      status: 'pending' // Double Opt In
     }
     const response = await r2.post(`https://${MAILCHIMP_INSTANCE}.api.mailchimp.com/3.0/lists/${MAILCHIMP_LIST_ID}/members`, {headers, json: obj}).response
     const mailchimp = await response.json()
