@@ -5,6 +5,7 @@ const config = require('./nuxt.config.js')
 const nuxt = new Nuxt(config)
 const r2 = require('r2')
 const { json } = require('micro')
+// const md5 = require('./md5')
 
 const {
   MAILCHIMP_API_KEY,
@@ -18,10 +19,12 @@ if (nuxt.options.dev) {
 }
 
 module.exports = async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Content-Type', 'application/json')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Origin')
+
   if (req.method === 'POST') {
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Content-Type', 'application/json')
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
 
     const data = await json(req)
 
@@ -33,17 +36,14 @@ module.exports = async (req, res) => {
     }
     const obj = {
       email_address: email,
-      status: 'pending' // Double Opt In
+      status: 'pending'  //Double Opt In
     }
-    let instance
-    if (data.instance) {
-      instance = '/'+ data.instance
-    }
+
     const response = await r2.post(`https://${MAILCHIMP_INSTANCE}.api.mailchimp.com/3.0/lists/${MAILCHIMP_LIST_ID}/members`, {headers, json: obj}).response
     const mailchimp = await response.json()
 
-    console.log({data})
-    console.log({mailchimp})
+    // console.log({data})
+    // console.log({mailchimp})
     return mailchimp
   }
   return nuxt.render(req, res)

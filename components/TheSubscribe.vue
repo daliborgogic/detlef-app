@@ -3,15 +3,13 @@
   input(type="email" placeholder="you@example.com" v-model="email" @keyup.up="validateEmail")
   .message(v-if="message" v-html="message")
   .error(v-if="error") {{error}}
-  button(v-if="!resubscribe" @click="subscribe" :disabled="!validateEmail")
+  button(@click="subscribe" :disabled="!validateEmail")
     span(v-if="loading") SUBSCRIBING
     span(v-else) SUBSCRIBE
-  button(v-else @click="resubscribe")
-    span(v-if="loading") RESUBSCRIBING
-    span(v-else) RESUBSCIBE?
 </template>
 
 <script>
+const timeout = ms => new Promise(res => setTimeout(res, ms))
 import r2 from 'r2'
 const { APP_DOMAIN } = process.env
 
@@ -21,9 +19,7 @@ export default {
       loading: false,
       email: null,
       message: null,
-      error: null,
-      resubscribe: false,
-      instance: null
+      error: null
     }
   },
 
@@ -43,54 +39,31 @@ export default {
         this.loading = true
 
         const obj = {
-          email: this.email
+          email: this.email,
+          status: 'pending'
         }
         const request = await r2.post(`https://${APP_DOMAIN}`, {json: obj}).response
         const sub = await request.json()
         if (sub.title === 'Member Exists') {
           this.error = sub.title
+          await timeout(3000)
+          this.error = null
+          this.email = null
         }
         if(sub.title === 'Forgotten Email Not Subscribed') {
           this.resubscribe = true
-          this.instance = sub.instance
           this.error = 'Member Exists, need to resubscribe'
         }
-        if (sub.status === 'subscribed') {
-          this.message = 'Subscribed'
-          await this.timeout(3000)
+        if (sub.status === 'pending') {
+          this.message = `We sent an email to <strong>${this.email}</strong>`
+          await timeout(6000)
           this.message = null
           this.email = null
         }
-        if (sub.status === 'pending') {
-          this.email = null
-          this.message = `We sent an email to <strong>$this.email</strong>`
-        }
         this.loading = false
+        console.log('SUBSCRIBE ', sub) // eslint-disable-line
       }
-    },
-    timeout (ms) { new Promise(res => setTimeout(res, ms)) }
-  },
-  async resubscribe () {
-    this.loading = true
-    const obj = {
-      email: this.email,
-      instance: this.instance
     }
-    const request = await r2.post(`https://${APP_DOMAIN}`, {json: obj}).response
-    const sub = await request.json()
-
-    if (sub.status === 'subscribed') {
-      this.message = 'Subscribed'
-      await this.timeout(3000)
-      this.message = null
-      this.email = null
-    }
-    if (sub.status === 'pending') {
-      this.email = null
-      this.message = `We sent an email to <strong>$this.email</strong>`
-    }
-
-    this.loading = false
   }
 }
 </script>

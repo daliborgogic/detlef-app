@@ -45,7 +45,6 @@ module.exports = {
       }
     ],
 
-
     [
       // // https://pwa.nuxtjs.org/
       '@nuxtjs/pwa', {
