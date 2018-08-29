@@ -45,7 +45,8 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "c3:e7:f3:53:69:3a:11:2e:a1:f6:db:15:d9:16:af:47"
-      - run: s
+      - run: 
+          name: Deploy 
           command: |
             ssh://$USER@$HOST
           
