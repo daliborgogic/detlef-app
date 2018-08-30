@@ -72,8 +72,6 @@ export default {
       this.observer =  new IntersectionObserver(entries =>{
         entries.forEach(change => {
           if (change.isIntersecting) {
-
-            // https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
             if (window.matchMedia('(min-width: 512px)').matches) {
               // this.observer.unobserve(change.target)
               this.scrollIt(change.target, 500, 'easeInQuad')

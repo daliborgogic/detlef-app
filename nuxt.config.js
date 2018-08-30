@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const {
   APP_NAME,
   APP_SHORT_NAME

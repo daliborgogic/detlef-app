@@ -1,12 +1,14 @@
 <template lang="pug">
 .subscribe
   input(type="email" placeholder="you@example.com" v-model="email" @keyup.up="validateEmail")
-  .message(v-if="message" v-html="message")
-  .error(v-if="error") {{error}}
-  button(v-if="!exist" @click="subscribe" :disabled="!validateEmail")
-    span(v-if="loading") SUBSCRIBING
-    span(v-else) SUBSCRIBE
-  nuxt-link(v-else tag="button" to="/preferences") MANAGE YOUR PREFERENCES
+  .message
+    span.error(v-if="error" v-html="error")
+    span(v-if="message" v-html="message")
+  small(v-if="exist") Email exists, update your preferences?#[br]
+
+  div(v-if="!hide")
+    button(v-if="!isSubscribed" @click="subscribe" :disabled="!validateEmail") SUBSCRIB{{sufix}}
+    button.resubscribe(v-else @click="resubscribe" :disabled="!validateEmail") RESUBSCRIB{{sufix}}
 </template>
 
 <script>
@@ -21,7 +23,9 @@ export default {
       email: null,
       message: null,
       error: null,
-      exist: null
+      isSubscribed: false,
+      hide: false,
+      exist: false
     }
   },
 
@@ -30,58 +34,100 @@ export default {
       // eslint-disable-next-line  no-useless-escape
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       const isValid = re.test(this.email)
-      if (isValid) {
-        this.$store.commit('setEmail', this.email)
-      }
       return isValid
+    },
+    sufix () {
+      return this.loading ? 'ING' : 'E'
     }
   },
 
   methods: {
+    reset () {
+      this.exist = false
+      this.error = null
+      this.isSubscribed = false
+      this.message = null
+    },
     async subscribe () {
       if(this.validateEmail) {
-        this.error = null
-        this.message = null
         this.loading = true
-
+        this.reset()
         const obj = {
-          email: this.email,
+          email_address: this.email,
           status: 'pending'
         }
         const request = await r2.post(`https://${APP_DOMAIN}`, {json: obj}).response
-        const sub = await request.json()
-        const { title, status } = sub.mailchimp
+        const { data } = await request.json()
+        const { title, status } = data
 
-        if (title === 'Member Exists') {
-          this.error = title
+        if (title === 'Member Exists' && status === 400) {
+          this.isSubscribed = true
           this.exist = true
-        }
-        if(title === 'Forgotten Email Not Subscribed') {
-          this.resubscribe = true
-          this.error = 'Member Exists, need to resubscribe'
+
         }
         if (status === 'pending') {
           this.message = `We sent an email to <strong>${this.email}</strong>`
+          this.hide = true
           await timeout(6000)
-          this.message = null
+          this.hide = false
+          this.email = null
+          this.reset()
+        }
+        if (title === 'Invalid Resource' && status === 400) {
+          this.error = `<strong>${this.email}</strong> has signed up to a lot of lists very recently; we're not allowing more signups for now.`
+          this.hide = true
+          await timeout(6000)
+          this.hide = false
+          this.reset()
           this.email = null
         }
         this.loading = false
-        console.log('SUBSCRIBE ', sub) // eslint-disable-line
+        // console.log('SUBSCRIBE ', data) // eslint-disable-line
       }
+    },
+    async resubscribe () {
+      this.loading = true
+      this.reset()
+      this.isSubscribed = true
+      this.exist = true
+      const obj = {
+        email_address: this.email,
+        status: 'pending'
+      }
+      const request = await r2.patch(`https://${APP_DOMAIN}`, {json: obj}).response
+      const { data } = await request.json()
+      const { status, title } = data
+      if (status === 'pending') {
+        this.message = `We sent an email to <strong>${this.email}</strong>`
+        this.isSubscribed = true
+        this.exist = false
+        await timeout(6000)
+        this.hide = false
+        this.email = null
+        this.reset()
+      }
+      if (title === 'Invalid Resource' && status === 400) {
+        this.error = `<strong>${this.email}</strong> has signed up to a lot of lists very recently; we're not allowing more signups for now.`
+        this.exist = false
+        this.hide = true
+        await timeout(6000)
+        this.hide = false
+        this.reset()
+        this.email = null
+      }
+      this.loading = false
+      // console.log('RESUBSCRIBE ', data) // eslint-disable-line
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-.error
-  color $pink
 .message
+  min-height 16px
   color $blue
 .error
-.message
-  padding-bottom 8px
+  color $pink
 .subscribe
   padding-top 32px
   padding-bottom 32px
@@ -108,7 +154,6 @@ input
   flex-grow 1
   margin 0 auto
   border-bottom 1px solid #000 + 88%
-  margin-bottom 16px
   &:focus
     border-color #000
   &:focus::-webkit-input-placeholder
@@ -129,4 +174,6 @@ button
   transition all 250ms ease-in
   &:hover
     color #000
+.unsubscribe
+  color #999
 </style>

@@ -7,8 +7,7 @@ const createStore = () => {
     state: {
       gotIt: null,
       category: 'sticky',
-      posts: [],
-      email: null
+      posts: []
     },
 
     mutations: {
@@ -20,9 +19,6 @@ const createStore = () => {
       },
       setPosts (state, value) {
         state.posts = value
-      },
-      setEmail (state, value) {
-        state.email = value
       }
     },
 

@@ -1,4 +1,4 @@
-require('dotenv').config()
+// require('dotenv').config()
 
 const { Nuxt, Builder } = require('nuxt-edge')
 const config = require('./nuxt.config.js')
@@ -8,6 +8,7 @@ const { json } = require('micro')
 const md5 = require('./md5')
 
 const {
+  // APP_DOMAIN,
   MAILCHIMP_API_KEY,
   MAILCHIMP_LIST_ID,
   MAILCHIMP_INSTANCE
@@ -19,9 +20,9 @@ if (nuxt.options.dev) {
 }
 
 module.exports = async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Origin', '*') // APP_DOMAIN
   res.setHeader('Content-Type', 'application/json')
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PATCH')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Origin')
 
   const headers = {
@@ -29,58 +30,28 @@ module.exports = async (req, res) => {
     'Authorization': 'apikey ' + MAILCHIMP_API_KEY
   }
 
-  if (req.method === 'DELETE') {
-    const data = await json(req)
-    const { email } = data
-
-    const obj = {
-      email_address: email,
-      status: 'subscribed'
-    }
-
-    const emailHash = md5(email)
-
-    const response = await r2.delete(`https://${MAILCHIMP_INSTANCE}.api.mailchimp.com/3.0/lists/${MAILCHIMP_LIST_ID}/members/${emailHash}`, {headers, json: obj}).response
-    const { ok, statusText, status } = response
-
-    return { ok, statusText, status }
-  }
-
   if (req.method === 'PATCH') {
-    const data = await json(req)
-    const { email } = data
-
-    const obj = {
-      email_address: email,
-      status: 'subscribed'
-    }
-
-    const emailHash = md5(email)
-
+    const body = await json(req)
+    const { email_address, status } = body
+    const obj = { email_address, status }
+    const emailHash = md5(email_address)
     const response = await r2.patch(`https://${MAILCHIMP_INSTANCE}.api.mailchimp.com/3.0/lists/${MAILCHIMP_LIST_ID}/members/${emailHash}`, {headers, json: obj}).response
-    const update = await response.json()
-    const { ok, statusText, status } = update
+    const data = await response.json()
 
-    return { update, ok, statusText, status }
+    return { data }
   }
 
   if (req.method === 'POST') {
-
-    const data = await json(req)
-
-    const { email } = data
-
+    const body = await json(req)
+    const { email_address } = body
     const obj = {
-      email_address: email,
+      email_address,
       status: 'pending'  //Double Opt In
     }
-
     const response = await r2.post(`https://${MAILCHIMP_INSTANCE}.api.mailchimp.com/3.0/lists/${MAILCHIMP_LIST_ID}/members`, {headers, json: obj}).response
-    const mailchimp = await response.json()
-    const { ok, statusText, status } = mailchimp
-    // console.log({data})
-    // console.log({mailchimp})
-    return { mailchimp, ok, statusText, status }
+    const data = await response.json()
+
+    return { data }
   }
   return nuxt.render(req, res)
 }
