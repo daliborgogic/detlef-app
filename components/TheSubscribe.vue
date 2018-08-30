@@ -3,9 +3,10 @@
   input(type="email" placeholder="you@example.com" v-model="email" @keyup.up="validateEmail")
   .message(v-if="message" v-html="message")
   .error(v-if="error") {{error}}
-  button(@click="subscribe" :disabled="!validateEmail")
+  button(v-if="!exist" @click="subscribe" :disabled="!validateEmail")
     span(v-if="loading") SUBSCRIBING
     span(v-else) SUBSCRIBE
+  nuxt-link(v-else tag="button" to="/preferences") MANAGE YOUR PREFERENCES
 </template>
 
 <script>
@@ -19,7 +20,8 @@ export default {
       loading: false,
       email: null,
       message: null,
-      error: null
+      error: null,
+      exist: null
     }
   },
 
@@ -27,7 +29,11 @@ export default {
     validateEmail () {
       // eslint-disable-next-line  no-useless-escape
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      return re.test(this.email)
+      const isValid = re.test(this.email)
+      if (isValid) {
+        this.$store.commit('setEmail', this.email)
+      }
+      return isValid
     }
   },
 
@@ -44,17 +50,17 @@ export default {
         }
         const request = await r2.post(`https://${APP_DOMAIN}`, {json: obj}).response
         const sub = await request.json()
-        if (sub.title === 'Member Exists') {
-          this.error = sub.title
-          await timeout(3000)
-          this.error = null
-          this.email = null
+        const { title, status } = sub.mailchimp
+
+        if (title === 'Member Exists') {
+          this.error = title
+          this.exist = true
         }
-        if(sub.title === 'Forgotten Email Not Subscribed') {
+        if(title === 'Forgotten Email Not Subscribed') {
           this.resubscribe = true
           this.error = 'Member Exists, need to resubscribe'
         }
-        if (sub.status === 'pending') {
+        if (status === 'pending') {
           this.message = `We sent an email to <strong>${this.email}</strong>`
           await timeout(6000)
           this.message = null
