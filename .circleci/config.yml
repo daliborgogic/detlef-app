@@ -1,17 +1,48 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/repo
+    working_directory: /app
     parallelism: 4
-    machine: true
+    docker:
+      - image: docker:17.05.0-ce-git
     steps:
     - checkout
+    - setup_remote_docker
     - run:
-        name: Build
+        name: Install dependencies
         command: |
-          TAG=0.1.$CIRCLE_BUILD_NUM
-          docker build --build-arg CMS_DOMAIN=$CMS_DOMAIN --build-arg APP_DOMAIN=$APP_DOMAIN --build-arg APP_NAME=$APP_NAME -t $CONTAINER_NAME:$TAG .
+          apk add --no-cache \
+            py-pip=9.0.0-r1
+    - restore_cache:
+        keys:
+          - v1-{{ .Branch }}
+        paths:
+          - /caches/app.tar
     - run:
-        name: Start Container
+        name: Load Docker image layer cache
         command: |
-          docker run -d --name $CONTAINER_NAME $CONTAINER_NAME:$TAG
+          set +o pipefail
+          docker load -i /caches/app.tar | true
+    - run:
+        name: Build Docker
+        command: |
+          docker build \
+          --build-arg CMS_DOMAIN=$CMS_DOMAIN \
+          --build-arg APP_DOMAIN=$APP_DOMAIN \
+          --build-arg APP_NAME=$APP_NAME \
+          -t app .
+    - run:
+        name: Run Docker Container
+        command: |
+          docker run \
+          -e MAILCHIMP_API_KEY=$MAILCHIMP_API_KEY \
+          -e MAILCHIMP_LIST_ID=$MAILCHIMP_LIST_ID \
+          -e MAILCHIMP_INSTANCE=$MAILCHIMP_INSTANCE \
+          -d --name pwa app
+    - run:
+        name: Tag and Push Docker Container
+        command: |
+          if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            docker tag app "app:${CIRCLE_SHA1}"
+            echo "to do deploy"
+          fi
