@@ -8,22 +8,31 @@ import TheSingle from '@/components/TheSingle'
 export default {
   components: { TheSingle },
 
-  async asyncData({ params }) {
+  async asyncData({ params, error }) {
     const { CMS_DOMAIN } = process.env
-    const res = await r2(`https://${CMS_DOMAIN}/wp-json/wp/v2/posts?slug=${params.slug}`).response
-    const posts = await res.json()
+    try {
+      const res = await r2(`https://${CMS_DOMAIN}/wp-json/wp/v2/posts?slug=${params.slug}`).response
+      const posts = await res.json()
 
-    const mapPosts = posts.map(post => {
-      const { id, title, content, acf  } = post
+      if (!Array.isArray(posts) || !posts.length) {
+        // array does not exist, is not an array, or is empty
+        error({ statusCode: 404, message: 'Post not found' })
+      } else {
+        const post = posts.map(post => {
+        const { id, title, content, acf  } = post
 
-      return {
-        id,
-        title: title.rendered,
-        content: content.rendered,
-        images: acf.gallery_images
+          return {
+            id,
+            title: title.rendered,
+            content: content.rendered,
+            images: acf.gallery_images
+          }
+        })
+        return { post }
       }
-    })
-    return { post: mapPosts }
+    } catch (error) {
+      error({ statusCode: 404, message: 'Post not found' })
+    }
   }
 }
 </script>

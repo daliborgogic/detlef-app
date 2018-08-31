@@ -7,14 +7,20 @@ export default {
         return []
       }
     }
+  },
+  computed: {
+    isError () {
+      return this.error.statusCode === 404
+        ? 'Not found'
+        : 'An error occurred'
+    }
   }
 }
 </script>
 
 <template lang="pug">
 .container
-  h1(v-if="error.statusCode === 404") Page not found
-  h1(v-else) An error occurred
+  h1 {{isError}}
   nuxt-link(tag="button" to="/") Home page
   </div>
 </template>
