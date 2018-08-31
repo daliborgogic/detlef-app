@@ -38,7 +38,7 @@ jobs:
           -e MAILCHIMP_API_KEY=$MAILCHIMP_API_KEY \
           -e MAILCHIMP_LIST_ID=$MAILCHIMP_LIST_ID \
           -e MAILCHIMP_INSTANCE=$MAILCHIMP_INSTANCE \
-          -d --name pwa app
+          -d --name app${CIRCLE_SHA1} app
     - run:
         name: Tag and Push Docker Container
         command: |
