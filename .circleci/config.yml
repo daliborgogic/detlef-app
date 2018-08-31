@@ -10,11 +10,7 @@ jobs:
         name: Build
         command: |
           TAG=0.1.$CIRCLE_BUILD_NUM
-          docker build \
-          --build-arg CMS_DOMAIN=$CMS_DOMAIN \
-          --build-arg APP_DOMAIN=$APP_DOMAIN \
-          --build-arg APP_NAME=$APP_NAME \
-          -t $CONTAINER_NAME:$TAG .
+          docker build --build-arg CMS_DOMAIN=$CMS_DOMAIN --build-arg APP_DOMAIN=$APP_DOMAIN --build-arg APP_NAME=$APP_NAME -t $CONTAINER_NAME:$TAG .
     - run:
         name: Start Container
         command: |
