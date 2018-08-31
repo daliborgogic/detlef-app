@@ -28,7 +28,7 @@ $ npm run build
 # Start
 $ npm start
 
-# Or start with process manager 
+# Or start with process manager
 $ pm2 start process.json
 ```
 

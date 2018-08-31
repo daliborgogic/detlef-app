@@ -30,8 +30,7 @@ import r2 from 'r2'
 
 export default {
   async asyncData () {
-    const { CMS_DOMAIN } = process.env
-    const res = await r2(`https://${CMS_DOMAIN}/wp-json/wp/v2/pages/17`).response
+    const res = await r2(`https://${process.env.CMS_DOMAIN}/wp-json/wp/v2/pages/17`).response
     const contact = await res.json()
 
     return { contact }

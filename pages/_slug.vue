@@ -9,9 +9,8 @@ export default {
   components: { TheSingle },
 
   async asyncData({ params, error }) {
-    const { CMS_DOMAIN } = process.env
     try {
-      const res = await r2(`https://${CMS_DOMAIN}/wp-json/wp/v2/posts?slug=${params.slug}`).response
+      const res = await r2(`https://${process.env.CMS_DOMAIN}/wp-json/wp/v2/posts?slug=${params.slug}`).response
       const posts = await res.json()
 
       if (!Array.isArray(posts) || !posts.length) {

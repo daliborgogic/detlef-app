@@ -1,19 +1,12 @@
-require('dotenv').config()
-
-const {
-  APP_NAME,
-  APP_SHORT_NAME
-} = process.env
-
 module.exports = {
+  env: {
+    CMS_DOMAIN: process.env.CMS_DOMAIN,
+    APP_DOMAIN: process.env.APP_DOMAIN,
+    APP_NAME: process.env.APP_NAME,
+    APP_SHORT_NAME: process.env.APP_SHORT_NAME
+  },
   head: {
     title: '###',
-    titleTemplate: (titleChunk, APP_NAME) => {
-      // If undefined or blank then we don't need the hyphen
-      return titleChunk
-        ? titleChunk + ' — ' + APP_NAME
-        : APP_NAME
-    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -36,24 +29,12 @@ module.exports = {
 
   modules: [
     [
-      // https://github.com/nuxt-community/dotenv-module
-      '@nuxtjs/dotenv',
-      {
-        only: [
-          'APP_NAME',
-          'CMS_DOMAIN',
-          'APP_DOMAIN'
-        ]
-      }
-    ],
-
-    [
       // // https://pwa.nuxtjs.org/
       '@nuxtjs/pwa', {
         workbox: {},
         manifest: {
-          name: APP_NAME,
-          short_name: APP_SHORT_NAME
+          // name: APP_NAME,
+          // short_name: APP_SHORT_NAME
           // display: 'fullscreen'
         }
       }

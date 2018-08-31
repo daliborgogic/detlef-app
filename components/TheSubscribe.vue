@@ -14,7 +14,6 @@
 <script>
 const timeout = ms => new Promise(res => setTimeout(res, ms))
 import r2 from 'r2'
-const { APP_DOMAIN } = process.env
 
 export default {
   data () {
@@ -56,7 +55,7 @@ export default {
           email_address: this.email,
           status: 'pending'
         }
-        const request = await r2.post(`https://${APP_DOMAIN}`, {json: obj}).response
+        const request = await r2.post(`https://${process.env.APP_DOMAIN}`, {json: obj}).response
         const { data } = await request.json()
         const { title, status } = data
 
@@ -94,7 +93,7 @@ export default {
         email_address: this.email,
         status: 'pending'
       }
-      const request = await r2.patch(`https://${APP_DOMAIN}`, {json: obj}).response
+      const request = await r2.patch(`https://${process.env.APP_DOMAIN}`, {json: obj}).response
       const { data } = await request.json()
       const { status, title } = data
       if (status === 'pending') {

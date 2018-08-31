@@ -5,8 +5,6 @@ import request from 'request-promise'
 import { Nuxt, Builder } from 'nuxt-edge'
 import config  from './../nuxt.config.js'
 
-const { APP_NAME } = process.env
-
 const nuxt = new Nuxt(config)
 
 const getUrl = fn => {
@@ -23,5 +21,5 @@ test('Route / exits and render HTML', async t => {
   const url = await getUrl(fn)
   const res = await request(url)
 
-  t.true(res.includes(APP_NAME))
+  t.true(res.includes(process.env.APP_NAME))
 })

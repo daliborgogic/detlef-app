@@ -1,7 +1,7 @@
 <template lang="pug">
 .breadcrumb(v-if="!isGotIt")
   .container
-    span.msg(v-if="$route.name !== 'privacy'") Detlef Schneider has a new #[nuxt-link(to="/privacy") Privacy Policy], effective May 25, 2018.
+    span.msg(v-if="$route.name !== 'privacy'") {{appName}} has a new #[nuxt-link(to="/privacy") Privacy Policy], effective May 25, 2018.
     span(v-else)
     span.button(@click="gotIt") GOT IT
 </template>
@@ -14,6 +14,9 @@ export default {
   computed: {
     isGotIt () {
       return this.$store.state.gotIt
+    },
+    appName () {
+      return process.env.APP_NAME
     }
   },
   methods: {
