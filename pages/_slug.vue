@@ -6,7 +6,9 @@ TheSingle(:post="post")
 import r2 from 'r2'
 import TheSingle from '@/components/TheSingle'
 export default {
-  components: { TheSingle },
+  components: {
+    TheSingle
+  },
 
   async asyncData({ params, error }) {
     try {

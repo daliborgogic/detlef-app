@@ -1,5 +1,9 @@
 <script>
+import TheLoading from '@/components/TheLoading'
+
 export default {
+  components: { TheLoading },
+
   props: {
     card: {
       type: Object,
@@ -40,10 +44,12 @@ export default {
         img(
           :src="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
           :alt="card.featuredImage.alt_text")
+        TheLoading
         svg.placeholder(width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
           path(d="M0 0h400v225H0z" fill="#F2F2F2")
       span(v-else)
         img(:src="card.featuredImage.media_details.sizes.w400.source_url"  :alt="card.featuredImage.alt_text")
+        TheLoading
         svg.placeholder(
           :height="card.featuredImage.media_details.sizes.w400.height"
           :viewBox="'0 0 ' +  card.featuredImage.media_details.sizes.w400.width + ' ' + card.featuredImage.media_details.sizes.w400.height"
@@ -64,20 +70,12 @@ export default {
   &:hover .iconPlay
     opacity 0
 img
+  z-index 3
+img
 svg
   width 100%
   height auto
   vertical-align middle
-img
-  object-fit cover
-
-.iconPlay
-  width 32px
-  height 32px
-  position absolute
-  top calc(50% - 16px)
-  left calc(50% - 16px)
-  z-index 1
 img
 .overlay
   position absolute

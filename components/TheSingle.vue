@@ -10,6 +10,7 @@
         :datasrcset="p.img.sizes.w400 + ' 400w, ' + p.img.sizes.w800 + ' 800w, ' + p.img.url + ' 2000w'"
         :alt="p.img.alt_text"
       )
+      TheLoading
       svg.placeholder(:height="p.img.height" :viewBox="'0 0 ' +  p.img.width + ' ' + p.img.height" :width="p.img.width" xmlns="http://www.w3.org/2000/svg")
           path(:d="'M0 0h' + p.img.width + 'v' + p.img.height + 'H0z'" fill="#f2f2f2")
     .s(v-else)
@@ -28,6 +29,7 @@
 <script>
 export default {
   components: {
+    TheLoading: () => import('@/components/TheLoading'),
     TheSubscribe: () => import('@/components/TheSubscribe')
   },
   props: {
@@ -187,6 +189,7 @@ img
   top 0
   left 50%
   transform translateX(-50%)
+  z-index 3
 .back
   height calc(100vh - 128px)
   display flex
