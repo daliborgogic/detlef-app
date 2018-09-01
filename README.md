@@ -20,20 +20,20 @@ MAILCHIMP_INSTANCE=
 EOL
 
 # Dev
-$ env $(cat .env | grep -v "#" | xargs) \
+$ grep -v '^#' .env | xargs -d '\n' && \
 node_modules/.bin/micro -l tcp://0.0.0.0:3000
 
 # Test
-$ env $(cat .env | grep -v "#" | xargs) \
+$ grep -v '^#' .env | xargs -d '\n' && \
 node_modules/.bin/ava --verbose
 
 # Build
-$ env $(cat .env | grep -v "#" | xargs) \
+$ grep -v '^#' .env | xargs -d '\n' && \
 node_modules/.bin/nuxt build
 
 # Start
-$ NODE_ENV=production \
-env $(cat .env | grep -v "#" | xargs) \
+$ NODE_ENV=production && \
+grep -v '^#' .env | xargs -d '\n' && \
 node_modules/.bin/micro -l tcp://0.0.0.0:3000
 
 # Or start with process manager
