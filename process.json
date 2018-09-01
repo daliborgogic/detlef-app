@@ -1,6 +1,6 @@
 {
   "apps" : [{
-    "name": "detlef",
+    "name": "pwa",
     "script": "npm",
     "args" : "start",
     "watch": true

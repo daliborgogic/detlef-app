@@ -2,7 +2,7 @@ import test from 'ava'
 import micro from 'micro'
 import listen from 'test-listen'
 import request from 'request-promise'
-import { Nuxt, Builder } from 'nuxt-edge'
+import { Nuxt } from 'nuxt-edge'
 import config  from './../nuxt.config.js'
 
 const nuxt = new Nuxt(config)

@@ -1,48 +1,27 @@
 version: 2
 jobs:
   build:
-    working_directory: /app
-    parallelism: 4
+    working_directory: ~/repo
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: circleci/node:10
+    parallelism: 4
+
     steps:
-    - checkout
-    - setup_remote_docker
-    - run:
-        name: Install dependencies
-        command: |
-          apk add --no-cache \
-            py-pip=9.0.0-r1
-    - restore_cache:
-        keys:
-          - v1-{{ .Branch }}
-        paths:
-          - /caches/app.tar
-    - run:
-        name: Load Docker image layer cache
-        command: |
-          set +o pipefail
-          docker load -i /caches/app.tar | true
-    - run:
-        name: Build Docker
-        command: |
-          docker build \
-          --build-arg CMS_DOMAIN=$CMS_DOMAIN \
-          --build-arg APP_DOMAIN=$APP_DOMAIN \
-          --build-arg APP_NAME=$APP_NAME \
-          -t app .
-    - run:
-        name: Run Docker Container
-        command: |
-          docker run \
-          -e MAILCHIMP_API_KEY=$MAILCHIMP_API_KEY \
-          -e MAILCHIMP_LIST_ID=$MAILCHIMP_LIST_ID \
-          -e MAILCHIMP_INSTANCE=$MAILCHIMP_INSTANCE \
-          -d --name app${CIRCLE_SHA1} app
-    - run:
-        name: Tag and Push Docker Container
-        command: |
-          if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            docker tag app "app:${CIRCLE_SHA1}"
-            echo "to do deploy"
-          fi
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: npm i
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run: npm run build
+
+      # run tests!
+      - run: npm test

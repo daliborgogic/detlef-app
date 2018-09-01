@@ -6,7 +6,7 @@
     "dev": "node_modules/.bin/micro -l tcp://0.0.0.0:3000",
     "build": "nuxt build",
     "precommit": "npm run lint",
-    "test": "ava",
+    "test": "ava --serial --verbose",
     "test:verbose": "ava",
     "start": "NODE_ENV=production node_modules/.bin/micro -l tcp://0.0.0.0:3000",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."

@@ -2,8 +2,7 @@ module.exports = {
   env: {
     CMS_DOMAIN: process.env.CMS_DOMAIN,
     APP_DOMAIN: process.env.APP_DOMAIN,
-    APP_NAME: process.env.APP_NAME,
-    APP_SHORT_NAME: process.env.APP_SHORT_NAME
+    APP_NAME: process.env.APP_NAME
   },
   head: {
     title: '###',

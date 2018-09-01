@@ -20,13 +20,21 @@ MAILCHIMP_INSTANCE=
 EOL
 
 # Dev
-$ npm run dev
+$ env $(cat .env | grep -v "#" | xargs) \
+node_modules/.bin/micro -l tcp://0.0.0.0:3000
+
+# Test
+$ env $(cat .env | grep -v "#" | xargs) \
+node_modules/.bin/ava --verbose
 
 # Build
-$ npm run build
+$ env $(cat .env | grep -v "#" | xargs) \
+node_modules/.bin/nuxt build
 
 # Start
-$ npm start
+$ NODE_ENV=production \
+env $(cat .env | grep -v "#" | xargs) \
+node_modules/.bin/micro -l tcp://0.0.0.0:3000
 
 # Or start with process manager
 $ pm2 start process.json
