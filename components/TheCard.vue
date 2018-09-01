@@ -29,28 +29,28 @@ export default {
   .overlay
     h3(v-if="card.title" v-html="card.title")
   span(v-if="card.images")
-    span(v-if="card.images[0].vimeo")
-      svg.iconPlay(
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24")
-        path(d="M8 5v14l11-7z" fill="#ffffff")
-        path(d="M0 0h24v24H0z" fill="none")
-  span(v-if="card.featuredImage")
-    span(v-if="card.categories.includes(5)")
-      img(
-        :src="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
-        :alt="card.featuredImage.alt_text")
-      svg.placeholder(width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
-        path(d="M0 0h400v225H0z" fill="#F2F2F2")
-    span(v-else)
-      img(:src="card.featuredImage.media_details.sizes.w400.source_url"  :alt="card.featuredImage.alt_text")
-      svg.placeholder(
-        :height="card.featuredImage.media_details.sizes.w400.height"
-        :viewBox="'0 0 ' +  card.featuredImage.media_details.sizes.w400.width + ' ' + card.featuredImage.media_details.sizes.w400.height"
-        :width="card.featuredImage.media_details.sizes.w400.width" xmlns="http://www.w3.org/2000/svg")
-        path(
-          :d="'M0 0h' + card.featuredImage.media_details.sizes.w400.width + 'v' + card.featuredImage.media_details.sizes.w400.height + 'H0z'"
-          fill="#F2F2F2")
+    //- span(v-if="card.images[0].vimeo")
+    //-   svg.iconPlay(
+    //-     xmlns="http://www.w3.org/2000/svg"
+    //-     viewBox="0 0 24 24")
+    //-     path(d="M8 5v14l11-7z" fill="#ffffff")
+    //-     path(d="M0 0h24v24H0z" fill="none")
+    span(v-if="card.featuredImage")
+      span(v-if="card.categories.includes(5)")
+        img(
+          :src="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
+          :alt="card.featuredImage.alt_text")
+        svg.placeholder(width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
+          path(d="M0 0h400v225H0z" fill="#F2F2F2")
+      span(v-else)
+        img(:src="card.featuredImage.media_details.sizes.w400.source_url"  :alt="card.featuredImage.alt_text")
+        svg.placeholder(
+          :height="card.featuredImage.media_details.sizes.w400.height"
+          :viewBox="'0 0 ' +  card.featuredImage.media_details.sizes.w400.width + ' ' + card.featuredImage.media_details.sizes.w400.height"
+          :width="card.featuredImage.media_details.sizes.w400.width" xmlns="http://www.w3.org/2000/svg")
+          path(
+            :d="'M0 0h' + card.featuredImage.media_details.sizes.w400.width + 'v' + card.featuredImage.media_details.sizes.w400.height + 'H0z'"
+            fill="#F2F2F2")
 </template>
 
 <style lang="stylus" scoped>
