@@ -3,6 +3,7 @@
     "name": "pwa",
     "script": "npm",
     "args" : "start",
-    "watch": true
+    "watch": true,
+    "ignore_watch": [".nuxt"]
   }]
 }

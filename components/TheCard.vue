@@ -1,3 +1,29 @@
+<script>
+export default {
+  props: {
+    card: {
+      type: Object,
+      default () {
+        return []
+      }
+    }
+  },
+
+  data () {
+    return {
+      tld: process.env.CMS_DOMAIN
+    }
+  },
+
+  computed: {
+    isGif () {
+      const { w400 } = this.card.featuredImage.media_details.sizes
+      return w400['mime-type'] === 'image/gif'
+    }
+  }
+}
+</script>
+
 <template lang="pug">
 .c
   .overlay
@@ -10,37 +36,24 @@
         path(d="M8 5v14l11-7z" fill="#ffffff")
         path(d="M0 0h24v24H0z" fill="none")
   span(v-if="card.featuredImage")
-    img(
-      :src="card.featuredImage.w400.source_url"
-      :alt="card.featuredImage.alt_text")
-    svg.placeholder(
-      :height="card.featuredImage.w400.height"
-      :viewBox="'0 0 ' +  card.featuredImage.w400.width + ' ' + card.featuredImage.w400.height"
-      :width="card.featuredImage.w400.width" xmlns="http://www.w3.org/2000/svg")
-      path(
-        :d="'M0 0h' + card.featuredImage.w400.width + 'v' + card.featuredImage.w400.height + 'H0z'"
-        fill="#F2F2F2")
+    span(v-if="card.categories.includes(5)")
+      img(
+        :src="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
+        :alt="card.featuredImage.alt_text")
+      svg.placeholder(width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
+        path(d="M0 0h400v225H0z" fill="#F2F2F2")
+    span(v-else)
+      img(:src="card.featuredImage.media_details.sizes.w400.source_url"  :alt="card.featuredImage.alt_text")
+      svg.placeholder(
+        :height="card.featuredImage.media_details.sizes.w400.height"
+        :viewBox="'0 0 ' +  card.featuredImage.media_details.sizes.w400.width + ' ' + card.featuredImage.media_details.sizes.w400.height"
+        :width="card.featuredImage.media_details.sizes.w400.width" xmlns="http://www.w3.org/2000/svg")
+        path(
+          :d="'M0 0h' + card.featuredImage.media_details.sizes.w400.width + 'v' + card.featuredImage.media_details.sizes.w400.height + 'H0z'"
+          fill="#F2F2F2")
 </template>
 
-<script>
-export default {
-  props: {
-    card: {
-      type: Object,
-      default () {
-        return []
-      }
-    }
-  }
-}
-</script>
-
 <style lang="stylus" scoped>
-img
-svg
-  width 100%
-  height auto
-  vertical-align middle
 .c
   position relative
   margin-bottom 50px
@@ -50,6 +63,14 @@ svg
     opacity 1
   &:hover .iconPlay
     opacity 0
+img
+svg
+  width 100%
+  height auto
+  vertical-align middle
+img
+  object-fit cover
+
 .iconPlay
   width 32px
   height 32px

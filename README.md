@@ -20,21 +20,16 @@ MAILCHIMP_INSTANCE=
 EOL
 
 # Dev
-$ env $(grep -v '^#' .env | xargs -d '\n' -t) \
-node_modules/.bin/micro -l tcp://0.0.0.0:3000
+$ npm run dev
 
 # Test
-$ env $(grep -v '^#' .env | xargs -d '\n' -t) \
-node_modules/.bin/ava -t -v
+$ npm test
 
 # Build
-$ env $(grep -v '^#' .env | xargs -d '\n' -t) \
-node_modules/.bin/nuxt build
+$ npm run build
 
 # Start
-$ env $(grep -v '^#' .env | xargs -d '\n') \
-NODE_ENV=production \
-node_modules/.bin/micro -l tcp://0.0.0.0:3000
+$ npm start
 
 # Or start with process manager
 $ pm2 start process.json
@@ -51,6 +46,6 @@ $ pm2 start process.json
 
 ```MAILCHIMP_API_KEY``` navigate to the API Keys section of your MailChimp account: [Your API Keys](https://us1.admin.mailchimp.com/account/api/).
 
-```MAILCHIMP_LIST_ID```Individual [mailChimp](https://us1.admin.mailchimp.com/account/api/) list id.
+```MAILCHIMP_LIST_ID```Individual [MailChimp](https://us1.admin.mailchimp.com/account/api/) list id. Lists > List > Settings > List name & defaults > List ID.
 
 ```MAILCHIMP_INSTANCE``` If last part of your MailChimp API key is e.g. us6, all API endpoints for your account are available at ```https://us6.api.mailchimp.com/3.0/```.

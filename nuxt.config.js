@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const { CMS_DOMAIN, APP_DOMAIN, FIRST_NAME, LAST_NAME } = process.env
 
 module.exports = {

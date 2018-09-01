@@ -1,3 +1,6 @@
+import dotenv from 'dotenv'
+dotenv.config()
+
 import test from 'ava'
 import micro from 'micro'
 import listen from 'test-listen'

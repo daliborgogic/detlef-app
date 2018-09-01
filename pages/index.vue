@@ -2,7 +2,7 @@
 .container(ref="container")
   no-ssr
     isotope(ref="isotope" :options="option" :list="list")
-      div(v-for="(l, index) in list" :key="index")
+      div(v-for="(l, index) in list" :key="index" :class="{isVideo: l.categories.includes(5)}")
         .gutter
         .grid-sizer
         nuxt-link(:to="'/' + l.slug")
@@ -31,6 +31,9 @@ export default {
   },
 
   computed: {
+    isVideo () {
+      return this.$store.state.category
+    },
     option () {
       return {
         filter: this.slug(this.$store.state.category),
@@ -97,7 +100,7 @@ export default {
 
 <style lang="stylus" scoped>
 .container
-  max-width 1260px
+  max-width 1292px // 16px + 1260px + 16px
   margin 0 auto 10vh auto
   padding-top 16px
   padding-left 16px
@@ -106,7 +109,21 @@ export default {
   width 30px
 .grid-sizer
 .item
-  width calc(100% / 3 - 20px)
+  width calc(100% / 3 - 20px + 0.01px)
+.isVideo
+  // outline 1px dashed tomato
+  margin-bottom 50px
+  >>> img
+    width 100%
+    height 100%
+  >>> .placeholder
+    width 100%
+    height auto
+  >>> img
+    object-fit cover
+  >>>.c
+    height 100%
+    margin-bottom 0
 @media (max-width 512px)
   .container
     padding-top 0
@@ -116,6 +133,8 @@ export default {
   .item
     width 100%
   .c
+    margin-bottom 32px
+  .isVideo
     margin-bottom 32px
 @media (min-width 512px) and (max-width 1024px) and (orientation portrait)
   .gutter

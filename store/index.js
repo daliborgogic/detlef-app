@@ -38,7 +38,7 @@ const createStore = () => {
             hide: acf.hide,
             content: content.rendered,
             categories: post.categories,
-            featuredImage: better_featured_image.media_details.sizes,
+            featuredImage: better_featured_image,
             images: acf.gallery_images
           }
         })
