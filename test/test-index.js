@@ -21,5 +21,5 @@ test('Route / exits and render HTML', async t => {
   const url = await getUrl(fn)
   const res = await request(url)
 
-  t.true(res.includes(process.env.APP_NAME))
+  t.true(res.includes(process.env.FIRST_NAME))
 })

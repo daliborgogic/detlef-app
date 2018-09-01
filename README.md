@@ -12,28 +12,28 @@ $ npm i
 $ cat > .env << EOL
 CMS_DOMAIN=
 APP_DOMAIN=
-APP_NAME=
-APP_SHORT_NAME=
+FIRST_NAME=
+LAST_NAME=
 MAILCHIMP_API_KEY=
 MAILCHIMP_LIST_ID=
 MAILCHIMP_INSTANCE=
 EOL
 
 # Dev
-$ grep -v '^#' .env | xargs -d '\n' && \
+$ env $(grep -v '^#' .env | xargs -d '\n' -t) \
 node_modules/.bin/micro -l tcp://0.0.0.0:3000
 
 # Test
-$ grep -v '^#' .env | xargs -d '\n' && \
-node_modules/.bin/ava --verbose
+$ env $(grep -v '^#' .env | xargs -d '\n' -t) \
+node_modules/.bin/ava -t -v
 
 # Build
-$ grep -v '^#' .env | xargs -d '\n' && \
+$ env $(grep -v '^#' .env | xargs -d '\n' -t) \
 node_modules/.bin/nuxt build
 
 # Start
-$ NODE_ENV=production && \
-grep -v '^#' .env | xargs -d '\n' && \
+$ env $(grep -v '^#' .env | xargs -d '\n') \
+NODE_ENV=production \
 node_modules/.bin/micro -l tcp://0.0.0.0:3000
 
 # Or start with process manager
