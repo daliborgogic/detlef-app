@@ -44,10 +44,18 @@ export default {
         },
         getFilterData: {
           sticky: el => { return !!el.sticky },
-          film: el => { return !!el.categories.includes(5) },
-          fashion: el => { return !!el.categories.includes(3) },
-          advertising: el => { return !!el.categories.includes(2) },
-          sports: el => { return !!el.categories.includes(4) }
+          film: el => {
+            return !!el.categories.includes(5) && !!el.hide
+          },
+          fashion: el => {
+            return !!el.categories.includes(3) && !!el.hide
+          },
+          advertising: el => {
+            return !!el.categories.includes(2) && !!el.hide
+          },
+          sports: el => {
+            return !!el.categories.includes(4) && !!el.hide
+          }
         }
       }
     },

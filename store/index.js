@@ -35,6 +35,7 @@ const createStore = () => {
             title: title.rendered,
             slug: slug,
             sticky,
+            hide: acf.hide,
             content: content.rendered,
             categories: post.categories,
             featuredImage: better_featured_image.media_details.sizes,
