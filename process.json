@@ -3,14 +3,17 @@
     "name": "pwa",
     "script": "npm",
     "args" : "start",
-    "watch": true,
-    "ignore_watch": [
-      ".nuxt",
-      "node_modules",
-      ".git"
-    ],
-    "watch_options": {
-      "followSymlinks": false
-    }
+    "watch": [
+      "assets",
+      "components",
+      "layouts",
+      "pages",
+      "plugins",
+      "static",
+      "store",
+      "test",
+      "*.js",
+      "*.json"
+    ]
   }]
 }
