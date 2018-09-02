@@ -18,9 +18,9 @@
         iframe(ref="video" :src="'https://player.vimeo.com/video/'+p.vimeo+'?color=ffffff&portrait=0&title=0&byline=0&portrait=0'" width="100%"  frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
         TheLoading
         svg.videoPlaceholder(v-if="$route.path === '/walk-film'" width="754" height="377" viewBox="0 0 754 377" xmlns="http://www.w3.org/2000/svg")
-            path(d="M0 0h754v377H0z" fill="#999")
+            path(d="M0 0h754v377H0z" fill="#f2f2f2")
         svg.videoPlaceholder(v-else width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
-            path(d="M0 0h400v225H0z" fill="#999")
+            path(d="M0 0h400v225H0z" fill="#f2f2f2")
 
 
   section(:data-slide="count")
