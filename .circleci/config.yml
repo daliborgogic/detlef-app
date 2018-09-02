@@ -36,7 +36,7 @@ jobs:
       - run:
           name: Deploy
           command: |
-            ssh $APP_USER@$APP_DOMAIN 'cd $APP_PATH; git pull'
+            ssh $APP_USER@$TLD 'cd $APP_PATH; git pull'
 
 workflows:
   version: 2
