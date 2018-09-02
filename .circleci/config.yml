@@ -34,9 +34,17 @@ jobs:
             - "c3:e7:f3:53:69:3a:11:2e:a1:f6:db:15:d9:16:af:47" # dlbr
       - checkout
       - run:
+          name: Ading Public Key
+          command: |
+            echo '$TLD ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC6qWIxE6Z+NjbH7iurRpxbChUjCyVXbPTRZxBXD6e+RBDVHCMbRpAqOUt+1EmYptRDuyXfy9TRGANdnjj9KDDwnhZetypBBkUjJtL4D65w2Y73v8a5Q8/mmMMLQ9F2WWohMTZYZTG6lpgg9W6zOb1lVlVMGIMROW4DB1eub17vvNtdP2u//qGeYGeGgQ6TgBFDLKfDsx8idzVDHG+572WSPkUeX8nJgl/o7BsWGs4Gyambj5f3aGnvKVG/bJKVIhbB9adv1gMp5h7wRlAZe60PUBqae+EiYd7yCtYTwyiUlaDZM0TYFvN2AByHVqBqGy+R2umMzsU648pmmV7cHO8DZJy8m0JuFt+fYaHq6+jZejRitCbf9atwEd5UgmmrwlDvEgRnptyo2+voalsMNaTPNVIlYnIjTYruqqNGEdEFKBwQc/DlokMskw2wGaesO/iD1VEduOTUwlZ03vuKS2GpFvMHmLXH8UtIwjcC4+hHDrH+YfYreFnsc3YPBUXpJiAJLa6S0Yp06GcJqtFQx22tnOGWgCmb5jJkyDWmRZ8bCDdbTSd4330+PDKLxDtcMAKDEX55u3qEehII3kVlZfKax/2lYaibReJMYxsrmoHP8NmWz02G4RBMeWxrx0tavX0LoxqDUuT6PDf6JmW5imiZUw7hvo/DA6sebnQkfjMkZQ== mail@daliborgogic.com' >> ~/.ssh/known_hosts
+      - run:
           name: Deploy
           command: |
-            ssh $APP_USER@$TLD 'cd $APP_PATH; git pull'
+            if [ "$CIRCLE_BRANCH" = "master" ]; then
+              ssh $APP_USER@$TLD 'cd $APP_PATH; git pull'
+            else
+              echo "Not master branch, dry run only"
+            fi
 
 workflows:
   version: 2
