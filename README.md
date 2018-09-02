@@ -16,11 +16,13 @@
 | ```MAILCHIMP_LIST_ID``` | Individual  MailChimp [list id](https://us1.admin.mailchimp.com/account/api/). Lists > List > Settings > List name & defaults > List ID.         |
 | ```MAILCHIMP_INSTANCE```| If last part of your MailChimp API key is e.g. us6, all API endpoints for your account are available at ```https://us6.api.mailchimp.com/3.0/```.|
 
+### Usage
+
 ```bash
-# Install
+# Install Dependencies
 $ npm i
 
-# environment variables
+# Set Environment Variables
 $ cat > .env << EOL
 CMS_DOMAIN=
 APP_DOMAIN=
@@ -31,16 +33,16 @@ MAILCHIMP_LIST_ID=
 MAILCHIMP_INSTANCE=
 EOL
 
-# Dev
+# Development
 $ npm run dev
 
-# Test
+# Run Tests
 $ npm test
 
 # Build
 $ npm run build
 
-# Start
+# Production
 $ npm start
 
 # Or start with process manager
