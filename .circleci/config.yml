@@ -1,7 +1,6 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/repo
     docker:
       - image: circleci/node:10
     parallelism: 4
@@ -34,9 +33,9 @@ jobs:
       - run:
           name: Deploy
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              echo "ToDo deploy"
-            fi
+            ssh $USER@$TLD \
+            'cd $PATH; git pull'
+            echo "Wohoo!"
 
 workflows:
   version: 2
