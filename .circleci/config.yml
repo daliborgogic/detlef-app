@@ -4,8 +4,6 @@ jobs:
     # working_directory: ~/repo
     docker:
       - image: circleci/node:10.8.0
-    environment:
-      - PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     parallelism: 4
 
     steps:
@@ -34,6 +32,11 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "90:5e:ae:2e:7a:20:89:2b:8b:55:b3:ac:0f:05:9e:65"
+      - run:
+          name: Include bin in PATH environment variable.
+          command: |
+            echo 'export PATH=$HOME/detlef-app/bin:$PATH' >> $BASH_ENV
+            source /home/circleci/.bashrc
       - run:
           name: Deploy
           command: |
