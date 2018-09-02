@@ -4,6 +4,10 @@
     "script": "npm",
     "args" : "start",
     "watch": true,
-    "ignore_watch": [".nuxt"]
+    "ignore_watch": [
+      ".nuxt",
+      "node_modules",
+      ".git"
+    ]
   }]
 }
