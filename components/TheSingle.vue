@@ -240,10 +240,6 @@ img
     top auto
     left auto
     transform translate(0, 0)
-  .videoContainer
-    padding-bottom 56%
-    iframe
-      height 100%
   .div
     top 64px
     height auto
