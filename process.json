@@ -13,7 +13,9 @@
       "store",
       "test",
       "*.js",
-      "*.json"
-    ]
+      "*.json",
+      ".env"
+    ],
+    "ignore_watch": ["static/sw.*"]
   }]
 }
