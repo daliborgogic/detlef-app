@@ -1,9 +1,11 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/repo
+    # working_directory: ~/repo
     docker:
       - image: circleci/node:10.8.0
+    environment:
+      - PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     parallelism: 4
 
     steps:
@@ -31,7 +33,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "c3:e7:f3:53:69:3a:11:2e:a1:f6:db:15:d9:16:af:47"
+            - "90:5e:ae:2e:7a:20:89:2b:8b:55:b3:ac:0f:05:9e:65"
       - run:
           name: Deploy
           command: |
