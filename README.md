@@ -18,12 +18,13 @@
 
 ### Usage
 
-Install a package, and any packages that it depends on
+Install a package, and any packages that it depends on:
+
 ```bash
 $ npm i
 ```
 
-Set Environment Variables
+Set Environment Variables:
 
 ```bash
 $ cat > .env << EOL
@@ -43,7 +44,8 @@ Launch a development server on ```localhost:3000``` with hot-reloading:
 $ npm run dev
 ```
 
-Run Tests
+Run Tests:
+
 ```bash
 $ npm test
 ```
