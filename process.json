@@ -1,21 +1,14 @@
 {
-  "apps" : [{
-    "name": "pwa",
-    "script": "npm",
-    "args" : "start",
-    "watch": [
-      "assets",
-      "components",
-      "layouts",
-      "pages",
-      "plugins",
-      "static",
-      "store",
-      "test",
-      "*.js",
-      "*.json",
-      ".env"
-    ],
-    "ignore_watch": ["static/sw.*"]
-  }]
+  "apps" : [
+    {
+      "name": "pwa",
+      "script": "npm",
+      "args" : "start",
+      "log_type": "json",
+      "error_file"      : "err.log",
+      "out_file"        : "out.log",
+      "merge_logs"      : true,
+      "log_date_format" : "YYYY-MM-DD HH:mm Z"
+    }
+  ]
 }

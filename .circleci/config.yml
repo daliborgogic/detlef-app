@@ -36,16 +36,12 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "c3:e7:f3:53:69:3a:11:2e:a1:f6:db:15:d9:16:af:47" # dlbr
+            - "c3:e7:f3:53:69:3a:11:2e:a1:f6:db:15:d9:16:af:47"
       - run: echo $REMOTE_HOSTKEY >> ~/.ssh/known_hosts
       - run:
           name: deploy
           command: |
-            if [ "$CIRCLE_BRANCH" = "master" ]; then
-              ssh $APP_USER@$TLD "cd $APP_PATH; git pull"
-            else
-              echo "Not master branch, dry run only"
-            fi
+            ssh $APP_USER@$TLD "cd $APP_PATH; git pull; pm2 restart pwa"
             # rsync -avce ssh ~/repo $APP_USER@$TLD:/path/to/your/website
 
 
