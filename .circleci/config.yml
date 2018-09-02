@@ -42,10 +42,7 @@ jobs:
       - run:
           name: deploy
           command: |
-            cd ~/repo
-            chmod -x ./deploy.sh
-            ./deploy.sh
-
+            ssh $APP_USER@$TLD "cd $APP_PATH; git pull; rm -rf node_modules .nuxt; npm i; npm run build; pm2 restart pwa"
             # rsync -avce ssh ~/repo $APP_USER@$TLD:/path/to/your/website
 
 
