@@ -47,7 +47,7 @@ Run Tests
 $ npm test
 ```
 
-Build application with webpack and minify the JS & CSS (for production):
+Build application with webpack:
 
 ```bash
 $ npm run build
@@ -59,7 +59,7 @@ Start the server in production mode:
 $ npm start
 ```
 
-Or start with process manager:
+Or start the server with process manager:
 
 ```bash
 #
