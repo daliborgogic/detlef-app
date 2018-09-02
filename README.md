@@ -19,10 +19,12 @@
 ### Usage
 
 ```bash
-# Install Dependencies
+# Install a package, and any packages that it depends on
 $ npm i
 
-# Set Environment Variables
+Set Environment Variables
+
+```bash
 $ cat > .env << EOL
 CMS_DOMAIN=
 APP_DOMAIN=
@@ -32,19 +34,34 @@ MAILCHIMP_API_KEY=
 MAILCHIMP_LIST_ID=
 MAILCHIMP_INSTANCE=
 EOL
+```
 
-# Development: Live build, lint & reloading
+Launch a development server on ```localhost:3000``` with hot-reloading:
+
+```bash
 $ npm run dev
+```
 
-# Run Tests
+Run Tests
+```bash
 $ npm test
+```
 
-# Build
+Build application with webpack and minify the JS & CSS (for production):
+
+```bash
 $ npm run build
+```
 
-# Production
+Start the server in production mode:
+
+```bash
 $ npm start
+```
 
-# Or start with process manager
+Or start with process manager:
+
+```bash
+#
 $ pm2 start process.json
 ```
