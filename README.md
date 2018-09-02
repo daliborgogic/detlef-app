@@ -33,7 +33,7 @@ MAILCHIMP_LIST_ID=
 MAILCHIMP_INSTANCE=
 EOL
 
-# Development
+# Development: Live build, lint & reloading
 $ npm run dev
 
 # Run Tests

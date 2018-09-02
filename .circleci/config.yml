@@ -26,8 +26,8 @@ jobs:
 
   deploy:
     working_directory: ~/repo
-    machine:
-      enabled: true
+    docker:
+      - image: circleci/node:10.8.0
     steps:
       - checkout
       - add_ssh_keys:
@@ -38,7 +38,7 @@ jobs:
       - run:
           name: Deploy
           command: |
-            ssh $USER@$TLD 'cd $APP_PATH; git pull'
+            ssh $APP_USER@$APP_DOMAIN 'cd $APP_PATH; git pull'
 
 workflows:
   version: 2
