@@ -16,6 +16,9 @@
     .s(v-else)
       .videoContainer(ref="videoContainer")
         iframe(ref="video" :src="'https://player.vimeo.com/video/'+p.vimeo+'?color=ffffff&portrait=0&title=0&byline=0&portrait=0'" width="100%"  frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
+        TheLoading
+        svg.videoPlaceholder(width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
+            path(d="M0 0h400v225H0z" fill="#F2F2F2")
 
   section(:data-slide="count")
     .back
@@ -27,9 +30,10 @@
 </template>
 
 <script>
+import TheLoading from '@/components/TheLoading'
 export default {
   components: {
-    TheLoading: () => import('@/components/TheLoading'),
+    TheLoading,
     TheSubscribe: () => import('@/components/TheSubscribe')
   },
   props: {
@@ -216,11 +220,19 @@ img
   height 100%
   width 100%
   overflow: hidden
+  z-index 4
 .videoContainer iframe
   position absolute
   top 0
   left 0
+  z-index 3
   object-fit cover
+  // opacity 0.1
+  // display none
+.videoPlaceholder
+  object-fit cover
+  width 100%
+  height 100%
 @media (max-width 512px)
   .external
   .externalImg
@@ -230,6 +242,8 @@ img
     transform translate(0, 0)
   .videoContainer
     padding-bottom 56%
+    iframe
+      height 100%
   .div
     top 64px
     height auto
@@ -240,6 +254,7 @@ img
   img
   .placeholder
   .externalPlaceholder
+  .videoPlaceholder
     max-width none
     max-height none
     width 100%
