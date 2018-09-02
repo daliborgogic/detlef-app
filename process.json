@@ -8,6 +8,9 @@
       ".nuxt",
       "node_modules",
       ".git"
-    ]
+    ],
+    "watch_options": {
+      "followSymlinks": false
+    }
   }]
 }
