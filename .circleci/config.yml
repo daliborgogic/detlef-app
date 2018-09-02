@@ -42,8 +42,9 @@ jobs:
       - run:
           name: deploy
           command: |
-            chmod -x deploy.sh
-            . ./deploy.sh
+            cd ~/repo
+            chmod -x ./deploy.sh
+            ./deploy.sh
 
             # rsync -avce ssh ~/repo $APP_USER@$TLD:/path/to/your/website
 
