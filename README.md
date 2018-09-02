@@ -18,9 +18,10 @@
 
 ### Usage
 
+Install a package, and any packages that it depends on
 ```bash
-# Install a package, and any packages that it depends on
 $ npm i
+```
 
 Set Environment Variables
 
@@ -62,6 +63,5 @@ $ npm start
 Or start the server with process manager:
 
 ```bash
-#
 $ pm2 start process.json
 ```
