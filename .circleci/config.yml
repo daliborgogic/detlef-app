@@ -30,14 +30,14 @@ jobs:
       - run: echo $REMOTE_HOSTKEY >> ~/.ssh/known_hosts
 
       - deploy:
-        name: deploy
-        steps:
-          - run:
-              name: Deploy
-              command: |
-                if [ "$CIRCLE_BRANCH" = "master" ]; then
-                  ssh $APP_USER@$TLD "cd $APP_PATH; git pull"
-                else
-                  echo "Not master branch, dry run only"
-                fi
-                # rsync -avce ssh ~/repo $APP_USER@$TLD:/path/to/your/website
+          name: deploy
+          steps:
+            - run:
+                name: Deploy
+                command: |
+                  if [ "$CIRCLE_BRANCH" = "master" ]; then
+                    ssh $APP_USER@$TLD "cd $APP_PATH; git pull"
+                  else
+                    echo "Not master branch, dry run only"
+                  fi
+                  # rsync -avce ssh ~/repo $APP_USER@$TLD:/path/to/your/website
