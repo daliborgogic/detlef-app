@@ -16,9 +16,9 @@
     .s(v-else)
       .videoContainer(ref="videoContainer")
         iframe(ref="video" :src="'https://player.vimeo.com/video/'+p.vimeo+'?color=ffffff&portrait=0&title=0&byline=0&portrait=0'" width="100%"  frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
-        TheLoading
+        TheLoading(stroke="#fff")
         svg.videoPlaceholder(width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
-            path(d="M0 0h400v225H0z" fill="#F2F2F2")
+            path(d="M0 0h400v225H0z" fill="#000")
 
   section(:data-slide="count")
     .back
@@ -230,6 +230,7 @@ img
   // opacity 0.1
   // display none
 .videoPlaceholder
+  vertical-align middle
   object-fit cover
   width 100%
   height 100%

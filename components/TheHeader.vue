@@ -92,7 +92,7 @@ nav
     font-size 16px
     margin-right 0.5vw
     cursor pointer
-    // color #999
+    color #000
     &:hover
       color #000
     &:last-child
