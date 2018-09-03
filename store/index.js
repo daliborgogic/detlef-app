@@ -52,6 +52,30 @@ const createStore = () => {
         }
         commit('setGotIt', privacy)
       }
+    },
+
+    getters: {
+      getCategory: state => {
+        let s
+        let value = state.category
+        switch(value) {
+          case(2):
+            s = 'advertising'
+            break
+          case(3):
+            s = 'fashion'
+            break
+          case(4):
+            s = 'sports'
+            break
+          case(5):
+            s = 'film'
+            break
+          default:
+            s = 'sticky'
+        }
+        return s
+      }
     }
   })
 }
