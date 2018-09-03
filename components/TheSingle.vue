@@ -34,6 +34,7 @@
 
 <script>
 import TheLoading from '@/components/TheLoading'
+
 export default {
   components: {
     TheLoading,
@@ -71,37 +72,33 @@ export default {
   async mounted () {
     window.addEventListener('resize', () => this.handleResize())
 
-    if (this.$refs.videoContainer) {
-      this.handleResize()
-    }
+    if (this.$refs.videoContainer) { this.handleResize() }
 
     const slides = [...document.getElementsByTagName('section')]
 
     if ('IntersectionObserver' in window) {
-      this.observer =  new IntersectionObserver(entries =>{
-        entries.forEach(change => {
+      this.observer = new IntersectionObserver(entries => {
+        entries.forEach(async change => {
           if (change.isIntersecting) {
-            if (window.matchMedia('(min-width: 512px)').matches) {
-              // this.observer.unobserve(change.target)
-              this.scrollIt(change.target, 500, 'easeInQuad')
-              // images.forEach(image => image.setAttribute('srcset', image.getAttribute('datasrcset')))
-            }
+            if (window.matchMedia('(min-width: 512px)').matches)
+              this.scrollIt(change.target, 1000)
 
             const image = change.target.getElementsByTagName('img')[0]
             if (image) {
               image.setAttribute('srcset', image.getAttribute('datasrcset'))
+              this.observer.unobserve(image)
             }
           }
         })
       },{
         root: this.$refs.div[0],
-        rootMargin: '-32px 0px -32px 0px',
-        threshold: [0],
+        rootMargin: '-40px 0px -40px 0px',
+        threshold: [0]
       })
 
       slides.forEach(slide => this.observer.observe(slide))
     } else {
-      // Not Supported
+      // IntersectionObserver  Not Supported
       slides.forEach(slide => {
         const image = slide.getElementsByTagName('img')[0]
         image.setAttribute('srcset', image.getAttribute('datasrcset'))
@@ -112,13 +109,13 @@ export default {
 
   beforeDestroy () {
     window.removeEventListener('resize', this.handleResize())
-    if ('IntersectionObserver' in window) {
+
+    if ('IntersectionObserver' in window)
       this.observer.disconnect()
-    }
   },
 
   methods:{
-      handleResize () {
+    handleResize () {
       if (this.$refs.videoContainer) {
         this.videoContainerHeight =  this.$refs.videoContainer[0].clientHeight || 0
         const iframe = this.$refs.video[0]
@@ -131,12 +128,7 @@ export default {
     },
     scrollIt (destination, duration = 200, easing = 'linear', callback) {
       const easings = {
-        easeInQuad(t) {
-          return t * t
-        },
-        easeOutQuad(t) {
-          return t * (2 - t)
-        }
+        linear (t) { return t },
       }
       const start = window.pageYOffset
       const startTime = 'now' in window.performance ? performance.now() : new Date().getTime()
@@ -180,11 +172,11 @@ export default {
   width 100%
   height 100%
 section
-  padding-top 64px
-  padding-bottom 64px
+  padding-top 80px
+  padding-bottom 80px
 .s
   width 100%
-  height calc(100vh - 128px)
+  height calc(100vh - 160px)
   position relative
 img
 .placeholder
@@ -193,12 +185,13 @@ img
   vertical-align middle
 img
   position absolute
+  border 1px solid #f2f2f2
   top 0
   left 50%
   transform translateX(-50%)
   z-index 3
 .back
-  height calc(100vh - 128px)
+  height calc(100vh - 160px)
   display flex
   align-items center
   text-align center
