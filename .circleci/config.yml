@@ -42,7 +42,7 @@ jobs:
       - run:
           name: deploy
           command: |
-            ssh $APP_USER@$TLD "cd $APP_PATH; git pull; pm2 restart pwa"
+            ssh $APP_USER@$TLD "cd $APP_PATH; git pull; pm2 reload pwa"
 
 workflows:
   version: 2
