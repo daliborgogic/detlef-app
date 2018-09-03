@@ -37,7 +37,7 @@ export default {
             const image = change.target
             if (image) {
               image.setAttribute('srcset', image.getAttribute('datasrcset'))
-              this.observer.observe(image)
+              this.observer.unobserve(image)
             }
           }
         })
@@ -52,7 +52,13 @@ export default {
       // Not Supported
       images.forEach(img => img.setAttribute('srcset', img.getAttribute('datasrcset')))
     }
-  }
+  },
+
+  beforeDestroy () {
+    if ('IntersectionObserver' in window) {
+      this.observer.disconnect()
+    }
+  },
 }
 </script>
 
