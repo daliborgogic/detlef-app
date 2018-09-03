@@ -49,7 +49,7 @@ export default {
 
       images.forEach(img => this.observer.observe(img))
     } else {
-      // Not Supported
+      // IntersectionObserver  Not Supported
       images.forEach(img => img.setAttribute('srcset', img.getAttribute('datasrcset')))
     }
   },

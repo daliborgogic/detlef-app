@@ -1,6 +1,6 @@
 <template lang="pug">
 header(ref="header")
-  nuxt-link.link(v-if="showNav" to="/" @click.native="category('sticky')") {{appName}}
+  nuxt-link.link(v-if="!showNav" to="/" @click.native="category('sticky')") {{appName}}
   nuxt-link.link(v-else to="/" @click.native="toogleNav") {{appName}}
 
   nav(:class="{navHidden: showNav}")
@@ -25,14 +25,15 @@ export default {
   data () {
     return {
       showNav: false,
-      appName: process.env.FIRST_NAME + ' ' + process.env.LAST_NAME
+      appName: process.env.FIRST_NAME + ' ' + process.env.LAST_NAME,
+      isMobile: false
     }
   },
 
   async mounted () {
-    const mq = window.matchMedia('(max-width: 512px)')
+    this.isMobile = window.matchMedia('(max-width: 512px)')
 
-    if (!mq.matches) {
+    if (!this.isMobile.matches) {
       await this.timeout(3000)
       this.$refs.header.classList.add('loaded')
     }
@@ -43,7 +44,10 @@ export default {
       this.$store.commit('setCategory', value)
       this.toogleNav()
     },
-    toogleNav () { this.showNav = !this.showNav },
+    toogleNav () {
+      if (this.isMobile.matches)
+        this.showNav = !this.showNav
+    },
     timeout (ms) {
       new Promise(res => setTimeout(res, ms))
     }
