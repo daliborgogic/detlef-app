@@ -15,7 +15,8 @@ export default {
 
   data () {
     return {
-      tld: process.env.CMS_DOMAIN
+      tld: process.env.CMS_DOMAIN,
+       observer: null
     }
   },
 
@@ -24,31 +25,59 @@ export default {
       const { w400 } = this.card.featuredImage.media_details.sizes
       return w400['mime-type'] === 'image/gif'
     }
+  },
+
+  mounted () {
+    const images = [...document.getElementsByTagName('img')]
+
+    if ('IntersectionObserver' in window) {
+      this.observer =  new IntersectionObserver(entries =>{
+        entries.forEach(change => {
+          if (change.isIntersecting) {
+            const image = change.target
+            if (image) {
+              image.setAttribute('srcset', image.getAttribute('datasrcset'))
+              this.observer.observe(image)
+            }
+          }
+        })
+      },{
+        root: this.$refs.div[0],
+        rootMargin: '0px',
+        threshold: [0],
+      })
+
+      images.forEach(img => this.observer.observe(img))
+    } else {
+      // Not Supported
+      images.forEach(img => img.setAttribute('srcset', img.getAttribute('datasrcset')))
+    }
   }
 }
 </script>
 
 <template lang="pug">
-.c
+.c(ref="div")
   .overlay
     h3(v-if="card.title" v-html="card.title")
   span(v-if="card.images")
-    //- span(v-if="card.images[0].vimeo")
-    //-   svg.iconPlay(
-    //-     xmlns="http://www.w3.org/2000/svg"
-    //-     viewBox="0 0 24 24")
-    //-     path(d="M8 5v14l11-7z" fill="#ffffff")
-    //-     path(d="M0 0h24v24H0z" fill="none")
     span(v-if="card.featuredImage")
       span(v-if="card.categories.includes(5)")
-        img(
+        img(ref="img"
           :src="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
-          :alt="card.featuredImage.alt_text")
+          :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
+          :datasrcset="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
+          alt="")
         TheLoading
         svg.placeholder(width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
           path(d="M0 0h400v225H0z" fill="#F2F2F2")
       span(v-else)
-        img(:src="card.featuredImage.media_details.sizes.w400.source_url"  :alt="card.featuredImage.alt_text")
+        img(
+          ref="img"
+          :src="card.featuredImage.media_details.sizes.w400.source_url"
+          :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
+          :datasrcset="card.featuredImage.media_details.sizes.w400.source_url"
+          :alt="card.featuredImage.alt_text")
         TheLoading
         svg.placeholder(
           :height="card.featuredImage.media_details.sizes.w400.height"
