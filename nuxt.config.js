@@ -28,12 +28,11 @@ module.exports = {
 
   modules: [
     [
-      // // https://pwa.nuxtjs.org/
+      // https://pwa.nuxtjs.org/
       '@nuxtjs/pwa', {
-        workbox: {},
         manifest: {
-          // name: APP_NAME,
-          // short_name: APP_SHORT_NAME
+          name: FIRST_NAME + ' ' + LAST_NAME,
+          short_name: FIRST_NAME
           // display: 'fullscreen'
         }
       }

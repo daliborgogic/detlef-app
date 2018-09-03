@@ -7,8 +7,7 @@
     "build": "nuxt build",
     "precommit": "npm run lint",
     "test": "ava --serial --verbose",
-    "test:production": "NODE_ENV=production  ava --serial --verbose",
-    "prestart": "npm i && npm run build",
+    "prestart": "rm -rf .nuxt && nuxt build",
     "start": "NODE_ENV=production node_modules/.bin/micro -l tcp://0.0.0.0:3000",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },

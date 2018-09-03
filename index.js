@@ -21,7 +21,7 @@ if (nuxt.options.dev) {
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*') // APP_DOMAIN
-  res.setHeader('Content-Type', 'application/json')
+
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PATCH')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Origin')
 
@@ -31,6 +31,7 @@ module.exports = async (req, res) => {
   }
 
   if (req.method === 'PATCH') {
+    res.setHeader('Content-Type', 'application/json')
     const body = await json(req)
     const { email_address, status } = body
     const obj = { email_address, status }
@@ -42,6 +43,7 @@ module.exports = async (req, res) => {
   }
 
   if (req.method === 'POST') {
+    res.setHeader('Content-Type', 'application/json')
     const body = await json(req)
     const { email_address } = body
     const obj = {
