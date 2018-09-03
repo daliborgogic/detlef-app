@@ -36,7 +36,7 @@ export default {
     },
     option () {
       return {
-        filter: this.slug(this.$store.state.category),
+        filter: this.$store.getters.getCategory,
         masonry: {
           gutter: '.gutter',
           layout: 'masonry',
@@ -69,31 +69,10 @@ export default {
   },
 
   watch: {
-    filterOption (option) { this.$refs.isotope.filter(this.slug(option)) }
+    filterOption () { this.$refs.isotope.filter(this.$store.getters.getCategory) }
   },
   methods: {
-    filter (key) { this.$refs.isotope.filter(key) },
-
-    slug (value) {
-      let s
-      switch(value) {
-        case(2):
-          s = 'advertising'
-          break
-        case(3):
-          s = 'fashion'
-          break
-        case(4):
-          s = 'sports'
-          break
-        case(5):
-          s = 'film'
-          break
-        default:
-          s = 'sticky'
-      }
-      return s
-    }
+    filter (key) { this.$refs.isotope.filter(key) }
   }
 }
 </script>
