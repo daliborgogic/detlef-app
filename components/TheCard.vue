@@ -76,7 +76,7 @@ export default {
           alt="")
         TheLoading
         svg.placeholder(width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
-          path(d="M0 0h400v225H0z" fill="#F2F2F2")
+          path(d="M0 0h400v225H0z" fill="#f2f2f2")
       span(v-else)
         img(
           ref="img"
@@ -91,20 +91,21 @@ export default {
           :width="card.featuredImage.media_details.sizes.w400.width" xmlns="http://www.w3.org/2000/svg")
           path(
             :d="'M0 0h' + card.featuredImage.media_details.sizes.w400.width + 'v' + card.featuredImage.media_details.sizes.w400.height + 'H0z'"
-            fill="#F2F2F2")
+            fill="#f2f2f2")
 </template>
 
 <style lang="stylus" scoped>
 .c
   position relative
   margin-bottom 50px
-  // outline 1px dashed tomato
+
   transition opacity 250ms ease-in
   &:hover .overlay
     opacity 1
   &:hover .iconPlay
     opacity 0
 img
+  border 1px solid #f2f2f2
   z-index 3
 img
 svg
@@ -125,12 +126,7 @@ img
   align-items center
   justify-content center
   opacity 0
-.item
-  width 370px
-  // outline 1px dashed
-  cursor pointer
-  pre
-    overflow-x scroll
+
 h3
   color black
   margin-top 0
