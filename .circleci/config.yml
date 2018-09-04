@@ -13,6 +13,11 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
       - run:
+          name: Install rsync
+          command: |
+            apt-get update -y
+            apt-get -y install rsync
+      - run:
           name: Install packages
           command: npm i
       - save_cache:
