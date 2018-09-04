@@ -32,10 +32,6 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Run tests
-          command: |
-            npm test
-      - run:
           name: Build application
           command: npm run build
       - run:
@@ -43,7 +39,15 @@ jobs:
           command: |
             npm run workbox
       - run:
+          name: Run tests
+          command: |
+            npm test
+      - run:
           name: rsync
           command: |
+          if [ "${CIRCLE_BRANCH}" == "master" ]; then
             rsync -e ssh -arvc --exclude .git ~/repo/ $APP_USER@$TLD:$APP_PATH && \
             ssh $APP_USER@$TLD "cd $APP_PATH; pm2 reload pwa"
+          else
+            echo "Not branch master, maybe next time."
+          fi
