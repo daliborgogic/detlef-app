@@ -1,3 +1,35 @@
+<template lang="pug">
+.c(ref="div")
+  .overlay
+    h3(v-if="card.title" v-html="card.title")
+  span(v-if="card.images")
+    span(v-if="card.featuredImage")
+      span(v-if="card.categories.includes(5)")
+        img(ref="img"
+          :src="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
+          :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
+          :datasrcset="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
+          alt="")
+        TheLoading
+        svg.placeholder(width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
+          path(d="M0 0h400v225H0z" fill="#f2f2f2")
+      span(v-else)
+        img(
+          ref="img"
+          :src="card.featuredImage.media_details.sizes.w400.source_url"
+          :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
+          :datasrcset="card.featuredImage.media_details.sizes.w400.source_url"
+          :alt="card.featuredImage.alt_text")
+        TheLoading
+        svg.placeholder(
+          :height="card.featuredImage.media_details.sizes.w400.height"
+          :viewBox="'0 0 ' +  card.featuredImage.media_details.sizes.w400.width + ' ' + card.featuredImage.media_details.sizes.w400.height"
+          :width="card.featuredImage.media_details.sizes.w400.width" xmlns="http://www.w3.org/2000/svg")
+          path(
+            :d="'M0 0h' + card.featuredImage.media_details.sizes.w400.width + 'v' + card.featuredImage.media_details.sizes.w400.height + 'H0z'"
+            fill="#f2f2f2")
+</template>
+
 <script>
 import TheLoading from '@/components/TheLoading'
 
@@ -62,37 +94,6 @@ export default {
 }
 </script>
 
-<template lang="pug">
-.c(ref="div")
-  .overlay
-    h3(v-if="card.title" v-html="card.title")
-  span(v-if="card.images")
-    span(v-if="card.featuredImage")
-      span(v-if="card.categories.includes(5)")
-        img(ref="img"
-          :src="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
-          :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
-          :datasrcset="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
-          alt="")
-        TheLoading
-        svg.placeholder(width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
-          path(d="M0 0h400v225H0z" fill="#f2f2f2")
-      span(v-else)
-        img(
-          ref="img"
-          :src="card.featuredImage.media_details.sizes.w400.source_url"
-          :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
-          :datasrcset="card.featuredImage.media_details.sizes.w400.source_url"
-          :alt="card.featuredImage.alt_text")
-        TheLoading
-        svg.placeholder(
-          :height="card.featuredImage.media_details.sizes.w400.height"
-          :viewBox="'0 0 ' +  card.featuredImage.media_details.sizes.w400.width + ' ' + card.featuredImage.media_details.sizes.w400.height"
-          :width="card.featuredImage.media_details.sizes.w400.width" xmlns="http://www.w3.org/2000/svg")
-          path(
-            :d="'M0 0h' + card.featuredImage.media_details.sizes.w400.width + 'v' + card.featuredImage.media_details.sizes.w400.height + 'H0z'"
-            fill="#f2f2f2")
-</template>
 
 <style lang="stylus" scoped>
 .c
@@ -126,6 +127,7 @@ img
   align-items center
   justify-content center
   opacity 0
+  cursor pointer
 
 h3
   color black

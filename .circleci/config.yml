@@ -46,8 +46,24 @@ jobs:
           name: rsync
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              rsync -e ssh -arvc --exclude .git ~/repo/ $APP_USER@$TLD:$APP_PATH && \
-              ssh $APP_USER@$TLD "cd $APP_PATH; pm2 reload pwa"
+              rsync -e ssh -arvc \
+              --exclude .git \
+              --exclude .circle \
+              --exclude assets \
+              --exclude components \
+              --exclude layouts \
+              --exclude pages \
+              --exclude plugins \
+              --exclude store \
+              --exclude test \
+              --exclude .editorconfig \
+              --exclude .gitignore \
+              --exclude package-lock.json \
+              --exclude README.md \
+              --exclude workbox-config.js \
+              ~/repo/ \
+              $APP_USER@$TLD:$APP_PATH && \
+              ssh $APP_USER@$TLD "cd $APP_PATH; pm2 reload pwa --update-env"
             else
               echo "Not branch master, maybe next time."
             fi

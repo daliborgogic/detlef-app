@@ -5,7 +5,7 @@
       div(v-for="(l, index) in list" :key="index" :class="{isVideo: l.categories.includes(5)}")
         .gutter
         .grid-sizer
-        nuxt-link(:to="'/' + l.slug")
+        div(@click="setCategory(l.categories[0], l.slug)")
           TheCard(:card="l")
 </template>
 
@@ -72,7 +72,11 @@ export default {
     filterOption () { this.$refs.isotope.filter(this.$store.getters.getCategory) }
   },
   methods: {
-    filter (key) { this.$refs.isotope.filter(key) }
+    filter (key) { this.$refs.isotope.filter(key) },
+    setCategory (category, slug) {
+      this.$store.commit('setCategory', category)
+      this.$router.push('/' + slug)
+    }
   }
 }
 </script>
