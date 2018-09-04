@@ -7,21 +7,12 @@
         span(v-else) Caching complete. Future visits will work offline
       div
         span.cta(v-if="state === 1" @click="reload") REFRESH
-    .bar(ref="bar" v-if="!$store.state.gotIt" :class="{active: !$store.state.gotIt }")
-      div
-        span(v-if="$route.name !== 'privacy'") New #[nuxt-link(to="/privacy") Privacy Policy]
-      span.cta(@click="gotIt") GOT IT
+        span.cta(v-else @click="dismis") OK
 </template>
 
 <script>
-import Cookie from 'js-cookie'
-
 export default {
-
   computed: {
-    showBar () {
-      return this.$store.state.gotNew
-    },
     willShow () {
       return this.$store.state.gotNew.show
     },
@@ -30,10 +21,6 @@ export default {
     }
   },
   methods: {
-    gotIt () {
-      this.$store.commit('setGotIt', true)
-      Cookie.set('gotIt', true)
-    },
     reload () {
       this.dismis()
       window.location.reload()
@@ -54,7 +41,7 @@ export default {
   position fixed
   width 100%
   left 0
-  bottom 24px
+  bottom 0
   z-index 10
   display flex
   justify-content center
@@ -63,7 +50,6 @@ export default {
   line-height 1.3
   letter-spacing 1px
   min-width 400px
-  background-color #fff
   display flex
   font-weight 400
   flex-direction column
@@ -71,17 +57,17 @@ export default {
   .bar
     padding 16px
     display flex
+    align-items baseline
+    background-color #fff
     justify-content space-between
     min-height 50px
-    border-bottom 1px solid #f2f2f2
+    margin-bottom 30px
     // transition transform 250ms ease-in
     // transform translateY(100% + 48px)
     // &.active
     //   transform translateY(0)
     a
       color #000
-  .bar + .bar
-    border-bottom none
 .cta
   font-weight 700
   cursor pointer

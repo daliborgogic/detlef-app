@@ -32,7 +32,7 @@ export default {
                   // 2 Caching complete. Future visits will work offline
                   this.$store.commit('setGotNew', {
                     show: true,
-                    state: navigator.serviceWorker.controller !== null ? 2 : 1
+                    state: navigator.serviceWorker.controller !== null ? 1 : 2
                   })
                   break
                 case 'redundant':

@@ -105,7 +105,7 @@ export default {
   &:hover .iconPlay
     opacity 0
 img
-  border 1px solid #f2f2f2
+  // border 1px solid #f2f2f2
   z-index 3
 img
 svg
