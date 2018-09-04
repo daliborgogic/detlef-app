@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     reload () {
-      this.dismis()
+      this.dismiss()
       window.location.reload()
     },
     dismiss () {
@@ -46,9 +46,9 @@ export default {
   display flex
   justify-content center
 .container
-  font-size 14px
+  font-size 13px
   line-height 1.3
-  letter-spacing 1px
+  letter-spacing .2px
   width 400px
   display flex
   font-weight 400
