@@ -1,6 +1,6 @@
 require('dotenv').config()
+
 const { FIRST_NAME, CMS_DOMAIN } = process.env
-const fixUrl = url => url.replace(/\/\//g, '/').replace(':/', '://')
 
 module.exports = {
   cacheId: FIRST_NAME.toLowerCase(),
