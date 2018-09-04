@@ -9,7 +9,7 @@
     "precommit": "npm run lint",
     "test": "ava --serial --verbose",
     "workbox": "workbox generateSW workbox-config.js",
-    "prestart": "rm -rf .nuxt && nuxt build && npm run workbox",
+    "prestart": "rm -rf .nuxt node_modules && npm i && nuxt build && npm run workbox",
     "start": "NODE_ENV=production node_modules/.bin/micro -l tcp://0.0.0.0:3000",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
