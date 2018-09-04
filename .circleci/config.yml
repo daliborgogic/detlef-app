@@ -45,9 +45,9 @@ jobs:
       - run:
           name: rsync
           command: |
-          if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            rsync -e ssh -arvc --exclude .git ~/repo/ $APP_USER@$TLD:$APP_PATH && \
-            ssh $APP_USER@$TLD "cd $APP_PATH; pm2 reload pwa"
-          else
-            echo "Not branch master, maybe next time."
-          fi
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              rsync -e ssh -arvc --exclude .git ~/repo/ $APP_USER@$TLD:$APP_PATH && \
+              ssh $APP_USER@$TLD "cd $APP_PATH; pm2 reload pwa"
+            else
+              echo "Not branch master, maybe next time."
+            fi
