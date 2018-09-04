@@ -6,6 +6,8 @@ TheSingle(:post="post")
 import r2 from 'r2'
 import TheSingle from '@/components/TheSingle'
 export default {
+  scrollToTop: true,
+
   components: {
     TheSingle
   },
