@@ -7,19 +7,18 @@ const createStore = () => {
     state: {
       gotIt: null,
       category: 'sticky',
-      posts: []
+      posts: [],
+      gotNew: {
+        show: false,
+        state: 1
+      }
     },
 
     mutations: {
-      setGotIt (state, value) {
-        state.gotIt = value
-      },
-      setCategory (state, value) {
-        state.category = value
-      },
-      setPosts (state, value) {
-        state.posts = value
-      }
+      setGotIt: (state, value) => state.gotIt = value,
+      setCategory: (state, value) => state.category = value,
+      setPosts: (state, value) => state.posts = value,
+      setGotNew: (state, value) => state.gotNew = value
     },
 
     actions: {
@@ -45,7 +44,7 @@ const createStore = () => {
 
         commit('setPosts', mapPosts)
 
-        let privacy = null
+        let privacy = false
         if (req.headers.cookie) {
           let parsed = cookieparser.parse(req.headers.cookie)
           privacy = JSON.parse(parsed.gotIt)
