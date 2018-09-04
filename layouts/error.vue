@@ -22,7 +22,7 @@ export default {
 .container
   h1 {{isError}}
   nuxt-link(tag="button" to="/") Home page
-  pre {{error.message}}
+  //- pre {{error.message}}
   </div>
 </template>
 

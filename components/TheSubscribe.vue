@@ -12,7 +12,7 @@
 </template>
 
 <script>
-const timeout = ms => new Promise(res => setTimeout(res, ms))
+import { timeout } from  '~/plugins/helpers'
 import r2 from 'r2'
 
 export default {
