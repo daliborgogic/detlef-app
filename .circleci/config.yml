@@ -15,7 +15,7 @@ jobs:
           - v1-dependencies-
 
       - run:
-          name: Install a package, and any packages that it depends on
+          name: Install packages
           command: npm i
 
       - save_cache:
@@ -24,9 +24,13 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
-          name: Build application with webpack
+          name: Build application
           command: npm run build
-      - run: npm test
+
+      - run:
+          name: Rune tests
+          command: |
+            npm test
 
   deploy:
     docker:
@@ -38,9 +42,12 @@ jobs:
           fingerprints:
             - "c3:e7:f3:53:69:3a:11:2e:a1:f6:db:15:d9:16:af:47"
 
-      - run: echo $REMOTE_HOSTKEY >> ~/.ssh/known_hosts
       - run:
-          name: deploy
+          name: Add public key
+          command: |
+            echo $REMOTE_HOSTKEY >> ~/.ssh/known_hosts
+      - run:
+          name: Deploy
           command: |
             ssh $APP_USER@$TLD "cd $APP_PATH; git pull; pm2 reload pwa"
 

@@ -7,7 +7,7 @@
         span(v-else) Caching complete. Future visits will work offline
       div
         span.cta(v-if="state === 1" @click="reload") REFRESH
-        span.cta(v-else @click="dismis") OK
+        span.cta(v-else @click="dismiss") DISMISS
 </template>
 
 <script>
@@ -25,10 +25,10 @@ export default {
       this.dismis()
       window.location.reload()
     },
-    dismis () {
+    dismiss () {
       this.$store.commit('setGotNew', {
         show: false,
-        state: null
+        state: 1
       })
     }
   }
@@ -69,6 +69,7 @@ export default {
     a
       color #000
 .cta
+  margin-left 16px
   font-weight 700
   cursor pointer
 @media (max-width 512px)

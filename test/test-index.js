@@ -5,10 +5,15 @@ import test from 'ava'
 import micro from 'micro'
 import listen from 'test-listen'
 import request from 'request-promise'
-import { Nuxt } from 'nuxt-edge'
+import { Nuxt, Builder } from 'nuxt-edge'
 import config  from './../nuxt.config.js'
 
 const nuxt = new Nuxt(config)
+
+if (process.env !== 'production') {
+  console.log('Not in production mode, building...')
+  new Builder(nuxt).build()
+}
 
 const getUrl = fn => {
   const srv = micro(fn)
