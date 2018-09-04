@@ -9,6 +9,7 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { hid: 'description', name: 'description', content: '###' },
       { name: 'msapplication-TileColor', content: '#ffffff' },
       { name: 'msapplication-config', content: '/icons/browserconfig.xml' },
       { name: 'theme-color', content: '#FFFFFF' },
@@ -23,12 +24,12 @@ module.exports = {
         Facebook Debug
         https://developers.facebook.com/tools/debug/sharing
       */
-      { property: 'og:image', content: '/icons/og.jpeg' },
-      { property: 'og:image:width', content: '1200' },
-      { property: 'og:image:height', content: '628' },
-      { property: 'og:title', content: '###' },
-      { property: 'og:description', content: '###' },
-      { property: 'og:url', content: `https://${APP_DOMAIN}` }
+      { hid: 'og:image', property: 'og:image', content: '/icons/og.jpeg' },
+      { hid: 'og:image:width', property: 'og:image:width', content: '1200' },
+      { hid: 'og:image:height', property: 'og:image:height', content: '628' },
+      { hid: 'og:title', property: 'og:title', content: '###' },
+      { hid: 'og:description', property: 'og:description', content: '###' },
+      { hid: 'og:url', property: 'og:url', content: `https://${APP_DOMAIN}` }
     ],
     link: [
       { rel: 'apple-touch-icon', sizes: '180x180', href: '/icons/apple-touch-icon.png' },
