@@ -1,8 +1,10 @@
 # detlef
 
-> Progressive Web App starts with a traditional web site/application and progressively enhance with modern features.
+> Progressive Web App start with a traditional web site/application and progressively enhance with modern features.
 
 [![CircleCI](https://circleci.com/gh/daliborgogic/detlef-app.svg?style=svg)](https://circleci.com/gh/daliborgogic/detlef-app)
+
+<img src="https://i.imgur.com/Zx2pSSs.png">
 
 ### Environment Variables
 
