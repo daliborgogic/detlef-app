@@ -7,6 +7,18 @@ jobs:
     parallelism: 4
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "c3:e7:f3:53:69:3a:11:2e:a1:f6:db:15:d9:16:af:47"
+      - run:
+          name: Add public key
+          command: |
+            echo $REMOTE_HOSTKEY >> ~/.ssh/known_hosts
+      - run:
+          name: Install rsync
+          command: |
+            sudo apt-get update -y
+            sudo apt-get -y install rsync
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
@@ -30,38 +42,12 @@ jobs:
           name: Run tests
           command: |
             npm test
-
-  deploy:
-    docker:
-      - image: circleci/node:10.8.0
-    working_directory: ~/repo
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "c3:e7:f3:53:69:3a:11:2e:a1:f6:db:15:d9:16:af:47"
       - run:
-          name: Install rsync
+          name: rsync
           command: |
-            sudo apt-get update -y
-            sudo apt-get -y install rsync
-      - run:
-          name: Add public key
-          command: |
-            echo $REMOTE_HOSTKEY >> ~/.ssh/known_hosts
-      - run:
-          name: Deploy
-          command: |
-            rsync -avce ssh ~/repo $APP_USER@$TLD:/$APP_PATH && \
-            ssh $APP_USER@$TLD "cd $APP_PATH; pm2 reload pwa"
-
-workflows:
-  version: 2
-  build-and-deploy:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              rsync -e ssh -arvc --exclude .git ~/repo/ $APP_USER@$TLD:$APP_PATH && \
+              ssh $APP_USER@$TLD "cd $APP_PATH; pm2 reload pwa"
+            else
+              echo "Not branch master, maybe next time."
+            fi

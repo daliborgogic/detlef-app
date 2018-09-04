@@ -10,9 +10,9 @@ import config  from './../nuxt.config.js'
 
 const nuxt = new Nuxt(config)
 
-if (nuxt.options.dev) {
-  new Builder(nuxt).build()
-}
+// if (nuxt.options.dev) {
+//   new Builder(nuxt).build()
+// }
 
 const getUrl = fn => {
   const srv = micro(fn)
