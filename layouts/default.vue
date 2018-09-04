@@ -9,6 +9,8 @@ div
 <script>
 import TheHeader from '@/components/TheHeader'
 
+const timeout = ms => new Promise(res => setTimeout(res, ms))
+
 export default {
   components: {
     TheHeader,
@@ -25,15 +27,24 @@ export default {
         navigator.serviceWorker.register('sw.js').then(reg => {
           reg.onupdatefound = () => {
             const installingWorker = reg.installing
-            installingWorker.onstatechange = () => {
+            installingWorker.onstatechange = async () => {
+              // States:
+              // 1 New or updated content is available
+              // 2 Caching complete. Future visits will work offline
+              let state = navigator.serviceWorker.controller !== null ? 2 : 1
               switch (installingWorker.state) {
                 case 'installed':
-                  // 1 New or updated content is available
-                  // 2 Caching complete. Future visits will work offline
                   this.$store.commit('setGotNew', {
                     show: true,
-                    state: navigator.serviceWorker.controller !== null ? 1 : 2
+                    state
                   })
+                  if (state === 2) {
+                    await timeout(6000)
+                    this.$store.commit('setGotNew', {
+                      show: false,
+                      state: null
+                    })
+                  }
                   break
                 case 'redundant':
                   // eslint-disable-next-line no-console
