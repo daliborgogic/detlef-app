@@ -46,8 +46,7 @@ jobs:
           name: rsync
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              rsync -e ssh -arvc \
-              --exclude .git \
+              rsync -e ssh -arvc --exclude .git \
               --exclude .circleci \
               --exclude assets \
               --exclude components \
@@ -63,7 +62,7 @@ jobs:
               --exclude workbox-config.js \
               ~/repo/ \
               $APP_USER@$TLD:$APP_PATH && \
-              ssh $APP_USER@$TLD "cd $APP_PATH; pm2 restart pwa --env production --update-env"
+              ssh $APP_USER@$TLD "cd $APP_PATH; pm2 restart pwa"
             else
               echo "Not branch master, maybe next time."
             fi
