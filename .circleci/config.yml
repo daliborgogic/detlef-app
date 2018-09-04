@@ -13,11 +13,6 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
       - run:
-          name: Install rsync
-          command: |
-            sudo apt-get update -y
-            sudo apt-get -y install rsync
-      - run:
           name: Install packages
           command: npm i
       - save_cache:
@@ -44,6 +39,11 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "c3:e7:f3:53:69:3a:11:2e:a1:f6:db:15:d9:16:af:47"
+      - run:
+          name: Install rsync
+          command: |
+            sudo apt-get update -y
+            sudo apt-get -y install rsync
       - run:
           name: Add public key
           command: |
