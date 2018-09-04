@@ -75,9 +75,12 @@ export default {
   },
 
   async mounted () {
-    window.addEventListener('resize', () => this.handleResize())
-
-    if (this.$refs.videoContainer) { this.handleResize() }
+    window.addEventListener('resize', () =>
+      this.handleResize()
+    )
+    if (this.$route.name === 'slug' && this.$refs.videoContainer) {
+      this.handleResize()
+    }
 
     const slides = [...document.getElementsByTagName('section')]
 
@@ -123,7 +126,7 @@ export default {
       return string.charAt(0).toUpperCase() + string.slice(1)
     },
     handleResize () {
-      if (this.$refs.videoContainer) {
+      if (this.$refs.videoContainer && this.$route.name === 'slug') {
         this.videoContainerHeight =  this.$refs.videoContainer[0].clientHeight || 0
         const iframe = this.$refs.video[0]
         iframe.setAttribute('height', this.videoContainerHeight)
