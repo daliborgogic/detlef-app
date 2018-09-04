@@ -53,16 +53,10 @@ module.exports = {
     '~/nuxt.config.js'
   ],
 
-  router: {
-    scrollBehavior: (to, from, savedPosition) => {
-      return { x: 0, y: 0 }
-    }
-  },
-
   workbox: {
-    importScripts: [
-      'custom-sw.js'
-    ],
+    // importScripts: [
+    //   'custom-sw.js'
+    // ],
     runtimeCaching: [
       {
         // Should be a regex string. Compiles into new RegExp('https://my-cdn.com/.*')
@@ -115,6 +109,7 @@ module.exports = {
       }
     }
   },
+
   render: {
     resourceHints: false,
     http2: {

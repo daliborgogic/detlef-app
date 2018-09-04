@@ -15,6 +15,8 @@ import { timeout } from  '~/plugins/helpers'
 export default {
   name: 'Index',
 
+  scrollToTop: true,
+
   components: { TheCard },
 
   head () {

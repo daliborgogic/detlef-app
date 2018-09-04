@@ -5,14 +5,28 @@ const config = require('./nuxt.config.js')
 const nuxt = new Nuxt(config)
 const r2 = require('r2')
 const { json } = require('micro')
-const md5 = require('./md5')
+const crypto = require('crypto')
 
 const {
   // APP_DOMAIN,
   MAILCHIMP_API_KEY,
+  NODE_ENV,
+  APP_DOMAIN,
   MAILCHIMP_LIST_ID,
   MAILCHIMP_INSTANCE
 } = process.env
+
+const isDev = NODE_ENV === 'development'
+
+/**
+ * Calculates the MD5 hash of a string.
+ *
+ * @param  {String} string - The string (or buffer).
+ * @return {String}        - The MD5 hash.
+ */
+const md5 = string => {
+  return crypto.createHash('md5').update(string).digest('hex')
+}
 
 // Enable live build & reloading on dev
 if (nuxt.options.dev) {
@@ -20,8 +34,9 @@ if (nuxt.options.dev) {
 }
 
 module.exports = async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*') // APP_DOMAIN
+  const allowOrigin = isDev ? '*' : APP_DOMAIN
 
+  res.setHeader('Access-Control-Allow-Origin', allowOrigin)
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PATCH')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Origin')
 

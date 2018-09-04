@@ -43,6 +43,10 @@ export default {
 
   methods: {
     async category (value) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
       this.$store.commit('setCategory', value)
       this.toogleNav()
     },
@@ -153,6 +157,7 @@ nav
   nav
     padding-bottom 16px
     & .link
+      font-size 18px
       padding-top 8px
       padding-bottom 8px
 @media (min-width 512px) and (max-width 1024px) and (orientation portrait)
