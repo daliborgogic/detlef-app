@@ -31,7 +31,7 @@ export default {
               // States:
               // 1 New or updated content is available
               // 2 Caching complete. Future visits will work offline
-              let state = navigator.serviceWorker.controller !== null ? 2 : 1
+              let state = navigator.serviceWorker.controller !== null ? 1 : 2
               switch (installingWorker.state) {
                 case 'installed':
                   this.$store.commit('setGotNew', {

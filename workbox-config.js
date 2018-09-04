@@ -6,7 +6,7 @@ module.exports = {
   cacheId: FIRST_NAME.toLowerCase(),
   globDirectory: '.nuxt/dist',
   clientsClaim: true,
-  // skipWaiting: true,
+  skipWaiting: true,
   directoryIndex: '/',
   globPatterns: ['**/*.{js,css}'],
   swDest: 'static/sw.js',
