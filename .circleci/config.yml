@@ -51,7 +51,7 @@ jobs:
       - run:
           name: Deploy
           command: |
-            rsync -avce ssh ~/repo/public $APP_USER@$TLD:/$APP_PATH && \
+            rsync -avce ssh ~/repo $APP_USER@$TLD:/$APP_PATH && \
             ssh $APP_USER@$TLD "cd $APP_PATH; pm2 reload pwa"
 
 workflows:
