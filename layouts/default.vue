@@ -23,7 +23,7 @@ export default {
 
   async mounted () {
     window.addEventListener('load', () => {
-      if ('serviceWorker' in navigator) {
+      if ('serviceWorker' in navigator && location.protocol === 'https:') {
         navigator.serviceWorker.register('sw.js').then(reg => {
           reg.onupdatefound = () => {
             const installingWorker = reg.installing

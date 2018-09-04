@@ -29,7 +29,8 @@
         .content(v-if="post[0].content" v-html="post[0].content")
         h3(v-else v-html="post[0].title")
         TheSubscribe
-        nuxt-link(to="/" @click.native="featured()") Back to Overview
+        nuxt-link(v-if="categorySlug === 'sticky'" to="/" @click.native="featured()") Back to Overview
+        nuxt-link(v-else to="/" @click.native="category(categorySlug)") More from {{ capitalize(categorySlug) }}
 </template>
 
 <script>
@@ -40,6 +41,7 @@ export default {
     TheLoading,
     TheSubscribe: () => import('@/components/TheSubscribe')
   },
+
   props: {
     post: {
       type: Array,
@@ -64,6 +66,9 @@ export default {
   },
 
   computed: {
+    categorySlug () {
+      return this.$store.getters.getCategory
+    },
     count () {
       return this.post[0].images.length
     }
@@ -114,6 +119,9 @@ export default {
   },
 
   methods:{
+    capitalize (string) {
+      return string.charAt(0).toUpperCase() + string.slice(1)
+    },
     handleResize () {
       if (this.$refs.videoContainer) {
         this.videoContainerHeight =  this.$refs.videoContainer[0].clientHeight || 0
@@ -122,6 +130,26 @@ export default {
       }
     },
     featured () { this.$store.dispatch('nuxtServerInit') },
+    category (value) {
+      let s
+      switch(value) {
+        case('advertising'):
+          s = 2
+          break
+        case('fashion'):
+          s = 3
+          break
+        case('sports'):
+          s = 4
+          break
+        case('film'):
+          s = 5
+          break
+        default:
+          s = 'sticky'
+      }
+      this.$store.commit('setCategory', s)
+    },
     wh () {
       return window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight
     },
