@@ -3,7 +3,7 @@ div
   TheHeader
   main
     nuxt
-  TheBreadCrumb
+  TheSnackBar
 </template>
 
 <script>
@@ -12,11 +12,43 @@ import TheHeader from '@/components/TheHeader'
 export default {
   components: {
     TheHeader,
-    TheBreadCrumb: () => import('@/components/TheBreadCrumb')
+    TheSnackBar: () => import('@/components/TheSnackBar')
   },
 
   beforeMount () {
     this.loadFont()
+  },
+
+  async mounted () {
+    window.addEventListener('load', () => {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').then(reg => {
+          reg.onupdatefound = () => {
+            const installingWorker = reg.installing
+            installingWorker.onstatechange = () => {
+              switch (installingWorker.state) {
+                case 'installed':
+                  // 1 New or updated content is available
+                  // 2 Caching complete. Future visits will work offline
+                  this.$store.commit('setGotNew', {
+                    show: true,
+                    state: navigator.serviceWorker.controller !== null ? 2 : 1
+                  })
+                  break
+                case 'redundant':
+                  // eslint-disable-next-line no-console
+                  console.error('The installing service worker became redundant.')
+                  break
+                default:
+                  // Ignore
+              }
+            }
+          }
+        }).catch(e =>
+          // eslint-disable-next-line no-console
+          console.error(`Error during service worker registration: ${e}`))
+      }
+    })
   },
 
   methods: {

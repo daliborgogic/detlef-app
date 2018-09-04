@@ -26,18 +26,43 @@ module.exports = {
     '~/nuxt.config.js'
   ],
 
-  modules: [
-    [
-      // https://pwa.nuxtjs.org/
-      '@nuxtjs/pwa', {
-        manifest: {
-          name: FIRST_NAME + ' ' + LAST_NAME,
-          short_name: FIRST_NAME
-          // display: 'fullscreen'
+  workbox: {
+    importScripts: [
+      'custom-sw.js'
+    ],
+    runtimeCaching: [
+      {
+        // Should be a regex string. Compiles into new RegExp('https://my-cdn.com/.*')
+        urlPattern: `https://${CMS_DOMAIN}/pages/.*`,
+        // Defaults to `networkFirst` if omitted
+        handler: 'cacheFirst',
+        // Defaults to `GET` if omitted
+        method: 'GET',
+        strategyOptions: {
+          cacheName: FIRST_NAME.toLowerCase() + 's-pages',
+          cacheExpiration: {
+            maxEntries: 10,
+            maxAgeSeconds: 300
+          }
+        }
+      },
+      {
+        // Should be a regex string. Compiles into new RegExp('https://my-cdn.com/.*')
+        urlPattern: `https://${CMS_DOMAIN}/posts/.*`,
+        // Defaults to `networkFirst` if omitted
+        handler: 'cacheFirst',
+        // Defaults to `GET` if omitted
+        method: 'GET',
+        strategyOptions: {
+          cacheName: FIRST_NAME.toLowerCase() + 's-posts',
+          cacheExpiration: {
+            maxEntries: 100,
+            maxAgeSeconds: 300
+          }
         }
       }
     ]
-  ],
+  },
 
   build: {
     parallel: true,
