@@ -11,7 +11,24 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'msapplication-TileColor', content: '#ffffff' },
       { name: 'msapplication-config', content: '/icons/browserconfig.xml' },
-      { name: 'theme-color', content: '#FFFFFF' }
+      { name: 'theme-color', content: '#FFFFFF' },
+
+      /*
+        Open Graph
+        http://ogp.me/
+
+        Twitter Card Validator
+        https://cards-dev.twitter.com/validator
+
+        Facebook Debug
+        https://developers.facebook.com/tools/debug/sharing
+      */
+      { property: 'og:image', content: '/icons/og.jpeg' },
+      { property: 'og:image:width', content: '1200' },
+      { property: 'og:image:height', content: '628' },
+      { property: 'og:title', content: '###' },
+      { property: 'og:description', content: '###' },
+      { property: 'og:url', content: `https://${APP_DOMAIN}` }
     ],
     link: [
       { rel: 'apple-touch-icon', sizes: '180x180', href: '/icons/apple-touch-icon.png' },
