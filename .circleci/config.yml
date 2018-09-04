@@ -32,16 +32,16 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
+          name: Run tests
+          command: |
+            npm test
+      - run:
           name: Build application
           command: npm run build
       - run:
           name: Build service worker
           command: |
             npm run workbox
-      - run:
-          name: Run tests
-          command: |
-            npm test
       - run:
           name: rsync
           command: |
