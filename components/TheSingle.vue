@@ -184,7 +184,7 @@ img
   vertical-align middle
 img
   position absolute
-  border 1px solid #f2f2f2
+  // border 1px solid #f2f2f2
   top 0
   left 50%
   transform translateX(-50%)
