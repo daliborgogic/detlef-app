@@ -4,7 +4,7 @@
 
 [![CircleCI](https://circleci.com/gh/daliborgogic/detlef-app.svg?style=svg)](https://circleci.com/gh/daliborgogic/detlef-app)
 
-<img src="https://i.imgur.com/Zx2pSSs.png">
+<img src="https://i.imgur.com/l0O1aLb.png?1">
 
 ### Environment Variables
 

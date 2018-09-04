@@ -127,6 +127,8 @@ nav
     display none
   header
     height 56px
+    > a
+      font-size 18px
   .icon-menu
     display block
     vertical-align middle
