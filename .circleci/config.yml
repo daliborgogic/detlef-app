@@ -13,11 +13,6 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
       - run:
-          name: Install rsync
-          command: |
-            sudo apt-get update -y
-            sudo apt-get -y install rsync
-      - run:
           name: Install packages
           command: npm i
       - save_cache:
@@ -45,13 +40,18 @@ jobs:
           fingerprints:
             - "c3:e7:f3:53:69:3a:11:2e:a1:f6:db:15:d9:16:af:47"
       - run:
+          name: Install rsync
+          command: |
+            sudo apt-get update -y
+            sudo apt-get -y install rsync
+      - run:
           name: Add public key
           command: |
             echo $REMOTE_HOSTKEY >> ~/.ssh/known_hosts
       - run:
           name: Deploy
           command: |
-            rsync -avce ssh ./.nuxt ./node_modules ./static ./package.json ./index.js ./md5.js $APP_USER@$TLD:/$APP_PATH && \
+            rsync -avce ssh ./.nuxt ./node_modules ./static ./package.json ./index.js ./nuxt.config.js ./md5.js $APP_USER@$TLD:/$APP_PATH && \
             ssh $APP_USER@$TLD "cd $APP_PATH; pm2 reload pwa"
 
 workflows:

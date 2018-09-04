@@ -10,8 +10,7 @@ import config  from './../nuxt.config.js'
 
 const nuxt = new Nuxt(config)
 
-if (process.env !== 'production') {
-  console.log('Not in production mode, building...')
+if (nuxt.options.dev) {
   new Builder(nuxt).build()
 }
 
