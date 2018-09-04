@@ -21,6 +21,8 @@ header(ref="header")
 
 
 <script>
+import { timeout } from  '~/plugins/helpers'
+
 export default {
   data () {
     return {
@@ -34,7 +36,7 @@ export default {
     this.isMobile = window.matchMedia('(max-width: 512px)')
 
     if (!this.isMobile.matches) {
-      await this.timeout(3000)
+      await timeout(3000)
       this.$refs.header.classList.add('loaded')
     }
   },
@@ -47,9 +49,6 @@ export default {
     toogleNav () {
       if (this.isMobile.matches)
         this.showNav = !this.showNav
-    },
-    timeout (ms) {
-      new Promise(res => setTimeout(res, ms))
     }
   }
 }
@@ -81,7 +80,7 @@ header
     text-decoration none
   > a
     color #000
-    font-size 20px
+    font-size 24px
     letter-spacing 0.25px
     span
       color #999

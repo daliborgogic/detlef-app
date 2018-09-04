@@ -43,7 +43,7 @@ export default {
   font-size 23px
   line-height 1.3
   max-width 362px
-  margin 25vh auto
+  margin 128px auto 25vh auto
   padding-left 16px
   padding-right 16px
 .content

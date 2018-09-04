@@ -46,13 +46,18 @@ module.exports = {
   ],
 
   plugins: [
-    { src: '~/plugins/isotope', ssr: false },
-    // { src: '~/plugins/in-view', ssr: false }
+    { src: '~/plugins/isotope', ssr: false }
   ],
 
   watch: [
     '~/nuxt.config.js'
   ],
+
+  router: {
+    scrollBehavior: (to, from, savedPosition) => {
+      return { x: 0, y: 0 }
+    }
+  },
 
   workbox: {
     importScripts: [

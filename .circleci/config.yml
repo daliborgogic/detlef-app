@@ -48,7 +48,7 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               rsync -e ssh -arvc \
               --exclude .git \
-              --exclude .circle \
+              --exclude .circleci \
               --exclude assets \
               --exclude components \
               --exclude layouts \

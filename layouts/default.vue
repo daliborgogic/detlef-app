@@ -8,8 +8,7 @@ div
 
 <script>
 import TheHeader from '@/components/TheHeader'
-
-const timeout = ms => new Promise(res => setTimeout(res, ms))
+import { timeout } from  '~/plugins/helpers'
 
 export default {
   components: {

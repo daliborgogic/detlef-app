@@ -11,6 +11,7 @@
 
 <script>
 import TheCard from '@/components/TheCard'
+import { timeout } from  '~/plugins/helpers'
 export default {
   name: 'Index',
 
@@ -73,9 +74,10 @@ export default {
   },
   methods: {
     filter (key) { this.$refs.isotope.filter(key) },
-    setCategory (category, slug) {
-      this.$store.commit('setCategory', category)
+    async setCategory (category, slug) {
       this.$router.push('/' + slug)
+      await timeout(500)
+      this.$store.commit('setCategory', category)
     }
   }
 }

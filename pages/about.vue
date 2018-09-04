@@ -21,7 +21,7 @@ div
   letter-spacing 0.2px
   line-height 1.3
   max-width 680px
-  margin 25vh auto
+  margin 128px auto 25vh auto
   padding-left 16px
   padding-right 16px
   >>> h1

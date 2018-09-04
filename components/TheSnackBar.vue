@@ -3,11 +3,11 @@
   .container
     .bar(ref="bar" v-if="willShow" :class="{active: willShow }")
       div
-        span(v-if="state === 1") New or updated content is available
+        span(v-if="state === 1") New content is available
         span(v-else) Caching complete. Future visits will work offline
       div
+        span.cta(@click="dismiss") DISMISS
         span.cta(v-if="state === 1" @click="reload") REFRESH
-        span.cta(v-else @click="dismiss") DISMISS
 </template>
 
 <script>
@@ -49,7 +49,7 @@ export default {
   font-size 14px
   line-height 1.3
   letter-spacing 1px
-  min-width 400px
+  width 400px
   display flex
   font-weight 400
   flex-direction column
