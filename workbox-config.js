@@ -1,10 +1,11 @@
 require('dotenv').config()
 
 const { FIRST_NAME, CMS_DOMAIN } = process.env
+const isDev = () => process.env.NODE_ENV === 'development'
 
 module.exports = {
   cacheId: FIRST_NAME.toLowerCase(),
-  globDirectory: '.nuxt/dist',
+  globDirectory: isDev ? '.nuxt' : '.nuxt/dist',
   clientsClaim: true,
   skipWaiting: true,
   directoryIndex: '/',
