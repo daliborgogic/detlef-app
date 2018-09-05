@@ -7,6 +7,12 @@ import r2 from 'r2'
 export default {
   name: 'Privacy',
 
+  head () {
+    return {
+      title: 'Privacy Policy'
+    }
+  },
+
   async asyncData () {
     const res = await r2(`https://${process.env.CMS_DOMAIN}/wp-json/wp/v2/pages/3`).response
     const privacy = await res.json()

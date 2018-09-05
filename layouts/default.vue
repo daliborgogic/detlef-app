@@ -8,7 +8,7 @@ div
 
 <script>
 import TheHeader from '@/components/TheHeader'
-import { timeout } from  '~/plugins/helpers'
+import { timeout } from  '~/helpers'
 
 export default {
   components: {

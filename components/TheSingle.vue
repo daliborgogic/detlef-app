@@ -30,10 +30,11 @@
         h3(v-else v-html="post[0].title")
         TheSubscribe
         nuxt-link(v-if="categorySlug === 'sticky'" to="/" @click.native="featured()") Back to Overview
-        nuxt-link(v-else to="/" @click.native="category(categorySlug)") More from {{ capitalize(categorySlug) }}
+        nuxt-link(v-else to="/" @click.native="category(categorySlug)") More from {{ setCapital(categorySlug) }}
 </template>
 
 <script>
+import { capitalize } from '@/helpers'
 import TheLoading from '@/components/TheLoading'
 
 export default {
@@ -66,6 +67,9 @@ export default {
   },
 
   computed: {
+    setCapital (string) {
+      return capitalize(string)
+    },
     categorySlug () {
       return this.$store.getters.getCategory
     },
@@ -122,9 +126,6 @@ export default {
   },
 
   methods:{
-    capitalize (string) {
-      return string.charAt(0).toUpperCase() + string.slice(1)
-    },
     handleResize () {
       if (this.$refs.videoContainer && this.$route.name === 'slug') {
         this.videoContainerHeight =  this.$refs.videoContainer[0].clientHeight || 0

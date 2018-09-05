@@ -21,7 +21,7 @@ header(ref="header")
 
 
 <script>
-import { timeout } from  '~/plugins/helpers'
+import { timeout } from  '~/helpers'
 
 export default {
   data () {
