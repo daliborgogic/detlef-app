@@ -79,9 +79,5 @@ export default {
   vertical-align middle
 @media (max-width 512px)
   .container
-    max-width 0
-  .container
-  .social
-  .content
-    width 100%
+    max-width 100%
 </style>

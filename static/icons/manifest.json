@@ -1,6 +1,8 @@
 {
-  "name": "Detlef",
+  "name": "Detlef Schneider",
   "short_name": "Detlef",
+  "description": "Detlef Schneider's Progressive Web",
+  "lang": "en",
   "icons": [
     {
       "src": "/icons/android-chrome-192x192.png",
@@ -13,8 +15,15 @@
       "type": "image/png"
     }
   ],
+  "orientation": "portarit",
   "theme_color": "#ffffff",
-  "start_url": "/",
+  "start_url": ".",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "standalone",
+  "author": {
+    "name": "Dalibor Gogic",
+    "website": "https://daliborgogic.com",
+    "github": "https://github.com/daliborgogic",
+    "source-repo": "https://github.com/daliborgogic/detlef-app"
+  }
 }
