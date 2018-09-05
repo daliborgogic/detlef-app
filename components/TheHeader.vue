@@ -82,6 +82,7 @@ header
     background-color white
   a
     text-decoration none
+    outline 0
   > a
     color #000
     font-size 24px

@@ -5,9 +5,9 @@
     .s(v-if="p.img")
       img(
         ref="img"
-        :src="p.img.sizes.large"
+        :src="p.img.sizes.w1920"
         :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
-        :datasrcset="p.img.sizes.w400 + ' 400w, ' + p.img.sizes.w800 + ' 800w, ' + p.img.url + ' 2000w'"
+        :datasrcset="p.img.sizes.w400 + ' 400w, ' + p.img.sizes.w800 + ' 800w, ' + p.img.sizes.w1920 + ' 2000w'"
         :alt="p.img.alt_text"
       )
       TheLoading
@@ -94,7 +94,7 @@ export default {
               this.observer.unobserve(image)
             }
             if (window.matchMedia('(min-width: 512px)').matches)
-              this.scrollIt(change.target, 1000)
+              this.scrollIt(change.target, 500)
           }
         })
       },{
