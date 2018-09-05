@@ -33,7 +33,7 @@ export default {
   },
 
   async mounted () {
-    this.isMobile = window.matchMedia('(max-width: 512px)')
+    this.isMobile = window.matchMedia('(max-width: 1024px)')
 
     if (!this.isMobile.matches) {
       await timeout(3000)

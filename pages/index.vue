@@ -120,6 +120,8 @@ export default {
 @media (max-width 512px)
   .container
     padding-top 0
+    padding-left 16px
+    padding-right 16px
   .gutter
     width 0
   .grid-sizer
