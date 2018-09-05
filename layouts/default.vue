@@ -7,6 +7,7 @@ div
 </template>
 
 <script>
+import io from 'socket.io-client'
 import TheHeader from '@/components/TheHeader'
 import { timeout } from  '~/helpers'
 
@@ -21,12 +22,55 @@ export default {
   },
 
   async mounted () {
+    const socket = io.connect()
+
+    socket.on('hooks', hook => {
+      const { id, title, slug, sticky, content, acf, better_featured_image } = hook
+
+      const postMap =  {
+        id,
+        title: title.rendered,
+        slug: slug,
+        sticky,
+        hide: acf.hide,
+        content: content.rendered,
+        categories: hook.categories,
+        featuredImage: better_featured_image,
+        images: acf.gallery_images
+      }
+
+      this.$store.commit('setPost', [postMap])
+
+      let posts = this.$store.state.posts
+
+      const getId = posts.findIndex(i => { return i.id === hook.id })
+
+      posts[getId].title = title.rendered
+      posts[getId].slug = slug,
+      posts[getId].sticky = sticky
+      posts[getId].hide = acf.hide
+      posts[getId].content = content.rendered
+      posts[getId].categories = hook.categories
+      posts[getId].featuredImage = better_featured_image
+      posts[getId].images = acf.gallery_images
+
+      console.log([postMap]) //eslint-disable-line
+
+      // console.log({hook}) // eslint-disable-line
+      this.$store.commit('setPosts', posts)
+    })
+
     window.addEventListener('load', () => {
       if ('serviceWorker' in navigator && location.protocol === 'https:') {
+        //var preventDevToolsReloadLoop
         navigator.serviceWorker.register('sw.js').then(reg => {
+          //if (preventDevToolsReloadLoop) return
+          //preventDevToolsReloadLoop = true
+
           reg.onupdatefound = () => {
             const installingWorker = reg.installing
             installingWorker.onstatechange = async () => {
+
               // States:
               // 1 New or updated content is available
               // 2 Caching complete. Future visits will work offline
@@ -54,6 +98,10 @@ export default {
               }
             }
           }
+          navigator.serviceWorker.addEventListener('message', event =>
+            // eslint-disable-next-line no-console
+            console.log(event.data.message)
+          )
         }).catch(e =>
           // eslint-disable-next-line no-console
           console.error(`Error during service worker registration: ${e}`))

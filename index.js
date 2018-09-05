@@ -4,8 +4,10 @@ const { Nuxt, Builder } = require('nuxt-edge')
 const config = require('./nuxt.config.js')
 const nuxt = new Nuxt(config)
 const r2 = require('r2')
-const { json } = require('micro')
+const micro = require('micro');
+const { json } = micro
 const crypto = require('crypto')
+const url = require('url')
 
 const {
   // APP_DOMAIN,
@@ -13,7 +15,9 @@ const {
   NODE_ENV,
   APP_DOMAIN,
   MAILCHIMP_LIST_ID,
-  MAILCHIMP_INSTANCE
+  MAILCHIMP_INSTANCE,
+  PORT,
+  HOST
 } = process.env
 
 const isDev = NODE_ENV === 'development'
@@ -33,7 +37,7 @@ if (nuxt.options.dev) {
   new Builder(nuxt).build()
 }
 
-module.exports = async (req, res) => {
+const server = micro(async (req, res) => {
   const allowOrigin = isDev ? '*' : APP_DOMAIN
 
   res.setHeader('Access-Control-Allow-Origin', allowOrigin)
@@ -58,17 +62,30 @@ module.exports = async (req, res) => {
   }
 
   if (req.method === 'POST') {
+    const parsed = url.parse(req.url, true)
     res.setHeader('Content-Type', 'application/json')
     const body = await json(req)
     const { email_address } = body
-    const obj = {
-      email_address,
-      status: 'pending'  //Double Opt In
-    }
-    const response = await r2.post(`https://${MAILCHIMP_INSTANCE}.api.mailchimp.com/3.0/lists/${MAILCHIMP_LIST_ID}/members`, {headers, json: obj}).response
-    const data = await response.json()
+    if (email_address) {
+      const obj = {
+        email_address,
+        status: 'pending'  //Double Opt In
+      }
+      const response = await r2.post(`https://${MAILCHIMP_INSTANCE}.api.mailchimp.com/3.0/lists/${MAILCHIMP_LIST_ID}/members`, {headers, json: obj}).response
+      const data = await response.json()
 
-    return { data }
+      return { data }
+    } else {
+      io.emit('hooks', body)
+      return { 'status': 200}
+    }
+
   }
   return nuxt.render(req, res)
-}
+})
+
+const io = require('socket.io')(server)
+
+server.listen(PORT, HOST)
+
+module.exports = () =>  console.log(`Listening on ${HOST}:${PORT}`)

@@ -6,6 +6,7 @@ const createStore = () => {
     state: {
       category: 'sticky',
       posts: [],
+      post: [],
       gotNew: {
         show: false,
         state: 1
@@ -15,11 +16,33 @@ const createStore = () => {
     mutations: {
       setCategory: (state, value) => state.category = value,
       setPosts: (state, value) => state.posts = value,
+      setPost: (state, value) => state.post = value,
       setGotNew: (state, value) => state.gotNew = value
     },
 
     actions: {
-      async nuxtServerInit ({ commit }) {
+      async nuxtServerInit ({ commit }, { params, error }) {
+        if (params.slug) {
+          const res = await r2(`https://${process.env.CMS_DOMAIN}/wp-json/wp/v2/posts?slug=${params.slug}`).response
+          const posts = await res.json()
+
+          if (!Array.isArray(posts) || !posts.length) {
+            // array does not exist, is not an array, or is empty
+            error({ statusCode: 404, message: 'Post not found' })
+          } else {
+            const post = posts.map(p => {
+              const { id, title, content, acf  } = p
+
+              return {
+                id,
+                title: title.rendered,
+                content: content.rendered,
+                images: acf.gallery_images
+              }
+            })
+            commit('setPost', post)
+          }
+        }
         const featured = await r2(`https://${process.env.CMS_DOMAIN}/wp-json/wp/v2/posts?per_page=100`).response
         const posts = await featured.json()
 
@@ -38,7 +61,6 @@ const createStore = () => {
             images: acf.gallery_images
           }
         })
-
         commit('setPosts', mapPosts)
       }
     },
