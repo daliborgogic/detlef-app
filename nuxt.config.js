@@ -5,6 +5,9 @@ const { CMS_DOMAIN, APP_DOMAIN, FIRST_NAME, LAST_NAME } = process.env
 module.exports = {
   env: { CMS_DOMAIN, APP_DOMAIN, FIRST_NAME, LAST_NAME },
   head: {
+    htmlAttrs: {
+      lang: 'en',
+    },
     title: '###',
     meta: [
       { charset: 'utf-8' },
