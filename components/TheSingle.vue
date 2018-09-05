@@ -30,7 +30,7 @@
         h3(v-else v-html="post[0].title")
         TheSubscribe
         nuxt-link(v-if="categorySlug === 'sticky'" to="/" @click.native="featured()") Back to Overview
-        nuxt-link(v-else to="/" @click.native="category(categorySlug)") More from {{ setCapital }}
+        nuxt-link(v-else to="/" @click.native="category(categorySlug)") More from {{ setCapital() }}
 </template>
 
 <script>
