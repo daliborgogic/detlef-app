@@ -72,8 +72,8 @@ header
   display flex
   align-items center
   justify-content space-between
-  padding-left 16px
-  padding-right 16px
+  padding-left 30px
+  padding-right 30px
   transition all 250ms ease-in
   // margin-bottom 16px
   // outline 1px dashed tomato

@@ -93,11 +93,11 @@ export default {
 
 <style lang="stylus" scoped>
 .container
-  max-width 1292px // 16px + 1260px + 16px
+  max-width 1320px // 30px + 1260px + 30px
   margin 0 auto 25vh auto
   padding-top 16px
-  padding-left 16px
-  padding-right 16px
+  padding-left 30px
+  padding-right 30px
 .gutter
   width 30px
 .grid-sizer
@@ -130,10 +130,13 @@ export default {
   .isVideo
     margin-bottom 32px
 @media (min-width 512px) and (max-width 1024px) and (orientation portrait)
+  .container
+    padding-left 30px
+    padding-right 30px
   .gutter
-    width 16px
+    width 30px
   .grid-sizer
   .item
-    width calc(50% - 8px)
+    width calc(50% - 15px)
 </style>
 
