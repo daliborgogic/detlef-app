@@ -29,8 +29,8 @@
         .content(v-if="post[0].content" v-html="post[0].content")
         h3(v-else v-html="post[0].title")
         TheSubscribe
-        nuxt-link(v-if="categorySlug === 'sticky'" to="/" @click.native="featured()") Back to Overview
-        nuxt-link(v-else to="/" @click.native="category(categorySlug)") More from {{ setCapital(categorySlug) }}
+        nuxt-link(v-if="categorySlug() === 'sticky'" to="/" @click.native="featured()") Back to Overview
+        nuxt-link(v-else to="/" @click.native="category(categorySlug())") More from {{ setCapital() }}
 </template>
 
 <script>
@@ -67,12 +67,6 @@ export default {
   },
 
   computed: {
-    setCapital (string) {
-      return capitalize(string)
-    },
-    categorySlug () {
-      return this.$store.getters.getCategory
-    },
     count () {
       return this.post[0].images.length
     }
@@ -125,7 +119,13 @@ export default {
       this.observer.disconnect()
   },
 
-  methods:{
+  methods: {
+    categorySlug () {
+      return this.$store.getters.getCategory
+    },
+    setCapital () {
+      return capitalize(this.categorySlug())
+    },
     handleResize () {
       if (this.$refs.videoContainer && this.$route.name === 'slug') {
         this.videoContainerHeight =  this.$refs.videoContainer[0].clientHeight || 0
@@ -207,6 +207,8 @@ section
   padding-bottom 80px
 .s
   width 100%
+  padding-left 30px
+  padding-right 30px
   height calc(100vh - 160px)
   position relative
 img
@@ -260,6 +262,9 @@ img
   width 100%
   height 100%
 @media (max-width 512px)
+  .s
+    padding-left 0
+    padding-right 0
   .external
   .externalImg
     position relative

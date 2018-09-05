@@ -48,6 +48,7 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               rsync -e ssh -arvc --exclude .git \
               --exclude .circleci \
+              --exlcude helpers \
               --exclude assets \
               --exclude components \
               --exclude layouts \
@@ -64,5 +65,5 @@ jobs:
               $APP_USER@$TLD:$APP_PATH && \
               ssh $APP_USER@$TLD "cd $APP_PATH; pm2 restart pwa"
             else
-              echo "Not branch master, maybe next time."
+              echo "Not branch master."
             fi
