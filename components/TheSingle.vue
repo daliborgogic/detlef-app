@@ -5,9 +5,9 @@
     .s(v-if="p.img")
       img(
         ref="img"
-        :src="p.img.sizes.large"
+        :src="p.img.sizes.w1920"
         :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
-        :datasrcset="p.img.sizes.w400 + ' 400w, ' + p.img.sizes.w800 + ' 800w, ' + p.img.url + ' 2000w'"
+        :datasrcset="p.img.sizes.w400 + ' 400w, ' + p.img.sizes.w800 + ' 800w, ' + p.img.sizes.w1920 + ' 2000w'"
         :alt="p.img.alt_text"
       )
       TheLoading
@@ -30,10 +30,11 @@
         h3(v-else v-html="post[0].title")
         TheSubscribe
         nuxt-link(v-if="categorySlug === 'sticky'" to="/" @click.native="featured()") Back to Overview
-        nuxt-link(v-else to="/" @click.native="category(categorySlug)") More from {{ capitalize(categorySlug) }}
+        nuxt-link(v-else to="/" @click.native="category(categorySlug)") More from {{ setCapital(categorySlug) }}
 </template>
 
 <script>
+import { capitalize } from '@/helpers'
 import TheLoading from '@/components/TheLoading'
 
 export default {
@@ -66,6 +67,9 @@ export default {
   },
 
   computed: {
+    setCapital (string) {
+      return capitalize(string)
+    },
     categorySlug () {
       return this.$store.getters.getCategory
     },
@@ -94,7 +98,7 @@ export default {
               this.observer.unobserve(image)
             }
             if (window.matchMedia('(min-width: 512px)').matches)
-              this.scrollIt(change.target, 1000)
+              this.scrollIt(change.target, 500)
           }
         })
       },{
@@ -122,9 +126,6 @@ export default {
   },
 
   methods:{
-    capitalize (string) {
-      return string.charAt(0).toUpperCase() + string.slice(1)
-    },
     handleResize () {
       if (this.$refs.videoContainer && this.$route.name === 'slug') {
         this.videoContainerHeight =  this.$refs.videoContainer[0].clientHeight || 0

@@ -21,7 +21,7 @@ header(ref="header")
 
 
 <script>
-import { timeout } from  '~/plugins/helpers'
+import { timeout } from  '~/helpers'
 
 export default {
   data () {
@@ -82,6 +82,7 @@ header
     background-color white
   a
     text-decoration none
+    outline 0
   > a
     color #000
     font-size 24px

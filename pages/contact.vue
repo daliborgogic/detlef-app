@@ -29,6 +29,11 @@
 import r2 from 'r2'
 
 export default {
+  head () {
+    return {
+      title: 'Contact'
+    }
+  },
   async asyncData () {
     const res = await r2(`https://${process.env.CMS_DOMAIN}/wp-json/wp/v2/pages/17`).response
     const contact = await res.json()
@@ -77,4 +82,7 @@ export default {
   width 24px
   height auto
   vertical-align middle
+@media (max-width 512px)
+  .container
+    max-width 100%
 </style>

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { timeout } from  '~/plugins/helpers'
+import { timeout } from  '@/helpers'
 import r2 from 'r2'
 
 export default {

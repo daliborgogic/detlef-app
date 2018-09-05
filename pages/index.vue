@@ -11,7 +11,7 @@
 
 <script>
 import TheCard from '@/components/TheCard'
-import { timeout } from  '~/plugins/helpers'
+import { timeout, capitalize } from  '~/helpers'
 export default {
   name: 'Index',
 
@@ -21,7 +21,7 @@ export default {
 
   head () {
     return {
-      titleTemplate: 'Detlef Schneider — Photographer'
+      titleTemplate: this.setFilter(this.$store.getters.getCategory) + 'Detlef Schneider — Photographer'
     }
   },
 
@@ -75,6 +75,12 @@ export default {
     filterOption () { this.$refs.isotope.filter(this.$store.getters.getCategory) }
   },
   methods: {
+    setFilter (string) {
+      if (string === 'sticky') {
+        return ''
+      }
+      return capitalize(string) + ' '
+    },
     filter (key) { this.$refs.isotope.filter(key) },
     async setCategory (category, slug) {
       this.$router.push('/' + slug)
@@ -88,7 +94,7 @@ export default {
 <style lang="stylus" scoped>
 .container
   max-width 1292px // 16px + 1260px + 16px
-  margin 0 auto 10vh auto
+  margin 0 auto 25vh auto
   padding-top 16px
   padding-left 16px
   padding-right 16px
