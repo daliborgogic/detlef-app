@@ -63,6 +63,7 @@ const server = micro(async (req, res) => {
 
   if (req.method === 'POST') {
     const parsed = url.parse(req.url, true)
+    // console.log(parsed)
     res.setHeader('Content-Type', 'application/json')
     const body = await json(req)
     const { email_address } = body
@@ -76,7 +77,10 @@ const server = micro(async (req, res) => {
 
       return { data }
     } else {
-      io.emit('hooks', body)
+      io.emit('hooks', {
+        body,
+        hook: parsed.path
+      })
       return { 'status': 200}
     }
 

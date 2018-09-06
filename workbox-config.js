@@ -22,21 +22,11 @@ module.exports = {
   runtimeCaching: [
     {
       urlPattern: new RegExp('/_nuxt/.*'),
-      handler: 'cacheFirst',
-      options: {
-        cacheableResponse: {
-          statuses: [0, 200]
-        }
-      }
+      handler: 'cacheFirst'
     },
     {
       urlPattern: new RegExp('/.*'),
-      handler: 'networkFirst',
-      options: {
-        cacheableResponse: {
-          statuses: [0, 200]
-        }
-      }
+      handler: 'networkFirst'
     }
   ]
 };

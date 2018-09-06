@@ -1,12 +1,13 @@
 <template lang="pug">
 .container(ref="container")
+  //- pre {{ update }}
   no-ssr
     isotope(ref="isotope" :options="option" :list="list")
       div(v-for="(l, index) in list" :key="index" :class="{isVideo: l.categories.includes(5)}")
         .gutter
         .grid-sizer
         div(@click="setCategory(l.categories[0], l.slug)")
-          TheCard(:card="l")
+          TheCard(:card="l" :id="index")
 </template>
 
 <script>
@@ -34,6 +35,9 @@ export default {
   },
 
   computed: {
+    // update () {
+    //   return this.$store.state.update
+    // },
     isVideo () {
       return this.$store.state.category
     },
@@ -65,14 +69,18 @@ export default {
         }
       }
     },
-    filterOption () { return this.$store.state.category },
+    filterOption () {
+       return this.$store.state.category
+    },
     list () {
-      return this.$store.state.posts
+      return this.$store.getters.getPosts
     }
   },
 
   watch: {
-    filterOption () { this.$refs.isotope.filter(this.$store.getters.getCategory) }
+    filterOption () {
+      this.$refs.isotope.filter(this.$store.getters.getCategory)
+    }
   },
   methods: {
     setFilter (string) {
@@ -87,6 +95,14 @@ export default {
       await timeout(500)
       this.$store.commit('setCategory', category)
     }
+
+    // replace () {
+    //   this.list = [this.$store.state.replace]
+    // },
+
+    // add () {
+    //   this.list.push({})
+    // }
   }
 }
 </script>

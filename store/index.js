@@ -7,6 +7,9 @@ const createStore = () => {
       category: 'sticky',
       posts: [],
       post: [],
+      postUpdate: {},
+      postDelete: {},
+      pageUpdate: {},
       gotNew: {
         show: false,
         state: 1
@@ -17,7 +20,9 @@ const createStore = () => {
       setCategory: (state, value) => state.category = value,
       setPosts: (state, value) => state.posts = value,
       setPost: (state, value) => state.post = value,
-      setGotNew: (state, value) => state.gotNew = value
+      setGotNew: (state, value) => state.gotNew = value,
+      setPostUpdate: (state, value) => state.postUpdate = value,
+      setPostDelete: (state, value) => state.postDelete = value
     },
 
     actions: {
@@ -66,6 +71,29 @@ const createStore = () => {
     },
 
     getters: {
+      getPosts: state => {
+        // Post updated
+        if (Object.keys(state.postUpdate).length !== 0) {
+          const insert = (arr, index, newItem) => [
+            // part of the array before the specified index
+            ...arr.slice(0, index),
+            // inserted item
+            newItem,
+            // part of the array after the specified index
+            ...arr.slice(index)
+          ]
+          return insert(state.posts, 0, state.postUpdate)
+        }
+
+        // Post deleted
+        if (Object.keys(state.postDelete).length !== 0) {
+          return state.posts.filter(element => {
+            return element.id !== state.postDelete.id
+          })
+        }
+
+        return state.posts
+      },
       getCategory: state => {
         let s
         let value = state.category
