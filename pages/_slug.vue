@@ -20,15 +20,16 @@ export default {
       error({ statusCode: 404, message: 'Post not found' })
     } else {
       const post = response.map(post => {
-      const { id, title, content, acf  } = post
+      const { id, title, content, acf, categories } = post
         return {
           id,
           title: title.rendered,
           content: content.rendered,
-          images: acf.gallery_images
+          images: acf.gallery_images,
+          categories
         }
       })
-      return { post }
+       return { post }
     }
   }
 }

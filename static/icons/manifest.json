@@ -15,9 +15,9 @@
       "type": "image/png"
     }
   ],
-  "orientation": "portarit",
+  "orientation": "portrait",
   "theme_color": "#ffffff",
-  "start_url": "/?utm_source=a2hs",
+  "start_url": ".",
   "background_color": "#ffffff",
   "display": "standalone",
   "author": {
