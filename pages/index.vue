@@ -36,7 +36,7 @@ export default {
 
   computed: {
     // update () {
-    //   return this.$store.state.update
+    //   return this.$store.state.postUpdate
     // },
     isVideo () {
       return this.$store.state.category

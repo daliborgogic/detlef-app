@@ -88,6 +88,22 @@ const createStore = () => {
           return insert(state.posts, 0, state.postNew)
         }
 
+        // Post need to be updated
+        if (Object.keys(state.postUpdate).length !== 0) {
+          const posts = state.posts
+
+          const updatePost = (list, updated) => {
+            const index = posts.findIndex(item => item.id === updated[0].id)
+            return [
+              ...list.slice(0, index),
+              ...updated,
+              ...list.slice(index + 1)
+            ]
+          }
+
+          return updatePost(posts, [state.postUpdate])
+        }
+
         // Post deleted
         if (Object.keys(state.postDelete).length !== 0) {
           return state.posts.filter(element => {
