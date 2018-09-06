@@ -1,7 +1,6 @@
 <template lang="pug">
 .div(ref="div")
   section(v-for="(p, index) in post[0].images" v-if="p.image_visibility" :key="index")
-
     .s(v-if="p.img")
       img(
         ref="img"
@@ -29,12 +28,13 @@
         .content(v-if="post[0].content" v-html="post[0].content")
         h3(v-else v-html="post[0].title")
         TheSubscribe
-        nuxt-link(v-if="categorySlug() === 'sticky'" to="/" @click.native="featured()") Back to Overview
-        nuxt-link(v-else to="/" @click.native="category(categorySlug())") More from {{ setCapital() }}
+        //- Back to Overview
+        nuxt-link.cat(v-for="c, index in post[0].categories" to="/" @click.native="categorySet(c)" :key="index") {{ categoryName(c) }}
+          span(v-if="post[0].categories.slice(-1)[0] === c")
+          span(v-else) ,&nbsp;
 </template>
 
 <script>
-import { capitalize } from '@/helpers'
 import TheLoading from '@/components/TheLoading'
 
 export default {
@@ -120,12 +120,6 @@ export default {
   },
 
   methods: {
-    categorySlug () {
-      return this.$store.getters.getCategory
-    },
-    setCapital () {
-      return capitalize(this.categorySlug())
-    },
     handleResize () {
       if (this.$refs.videoContainer && this.$route.name === 'slug') {
         this.videoContainerHeight =  this.$refs.videoContainer[0].clientHeight || 0
@@ -134,25 +128,28 @@ export default {
       }
     },
     featured () { this.$store.dispatch('nuxtServerInit') },
-    category (value) {
-      let s
+    categoryName (value) {
+      let cat
       switch(value) {
-        case('advertising'):
-          s = 2
+        case(2):
+          cat = 'advertising'
           break
-        case('fashion'):
-          s = 3
+        case(3):
+          cat = 'fashion'
           break
-        case('sports'):
-          s = 4
+        case(4):
+          cat = 'sports'
           break
-        case('film'):
-          s = 5
+        case(5):
+          cat = 'film'
           break
         default:
-          s = 'sticky'
+          cat = 'sticky'
       }
-      this.$store.commit('setCategory', s)
+      return cat
+    },
+    categorySet (value) {
+      this.$store.commit('setCategory', value)
     },
     wh () {
       return window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight
@@ -196,6 +193,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.cat
+  text-transform capitalize
 .div
   position absolute
   top 0

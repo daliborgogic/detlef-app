@@ -12,7 +12,6 @@
 <script>
 import r2 from 'r2'
 import TheCard from '@/components/TheCard'
-import { capitalize } from  '~/helpers'
 
 export default {
   name: 'Index',
@@ -21,7 +20,7 @@ export default {
 
   head () {
     return {
-      titleTemplate: this.setFilter(this.$store.getters.getCategory) + 'Detlef Schneider — Photographer'
+      titleTemplate: '###'
     }
   },
 
@@ -99,9 +98,6 @@ export default {
   },
 
   methods: {
-    setFilter (string) {
-      return (string === 'sticky') ? '' : capitalize(string) + ' '
-    },
     filter (key) { this.$refs.isotope.filter(key) }
   }
 }
