@@ -69,3 +69,9 @@ Or start the server with process manager:
 ```bash
 $ pm2 start process.json
 ```
+
+### License
+
+[MIT](http://opensource.org/licenses/MIT)
+
+Copyright (c) 2018, Dalibor Gogic
