@@ -24,40 +24,40 @@ export default {
   async mounted () {
     const socket = io.connect()
 
-    socket.on('hooks', hook => {
-      const { id, title, slug, sticky, content, acf, better_featured_image } = hook
+    socket.on('hooks', data => {
+      const posts = this.$store.state.posts
+      const { hook, body } = data
 
-      const postMap =  {
+      const { id, title, slug, sticky, content, acf, better_featured_image } = body
+      const isExists = posts.findIndex(i => { return i.id === id })
+      const post = {
         id,
         title: title.rendered,
         slug: slug,
         sticky,
         hide: acf.hide,
         content: content.rendered,
-        categories: hook.categories,
+        categories: body.categories,
         featuredImage: better_featured_image,
         images: acf.gallery_images
       }
 
-      this.$store.commit('setPost', [postMap])
+      // New post or updated
+      if (hook === '/hooks/post/update') {
+        // Post is new
+        if (isExists === -1) {
+          // console.log('It\'s a new post') //eslint-disable-line
+          this.$store.commit('setNewPost', post)
+        } else {
+          // console.log(`Post with ID ${id} is updated`) //eslint-disable-line
+          this.$store.commit('setPostUpdate', post)
+        }
+      }
 
-      let posts = this.$store.state.posts
-
-      const getId = posts.findIndex(i => { return i.id === hook.id })
-
-      posts[getId].title = title.rendered
-      posts[getId].slug = slug,
-      posts[getId].sticky = sticky
-      posts[getId].hide = acf.hide
-      posts[getId].content = content.rendered
-      posts[getId].categories = hook.categories
-      posts[getId].featuredImage = better_featured_image
-      posts[getId].images = acf.gallery_images
-
-      console.log([postMap]) //eslint-disable-line
-
-      // console.log({hook}) // eslint-disable-line
-      this.$store.commit('setPosts', posts)
+      // Post deleted
+      if (hook === '/hooks/post/delete') {
+        this.$store.commit('setPostDelete', post)
+      }
     })
 
     window.addEventListener('load', () => {
