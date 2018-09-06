@@ -42,7 +42,7 @@ export default {
   },
 
   methods: {
-    async category (value) {
+    category (value) {
       window.scrollTo({
         top: 0,
         behavior: 'smooth'

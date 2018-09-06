@@ -7,7 +7,6 @@ div
 </template>
 
 <script>
-import io from 'socket.io-client'
 import TheHeader from '@/components/TheHeader'
 import { timeout } from  '~/helpers'
 
@@ -22,45 +21,6 @@ export default {
   },
 
   async mounted () {
-    const socket = io.connect()
-
-    socket.on('hooks', data => {
-      const posts = this.$store.state.posts
-      const { hook, body } = data
-
-      const { id, title, slug, sticky, content, acf, better_featured_image } = body
-      const isExists = posts.findIndex(i => { return i.id === id })
-      const post = {
-        id,
-        title: title.rendered,
-        slug: slug,
-        sticky,
-        hide: acf.hide,
-        content: content.rendered,
-        categories: body.categories,
-        featuredImage: better_featured_image,
-        images: acf.gallery_images
-      }
-
-      // New post or updated
-      if (hook === '/hooks/post/update') {
-        // Post is new
-        if (isExists === -1) {
-          // console.log('It\'s a new post') //eslint-disable-line
-          this.$store.commit('setPostNew', post)
-        } else {
-          // Post need to be updated
-          // console.log(`Post with ID ${id} is updated`) //eslint-disable-line
-          this.$store.commit('setPostUpdate', post)
-        }
-      }
-
-      // Post deleted
-      if (hook === '/hooks/post/delete') {
-        this.$store.commit('setPostDelete', post)
-      }
-    })
-
     window.addEventListener('load', () => {
       if ('serviceWorker' in navigator && location.protocol === 'https:') {
         //var preventDevToolsReloadLoop

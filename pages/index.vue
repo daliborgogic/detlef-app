@@ -1,22 +1,21 @@
 <template lang="pug">
 .container(ref="container")
-  //- pre {{ update }}
   no-ssr
     isotope(ref="isotope" :options="option" :list="list")
       div(v-for="(l, index) in list" :key="index" :class="{isVideo: l.categories.includes(5)}")
         .gutter
         .grid-sizer
-        div(@click="setCategory(l.categories[0], l.slug)")
+        nuxt-link(:to="'/' + l.slug")
           TheCard(:card="l" :id="index")
 </template>
 
 <script>
+import r2 from 'r2'
 import TheCard from '@/components/TheCard'
-import { timeout, capitalize } from  '~/helpers'
+import { capitalize } from  '~/helpers'
+
 export default {
   name: 'Index',
-
-  scrollToTop: true,
 
   components: { TheCard },
 
@@ -24,6 +23,28 @@ export default {
     return {
       titleTemplate: this.setFilter(this.$store.getters.getCategory) + 'Detlef Schneider — Photographer'
     }
+  },
+
+  async asyncData () {
+    const featured = await r2(`https://${process.env.CMS_DOMAIN}/wp-json/wp/v2/posts?per_page=100`).response
+    const posts = await featured.json()
+
+    const list = posts.map(post => {
+      const { id, title, slug, sticky, content, acf, better_featured_image } = post
+
+      return {
+        id,
+        title: title.rendered,
+        slug: slug,
+        sticky,
+        hide: acf.hide,
+        content: content.rendered,
+        categories: post.categories,
+        featuredImage: better_featured_image,
+        images: acf.gallery_images
+      }
+    })
+    return { list }
   },
 
   data () {
@@ -35,9 +56,6 @@ export default {
   },
 
   computed: {
-    // update () {
-    //   return this.$store.state.postUpdate
-    // },
     isVideo () {
       return this.$store.state.category
     },
@@ -70,10 +88,7 @@ export default {
       }
     },
     filterOption () {
-       return this.$store.state.category
-    },
-    list () {
-      return this.$store.getters.getPosts
+      return this.$store.state.category
     }
   },
 
@@ -82,27 +97,12 @@ export default {
       this.$refs.isotope.filter(this.$store.getters.getCategory)
     }
   },
+
   methods: {
     setFilter (string) {
-      if (string === 'sticky') {
-        return ''
-      }
-      return capitalize(string) + ' '
+      return (string === 'sticky') ? '' : capitalize(string) + ' '
     },
-    filter (key) { this.$refs.isotope.filter(key) },
-    async setCategory (category, slug) {
-      this.$router.push('/' + slug)
-      await timeout(500)
-      this.$store.commit('setCategory', category)
-    }
-
-    // replace () {
-    //   this.list = [this.$store.state.replace]
-    // },
-
-    // add () {
-    //   this.list.push({})
-    // }
+    filter (key) { this.$refs.isotope.filter(key) }
   }
 }
 </script>

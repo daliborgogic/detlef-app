@@ -8,6 +8,8 @@
       span(v-if="card.categories.includes(5)")
         img(ref="img"
           :src="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
+          :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
+          :datasrcset="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
           alt="")
         TheLoading
         svg.placeholder(width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
@@ -16,6 +18,8 @@
         img(
           ref="img"
           :src="card.featuredImage.media_details.sizes.w400.source_url"
+          :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
+          :datasrcset="card.featuredImage.media_details.sizes.w400.source_url"
           :alt="card.featuredImage.alt_text")
         TheLoading
         svg.placeholder(
@@ -49,7 +53,6 @@ export default {
   data () {
     return {
       tld: process.env.CMS_DOMAIN,
-      images: [],
       observer: null
     }
   },
@@ -63,7 +66,7 @@ export default {
   },
 
   mounted () {
-    this.images =  [...document.getElementsByTagName('img')]
+    const images =  [...document.getElementsByTagName('img')]
 
     if ('IntersectionObserver' in window) {
       this.observer =  new IntersectionObserver(entries =>{
@@ -71,7 +74,7 @@ export default {
           if (change.isIntersecting) {
             const image = change.target
             if (image) {
-              //image.setAttribute('src', image.getAttribute('datasrc'))
+              image.setAttribute('srcset', image.getAttribute('datasrcset'))
               this.observer.unobserve(image)
             }
           }
@@ -82,10 +85,10 @@ export default {
         threshold: [0],
       })
 
-      this.images.forEach(img => this.observer.observe(img))
+      images.forEach(img => this.observer.observe(img))
     } else {
       // IntersectionObserver  Not Supported
-      this.images.forEach(img => img.setAttribute('src', img.getAttribute('datasrc')))
+      images.forEach(img => img.setAttribute('srcset', img.getAttribute('datasrcset')))
     }
   },
 

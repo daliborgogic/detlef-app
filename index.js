@@ -4,23 +4,16 @@ const { Nuxt, Builder } = require('nuxt-edge')
 const config = require('./nuxt.config.js')
 const nuxt = new Nuxt(config)
 const r2 = require('r2')
-const micro = require('micro');
+const micro = require('micro')
 const { json } = micro
 const crypto = require('crypto')
-const url = require('url')
 
 const {
-  // APP_DOMAIN,
   MAILCHIMP_API_KEY,
-  NODE_ENV,
   APP_DOMAIN,
   MAILCHIMP_LIST_ID,
-  MAILCHIMP_INSTANCE,
-  PORT,
-  HOST
+  MAILCHIMP_INSTANCE
 } = process.env
-
-const isDev = NODE_ENV === 'development'
 
 /**
  * Calculates the MD5 hash of a string.
@@ -37,8 +30,10 @@ if (nuxt.options.dev) {
   new Builder(nuxt).build()
 }
 
-const server = micro(async (req, res) => {
-  const allowOrigin = isDev ? '*' : APP_DOMAIN
+module.exports = async (req, res) => {
+  const allowOrigin = nuxt.options.dev
+    ? '*'
+    : APP_DOMAIN
 
   res.setHeader('Access-Control-Allow-Origin', allowOrigin)
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PATCH')
@@ -62,8 +57,6 @@ const server = micro(async (req, res) => {
   }
 
   if (req.method === 'POST') {
-    const parsed = url.parse(req.url, true)
-    // console.log(parsed)
     res.setHeader('Content-Type', 'application/json')
     const body = await json(req)
     const { email_address } = body
@@ -76,20 +69,8 @@ const server = micro(async (req, res) => {
       const data = await response.json()
 
       return { data }
-    } else {
-      io.emit('hooks', {
-        body,
-        hook: parsed.path
-      })
-      return { 'status': 200}
     }
 
   }
   return nuxt.render(req, res)
-})
-
-const io = require('socket.io')(server)
-
-server.listen(PORT, HOST)
-
-module.exports = () =>  console.log(`Listening on ${HOST}:${PORT}`)
+}
