@@ -9,6 +9,7 @@ const createStore = () => {
       post: [],
       postUpdate: {},
       postDelete: {},
+      postNew: {},
       pageUpdate: {},
       gotNew: {
         show: false,
@@ -22,7 +23,9 @@ const createStore = () => {
       setPost: (state, value) => state.post = value,
       setGotNew: (state, value) => state.gotNew = value,
       setPostUpdate: (state, value) => state.postUpdate = value,
-      setPostDelete: (state, value) => state.postDelete = value
+      setPostNew: (state, value) => state.postNew = value,
+      setPostDelete: (state, value) => state.postDelete = value,
+      setPageUpdate: (state, value) => state.pageUpdate = value
     },
 
     actions: {
@@ -72,8 +75,8 @@ const createStore = () => {
 
     getters: {
       getPosts: state => {
-        // Post updated
-        if (Object.keys(state.postUpdate).length !== 0) {
+        // Post is new
+        if (Object.keys(state.postNew).length !== 0) {
           const insert = (arr, index, newItem) => [
             // part of the array before the specified index
             ...arr.slice(0, index),
@@ -82,7 +85,7 @@ const createStore = () => {
             // part of the array after the specified index
             ...arr.slice(index)
           ]
-          return insert(state.posts, 0, state.postUpdate)
+          return insert(state.posts, 0, state.postNew)
         }
 
         // Post deleted

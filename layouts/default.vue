@@ -47,8 +47,9 @@ export default {
         // Post is new
         if (isExists === -1) {
           // console.log('It\'s a new post') //eslint-disable-line
-          this.$store.commit('setNewPost', post)
+          this.$store.commit('setPostNew', post)
         } else {
+          // Post need to be updated
           // console.log(`Post with ID ${id} is updated`) //eslint-disable-line
           this.$store.commit('setPostUpdate', post)
         }
