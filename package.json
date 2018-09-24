@@ -9,7 +9,8 @@
     "test": "node_modules/.bin/ava",
     "workbox": "workbox generateSW workbox-config.js",
     "start": "NODE_ENV=production node_modules/.bin/micro -l tcp://0.0.0.0:3000",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lh": "lighthouse-ci"
   },
   "dependencies": {
     "dotenv": "^6.0.0",
@@ -26,6 +27,7 @@
     "eslint": "^5.2.0",
     "eslint-loader": "^2.1.0",
     "eslint-plugin-vue": "^4.7.1",
+    "lighthouse-ci": "git+https://github.com/ebidel/lighthouse-ci.git",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "r2": "^2.0.1",
