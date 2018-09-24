@@ -15,7 +15,7 @@
           TheLoading
           svg.placeholder(width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
             path(d="M0 0h400v225H0z" fill="#f2f2f2")
-        div.fix(v-if="card.additional")
+        div.fix(v-if="card.additional && $store.state.category !== 5")
           img(ref="img"
             :src="card.additional.url"
             :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
