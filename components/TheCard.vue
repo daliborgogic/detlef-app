@@ -6,14 +6,24 @@
     span(v-if="card.featuredImage")
       //- It's a video
       span(v-if="card.categories.includes(5)")
-        img(ref="img"
-          :src="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
-          :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
-          :datasrcset="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
-          alt="")
-        TheLoading
-        svg.placeholder(width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
-          path(d="M0 0h400v225H0z" fill="#f2f2f2")
+        div.fix.mb
+          img(ref="img"
+            :src="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
+            :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
+            :datasrcset="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
+            alt="")
+          TheLoading
+          svg.placeholder(width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
+            path(d="M0 0h400v225H0z" fill="#f2f2f2")
+        div.fix(v-if="card.additional")
+          img(ref="img"
+            :src="card.additional.url"
+            :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
+            :datasrcset="card.additional.url"
+            alt="")
+          TheLoading
+          svg.placeholder(width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
+            path(d="M0 0h400v225H0z" fill="#f2f2f2")
       span(v-else)
         img(
           ref="img"
@@ -102,6 +112,10 @@ export default {
 
 
 <style lang="stylus" scoped>
+.fix
+  position relative
+.mb
+  margin-bottom 50px
 .c
   position relative
   margin-bottom 50px
@@ -146,4 +160,7 @@ h3
   text-align center
   padding-left 20px
   padding-right 20px
+@media (max-width 512px)
+  .mb
+    margin-bottom 32px
 </style>
