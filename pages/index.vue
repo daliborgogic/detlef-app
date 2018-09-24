@@ -40,7 +40,8 @@ export default {
         content: content.rendered,
         categories: post.categories,
         featuredImage: better_featured_image,
-        images: acf.gallery_images
+        images: acf.gallery_images,
+        additional: acf.additional_gif
       }
     })
     return { list }
