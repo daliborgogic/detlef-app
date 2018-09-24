@@ -67,3 +67,11 @@ jobs:
             else
               echo "Not branch master."
             fi
+
+      - run:
+          name: Build Success
+          when: on_success
+          command: |
+            if [ "$CIRCLE_NODE_INDEX" == 0 ]; then
+              npm run lh -- https://beta.$TLD
+            fi
