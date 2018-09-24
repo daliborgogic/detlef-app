@@ -59,6 +59,8 @@ module.exports = {
 
   build: {
     parallel: true,
+    extractCSS: false,
+    cssSourceMap: false,
     styleResources: {
       stylus: './assets/css/variables.styl'
     },

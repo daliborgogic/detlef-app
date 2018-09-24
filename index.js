@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { Nuxt, Builder } = require('nuxt-edge')
+const { Nuxt, Builder } = require('nuxt')
 const config = require('./nuxt.config.js')
 const nuxt = new Nuxt(config)
 const r2 = require('r2')
