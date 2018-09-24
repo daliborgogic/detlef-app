@@ -6,7 +6,8 @@
     "dev": "node_modules/.bin/micro -l tcp://0.0.0.0:3000",
     "build": "nuxt build",
     "precommit": "npm run lint",
-    "test": "NODE_ENV=production ava",
+    "pretest": "npm run build",
+    "test": "ava",
     "workbox": "workbox generateSW workbox-config.js",
     "start": "NODE_ENV=production node_modules/.bin/micro -l tcp://0.0.0.0:3000",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
@@ -36,6 +37,22 @@
     "test-listen": "^1.1.0",
     "vueisotope": "^3.1.2",
     "workbox-cli": "^3.4.1"
+  },
+  "ava": {
+    "babel": {
+      "testOptions": {
+        "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "6.5"
+          }
+        }
+      ]
+    ]
+      }
+    }
   },
   "babel": {
     "presets": [
