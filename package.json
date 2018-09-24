@@ -18,9 +18,10 @@
     "nuxt-edge": "^2.0.0-25603961.baaf67d"
   },
   "devDependencies": {
-    "ava": "^0.25.0",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "ava": "1.0.0-beta.8",
     "babel-eslint": "^8.2.6",
-    "babel-preset-env": "^1.7.0",
     "eslint": "^5.2.0",
     "eslint-loader": "^2.1.0",
     "eslint-plugin-vue": "^4.7.1",
@@ -35,22 +36,20 @@
     "vueisotope": "^3.1.2",
     "workbox-cli": "^3.4.1"
   },
-  "ava": {
-    "require": [
-      "babel-register"
-    ]
-  },
   "babel": {
     "presets": [
       [
-        "@babel/env", {
+        "@babel/preset-env",
+        {
           "targets": {
             "node": "6.5"
           }
         }
       ]
     ],
-    "plugins": ["@babel/plugin-syntax-dynamic-import"]
+    "plugins": [
+      "@babel/plugin-syntax-dynamic-import"
+    ]
   },
   "eslintConfig": {
     "root": true,
