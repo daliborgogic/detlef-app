@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { FIRST_NAME, CMS_DOMAIN } = process.env
+const { FIRST_NAME } = process.env
 const isDev = () => process.env.NODE_ENV === 'development'
 
 module.exports = {
@@ -29,4 +29,4 @@ module.exports = {
       handler: 'networkFirst'
     }
   ]
-};
+}

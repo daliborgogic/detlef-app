@@ -1,18 +1,20 @@
 require('dotenv').config()
 
-const { CMS_DOMAIN, APP_DOMAIN, FIRST_NAME, LAST_NAME } = process.env
+const { CMS_DOMAIN, APP_DOMAIN } = process.env
+const DESCRIPTION = 'Detlef Schneider is a German born photographer whose work is predominantly focused on sport and fashion'
+const TITLE = 'Detlef Schneider — Photographer'
 
 module.exports = {
-  env: { CMS_DOMAIN, APP_DOMAIN, FIRST_NAME, LAST_NAME },
+  env: { CMS_DOMAIN, APP_DOMAIN },
   head: {
     htmlAttrs: {
       lang: 'en',
     },
-    titleTemplate: `%s - ${FIRST_NAME} ${LAST_NAME}`,
+    titleTemplate: `%s - ${TITLE}`,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '###' },
+      { hid: 'description', name: 'description', content: DESCRIPTION },
       { name: 'msapplication-TileColor', content: '#ffffff' },
       { name: 'msapplication-config', content: '/icons/browserconfig.xml' },
       { name: 'theme-color', content: '#FFFFFF' },
@@ -27,11 +29,11 @@ module.exports = {
         Facebook Debug
         https://developers.facebook.com/tools/debug/sharing
       */
-      { hid: 'og:image', property: 'og:image', content: '/icons/og.jpeg' },
-      { hid: 'og:image:width', property: 'og:image:width', content: '1200' },
-      { hid: 'og:image:height', property: 'og:image:height', content: '628' },
-      { hid: 'og:title', property: 'og:title', content: '###' },
-      { hid: 'og:description', property: 'og:description', content: '###' },
+      { hid: 'og:image', property: 'og:image', content: `https://${CMS_DOMAIN}/wp-content/uploads/2018/08/PDS03_01.jpg` },
+      { hid: 'og:image:width', property: 'og:image:width', content: '1680' },
+      { hid: 'og:image:height', property: 'og:image:height', content: '945' },
+      { hid: 'og:title', property: 'og:title', content: TITLE },
+      { hid: 'og:description', property: 'og:description', content: DESCRIPTION },
       { hid: 'og:url', property: 'og:url', content: `https://${APP_DOMAIN}` }
     ],
     link: [
