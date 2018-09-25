@@ -1,7 +1,7 @@
 {
   "name": "detlef",
   "version": "1.0.0",
-  "description": "Progressive Web App",
+  "description": "Progressive Web App.",
   "scripts": {
     "dev": "node_modules/.bin/micro -l tcp://0.0.0.0:3000",
     "build": "nuxt build",
