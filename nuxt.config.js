@@ -29,6 +29,7 @@ module.exports = {
         Facebook Debug
         https://developers.facebook.com/tools/debug/sharing
       */
+      { name: 'twitter:card', value: 'summary_large_image' },
       { hid: 'og:image', property: 'og:image', content: `https://${CMS_DOMAIN}/wp-content/uploads/2018/08/PDS03_01.jpg` },
       { hid: 'og:image:width', property: 'og:image:width', content: '1680' },
       { hid: 'og:image:height', property: 'og:image:height', content: '945' },
