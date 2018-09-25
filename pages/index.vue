@@ -20,7 +20,7 @@ export default {
 
   head () {
     return {
-      titleTemplate: process.env.FIRST_NAME + ' ' + process.env.LAST_NAME + ' — Photographer'
+      titleTemplate: 'Detlef Schneider — Photographer'
     }
   },
 
