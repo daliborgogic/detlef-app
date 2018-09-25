@@ -24,12 +24,12 @@ export default {
     const cleanVimeo = this.vimeo.description.replace(/(?:\r\n|\r|\n)/g, '')
 
     let meta = [
-      { hid: 'og:description', property: 'og:description', content: clean },
       { hid: 'og:url', property: 'og:url', content: `https://${process.env.APP_DOMAIN + this.$route.path}` }
     ]
 
     if (images[0].vimeo) {
       meta.push(
+        { hid: 'og:description', property: 'og:description', content: cleanVimeo },
         { hid: 'twitter:card', name: 'twitter:card', value: 'summary' },
         { hid: 'og:title', property: 'og:title', content: title },
         { hid: 'description', name: 'description', content: cleanVimeo },
@@ -46,6 +46,7 @@ export default {
 
     if (images[0].img) {
       meta.push(
+        { hid: 'og:description', property: 'og:description', content: clean },
         { hid: 'og:title', property: 'og:title', content: title },
         { hid: 'description', name: 'description', content: clean },
         { hid: 'og:image', property: 'og:image', content: images[0].img.sizes.w1920 },
