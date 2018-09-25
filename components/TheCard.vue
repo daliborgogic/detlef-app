@@ -169,7 +169,7 @@ h3
     display none
   .c
   .fix:first-child
-    margin-bottom 8px
+    margin-bottom 16px
   .fix:last-child
     margin-bottom 0
 </style>

@@ -141,7 +141,7 @@ export default {
   .item
     width calc(50% - 4px)
   .isVideo
-    margin-bottom 8px
+    margin-bottom 16px
 @media (min-width 512px) and (max-width 1024px) and (orientation portrait)
   .container
     padding-left 30px
