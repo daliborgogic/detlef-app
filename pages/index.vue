@@ -2,11 +2,11 @@
 .container(ref="container")
   no-ssr
     isotope(ref="isotope" :options="option" :list="list")
-      div(v-for="(l, index) in list" :key="index" :class="{isVideo: l.categories.includes(5)}")
+      div(v-for="(l, index) in list" :key="index")
         .gutter
         .grid-sizer
         nuxt-link(:to="'/' + l.slug")
-          TheCard(:card="l" :id="index")
+          TheCard(:card="l" :id="index" :class="{isVideo: l.categories.includes(5)}")
 </template>
 
 <script>
@@ -118,7 +118,7 @@ export default {
   width calc(100% / 3 - 20px + 0.01px)
 .isVideo
   // outline 1px dashed tomato
-  margin-bottom 50px
+  // margin-bottom 50px
   >>> img
     width 100%
     height 100%
@@ -130,20 +130,18 @@ export default {
   >>>.c
     height 100%
     margin-bottom 0
-@media (max-width 512px)
+@media (max-width 511px)
   .container
     padding-top 0
     padding-left 16px
     padding-right 16px
   .gutter
-    width 0
+    width 8px
   .grid-sizer
   .item
-    width 100%
-  .c
-    margin-bottom 32px
+    width calc(50% - 4px)
   .isVideo
-    margin-bottom 32px
+    margin-bottom 8px
 @media (min-width 512px) and (max-width 1024px) and (orientation portrait)
   .container
     padding-left 30px

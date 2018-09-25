@@ -73,7 +73,12 @@ export default {
           categories
         }
       })
-      const vimeo = await r2(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${post[0].images[0].vimeo}`).json
+
+      let vimeo
+
+      if (post[0].images[0].vimeo) {
+        vimeo = await r2(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${post[0].images[0].vimeo}`).json
+      }
 
       return { post, vimeo }
     }

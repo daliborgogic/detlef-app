@@ -14,7 +14,7 @@
           path(:d="'M0 0h' + p.img.width + 'v' + p.img.height + 'H0z'" fill="#f2f2f2")
     .s(v-else)
       .videoContainer(ref="videoContainer")
-        iframe(ref="video" :src="'https://player.vimeo.com/video/'+p.vimeo+'?color=ffffff&portrait=0&title=0&byline=0&portrait=0'" width=""  frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
+        iframe(ref="video" :src="'https://player.vimeo.com/video/'+p.vimeo+'?color=ffffff&portrait=0&title=0&byline=0&portrait=0'" width="100%"  frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
         TheLoading
         svg.videoPlaceholder(v-if="$route.path === '/walk-music'" width="754" height="377" viewBox="0 0 754 377" xmlns="http://www.w3.org/2000/svg")
             path(d="M0 0h754v377H0z" fill="#f2f2f2")
