@@ -27,7 +27,6 @@
       div
         .content(v-if="post[0].content" v-html="post[0].content")
         h3(v-else v-html="post[0].title")
-        pre {{post[0]}}
         TheSubscribe
         //- Back to Overview
         nuxt-link.cat(v-for="c, index in post[0].categories" to="/" @click.native="categorySet(c)" :key="index") {{ categoryName(c) }}
