@@ -21,7 +21,7 @@ export default {
     console.log(this.vimeo.thumbnail_url) // eslint-disable-line
     const { title, content, images } = this.post[0]
     const clean = content.replace(/<\/?[^>]+(>|$)/g, '') || title
-    const cleanVimeo = this.vimeo.description.replace(/(?:\r\n|\r|\n)/g, '')
+    const cleanVimeo = this.vimeo.description.replace(/(?:\r\n|\r|\n)/g, '') || clean || title
 
     let meta = [
       { hid: 'og:url', property: 'og:url', content: `https://${process.env.APP_DOMAIN + this.$route.path}` }
@@ -30,7 +30,7 @@ export default {
     if (images[0].vimeo) {
       meta.push(
         { hid: 'og:description', property: 'og:description', content: cleanVimeo },
-        { hid: 'twitter:card', name: 'twitter:card', value: 'summary' },
+        // { hid: 'twitter:card', name: 'twitter:card', value: 'summary' },
         { hid: 'og:title', property: 'og:title', content: title },
         { hid: 'description', name: 'description', content: cleanVimeo },
         { hid: 'og:video:type', property: 'og:video:type', content: 'text/html' },
