@@ -6,7 +6,7 @@
     span(v-if="card.featuredImage")
       //- It's a video
       span(v-if="card.categories.includes(5)")
-        div.fix.mb
+        div.fix
           img(ref="img"
             :src="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
             :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
@@ -15,7 +15,7 @@
           TheLoading
           svg.placeholder(width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
             path(d="M0 0h400v225H0z" fill="#f2f2f2")
-        div.fix(v-if="card.additional && $store.state.category !== 5")
+        div.fix.mb(v-if="card.additional && $store.state.category !== 5")
           img(ref="img"
             :src="card.additional.url"
             :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
@@ -114,7 +114,9 @@ export default {
 <style lang="stylus" scoped>
 .fix
   position relative
-.mb
+  // margin-bottom 50px
+.fix:first-child
+.fix:last-child
   margin-bottom 50px
 .c
   position relative
@@ -161,6 +163,9 @@ h3
   padding-left 20px
   padding-right 20px
 @media (max-width 512px)
-  .mb
-    margin-bottom 32px
+  .c
+  .fix:first-child
+    margin-bottom 8px
+  .fix:last-child
+    margin-bottom 0
 </style>
