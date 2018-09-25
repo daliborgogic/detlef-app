@@ -31,7 +31,11 @@ import r2 from 'r2'
 export default {
   head () {
     return {
-      title: 'Contact'
+      title: 'Contact',
+      meta: [
+        { hid: 'og:title', property: 'og:title', content: 'Contact — Detlef Schneider — Photographer' },
+        { hid: 'og:url', property: 'og:url', content: `https://${process.env.APP_DOMAIN + this.$route.path}` }
+      ]
     }
   },
   async asyncData () {

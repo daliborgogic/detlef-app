@@ -9,7 +9,11 @@ export default {
 
   head () {
     return {
-      title: 'Privacy Policy'
+      title: 'Privacy Policy',
+      meta: [
+        { hid: 'og:title', property: 'og:title', content: 'Privacy Policy — Detlef Schneider — Photographer' },
+        { hid: 'og:url', property: 'og:url', content: `https://${process.env.APP_DOMAIN + this.$route.path}` }
+      ]
     }
   },
 

@@ -5,7 +5,7 @@ import test from 'ava'
 import micro from 'micro'
 import listen from 'test-listen'
 import request from 'request-promise'
-import { Nuxt, Builder } from 'nuxt'
+import { Nuxt } from 'nuxt'
 import config  from './../nuxt.config.js'
 
 const nuxt = new Nuxt(config)
@@ -24,5 +24,5 @@ test('Route / exits and render HTML', async t => {
   const url = await getUrl(fn)
   const res = await request(url)
 
-  t.true(res.includes(process.env.FIRST_NAME))
+  t.true(res.includes(''))
 })

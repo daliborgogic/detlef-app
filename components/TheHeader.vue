@@ -1,7 +1,7 @@
 <template lang="pug">
 header(ref="header")
-  nuxt-link.link(v-if="!showNav" to="/" @click.native="category('sticky')") {{appName}}
-  nuxt-link.link(v-else to="/" @click.native="toogleNav") {{appName}}
+  nuxt-link.link(v-if="!showNav" to="/" @click.native="category('sticky')") Detlef Schneider
+  nuxt-link.link(v-else to="/" @click.native="toogleNav") Detlef Schneider
 
   nav(:class="{navHidden: showNav}")
     nuxt-link.link(to="/" @click.native="category(5)") Film
@@ -27,7 +27,6 @@ export default {
   data () {
     return {
       showNav: false,
-      appName: process.env.FIRST_NAME + ' ' + process.env.LAST_NAME,
       isMobile: false
     }
   },
