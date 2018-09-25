@@ -11,15 +11,63 @@ export default {
     TheSingle
   },
 
-  async asyncData({ params, error }) {
-    const request = await r2(`https://${process.env.CMS_DOMAIN}/wp-json/wp/v2/posts?slug=${params.slug}`).response
-    const response = await request.json()
+  data () {
+    return {
+      vimeo: null
+    }
+  },
 
-    if (!Array.isArray(response) || !response.length) {
+  head () {
+    console.log(this.vimeo.thumbnail_url) // eslint-disable-line
+    const { title, content, images } = this.post[0]
+    const clean = content.replace(/<\/?[^>]+(>|$)/g, '') || title
+    const cleanVimeo = this.vimeo.description.replace(/(?:\r\n|\r|\n)/g, '')
+
+    let meta = [
+      { hid: 'og:description', property: 'og:description', content: clean },
+      { hid: 'og:url', property: 'og:url', content: `https://${process.env.APP_DOMAIN + this.$route.path}` }
+    ]
+
+    if (images[0].vimeo) {
+      meta.push(
+        { hid: 'twitter:card', name: 'twitter:card', value: 'summary' },
+        { hid: 'og:title', property: 'og:title', content: title },
+        { hid: 'description', name: 'description', content: cleanVimeo },
+        { hid: 'og:video:type', property: 'og:video:type', content: 'text/html' },
+        { hid: 'og:video:url', property: 'og:video:url', content: `https://player.vimeo.com/video/${images[0].vimeo}?autoplay=1` },
+        { hid: 'og:video:secure_url', property: 'og:video:secure_url', content: `https://player.vimeo.com/video/${images[0].vimeo}?autoplay=1` },
+        { hid: 'video:tag', property: 'video:tag', content: title },
+        { hid: 'video:tag', property: 'video:tag', content: this.vimeo.author_name },
+        { hid: 'og:image', property: 'og:image', content: this.vimeo.thumbnail_url },
+        { hid: 'og:image:width', property: 'og:image:width', content: this.vimeo.thumbnail_width },
+        { hid: 'og:image:height', property: 'og:image:height', content: this.vimeo.thumbnail_height }
+      )
+    }
+
+    if (images[0].img) {
+      meta.push(
+        { hid: 'og:title', property: 'og:title', content: title },
+        { hid: 'description', name: 'description', content: clean },
+        { hid: 'og:image', property: 'og:image', content: images[0].img.sizes.w1920 },
+        { hid: 'og:image:width', property: 'og:image:width', content: images[0].img.width },
+        { hid: 'og:image:height', property: 'og:image:height', content: images[0].img.height }
+      )
+    }
+    // console.log(meta) // eslint-disable-line
+    return {
+      title,
+      meta
+    }
+  },
+
+  async asyncData({ params, error }) {
+    const request = await r2(`https://${process.env.CMS_DOMAIN}/wp-json/wp/v2/posts?slug=${params.slug}`).json
+
+    if (!Array.isArray(request) || !request.length) {
       // array does not exist, is not an array, or is empty
       error({ statusCode: 404, message: 'Post not found' })
     } else {
-      const post = response.map(post => {
+      const post = request.map(post => {
       const { id, title, content, acf, categories } = post
         return {
           id,
@@ -29,8 +77,11 @@ export default {
           categories
         }
       })
-       return { post }
+      const vimeo = await r2(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${post[0].images[0].vimeo}`).json
+
+      return { post, vimeo }
     }
+
   }
 }
 </script>
