@@ -163,6 +163,10 @@ h3
   padding-left 20px
   padding-right 20px
 @media (max-width 512px)
+  .overlay
+    background-color transparent
+  h3
+    display none
   .c
   .fix:first-child
     margin-bottom 8px
