@@ -27,6 +27,7 @@
       div
         .content(v-if="post[0].content" v-html="post[0].content")
         h3(v-else v-html="post[0].title")
+        pre {{post[0]}}
         TheSubscribe
         //- Back to Overview
         nuxt-link.cat(v-for="c, index in post[0].categories" to="/" @click.native="categorySet(c)" :key="index") {{ categoryName(c) }}
@@ -57,43 +58,6 @@ export default {
       slides: 0,
       videoContainerHeight: 0,
       observer: null
-    }
-  },
-
-  head () {
-    const { title, content, images } = this.post[0]
-    const clean = content.replace(/<\/?[^>]+(>|$)/g, '') || title
-
-    let meta = [
-      { hid: 'description', name: 'description', content: clean },
-      { hid: 'og:title', property: 'og:title', content: title },
-      { hid: 'og:description', property: 'og:description', content: clean },
-      { hid: 'og:url', property: 'og:url', content: `https://${process.env.APP_DOMAIN + this.$route.path}` }
-    ]
-
-    if (images[0].vimeo) {
-      console.log('VIMEO') // eslint-disable-line
-      meta.push(
-        { hid: 'og:video:type', property: 'og:video:type', content: 'text/html' },
-        { hid: 'og:video:url', property: 'og:video:url', content: `https://player.vimeo.com/video/${images[0].vimeo}?autoplay=1` },
-        { hid: 'og:video:secure_url', property: 'og:video:secure_url', content: `https://player.vimeo.com/video/${images[0].vimeo}?autoplay=1` },
-        { hid: 'video:tag', property: 'video:tag', content: title },
-        { hid: 'video:tag', property: 'video:tag', content: process.env.FIRST_NAME + ' ' + process.env.LAST_NAME }
-      )
-    }
-
-    if (images[0].img) {
-      console.log('IMG') // eslint-disable-line
-      meta.push(
-        { hid: 'og:image', property: 'og:image', content: images[0].img.sizes.w1920 },
-        { hid: 'og:image:width', property: 'og:image:width', content: images[0].img.width },
-        { hid: 'og:image:height', property: 'og:image:height', content: images[0].img.height }
-      )
-    }
-    console.log(meta) // eslint-disable-line
-    return {
-      title,
-      meta
     }
   },
 
@@ -327,4 +291,3 @@ img
     padding-top 56px
     padding-bottom 56px
 </style>
-
