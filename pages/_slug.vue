@@ -20,13 +20,13 @@ export default {
   head () {
     const { title, content, images } = this.post[0]
     const clean = content.replace(/<\/?[^>]+(>|$)/g, '') || title
-    const cleanVimeo = this.vimeo.description.replace(/(?:\n)/g, ' ') || clean || title
 
     let meta = [
       { hid: 'og:url', property: 'og:url', content: `https://${process.env.APP_DOMAIN + this.$route.path}` }
     ]
 
     if (images[0].vimeo) {
+      const cleanVimeo = this.vimeo.description.replace(/(?:\n)/g, ' ') || clean || title
       meta.push(
         { hid: 'og:description', property: 'og:description', content: cleanVimeo },
         { hid: 'og:title', property: 'og:title', content: title },
