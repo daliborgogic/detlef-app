@@ -27,7 +27,7 @@
     "eslint": "^5.2.0",
     "eslint-loader": "^2.1.0",
     "eslint-plugin-vue": "^4.7.1",
-    "lighthouse-ci": "github:daliborgogic/lighthouse-ci#5bcb6392aac9473af4687b06e2b9ce9a6ffb4c3f",
+    "lighthouse-ci": "github:daliborgogic/lighthouse-ci",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "r2": "^2.0.1",

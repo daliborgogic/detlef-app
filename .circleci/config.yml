@@ -72,4 +72,7 @@ jobs:
           name: Build Success
           when: on_success
           command: |
+            echo $CIRCLE_PR_NUM
+            echo $CIRCLE_SHA1
+            echo $CIRCLE_REPOSITORY_URL
             npm run lh -- https://beta.$TLD
