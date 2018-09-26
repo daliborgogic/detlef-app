@@ -69,11 +69,11 @@ jobs:
             fi
 
       - run:
-          name: Build Success
+          name: Lighthouse
           when: on_success
           command: |
-            echo 'CIRCLE_PR_NUM ' $CIRCLE_PR_NUM
-            echo 'CIRCLE_SHA1 ' $CIRCLE_SHA1
-            echo 'Get PR number ' ${CIRCLE_PULL_REQUEST##*/}
-            echo 'CIRCLE_REPOSITORY_URL ' $CIRCLE_REPOSITORY_URL
-            npm run lh -- https://beta.$TLD
+            if [[ ! -z $CIRCLE_PULL_REQUEST ]]; then
+              npm run lh -- https://beta.$TLD
+            else
+              echo 'Lighthouse is not run for non-PR commits.'
+            fi
