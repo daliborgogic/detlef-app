@@ -8,7 +8,7 @@
 
   div(v-if="!hide")
     button(v-if="!isSubscribed" @click="subscribe" :disabled="!validateEmail") SUBSCRIB{{sufix}}
-    button.resubscribe(v-else @click="resubscribe" :disabled="!validateEmail") RESUBSCRIB{{sufix}}
+    button.resubscribe(v-else @click="resubscribe" :disabled="!validateEmail") UPDAT{{sufix}}
 </template>
 
 <script>
