@@ -68,12 +68,12 @@ jobs:
               echo "Not branch master."
             fi
 
-      - run:
-          name: Lighthouse
-          when: on_success
-          command: |
-            if [[ ! -z $CIRCLE_PULL_REQUEST ]]; then
-              npm run lh -- https://beta.$TLD
-            else
-              echo 'Lighthouse is not run for non-PR commits.'
-            fi
+      # - run:
+      #     name: Lighthouse
+      #     when: on_success
+      #     command: |
+      #       if [[ ! -z $CIRCLE_PULL_REQUEST ]]; then
+      #         npm run lh -- https://beta.$TLD
+      #       else
+      #         echo 'Lighthouse is not run for non-PR commits.'
+      #       fi
