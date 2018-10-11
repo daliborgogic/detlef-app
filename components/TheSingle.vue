@@ -27,11 +27,12 @@
       div
         .content(v-if="post[0].content" v-html="post[0].content")
         h3(v-else v-html="post[0].title")
-        TheSubscribe
-        //- Back to Overview
         nuxt-link.cat(v-for="c, index in post[0].categories" to="/" @click.native="categorySet(c)" :key="index") {{ categoryName(c) }}
           span(v-if="post[0].categories.slice(-1)[0] === c")
           span(v-else) ,&nbsp;
+        TheSubscribe
+        //- Back to Overview
+        nuxt-link.cat(to="/" @click.native="categorySet()") Back to Overview
 </template>
 
 <script>
