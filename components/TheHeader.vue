@@ -4,13 +4,13 @@ header(ref="header")
   nuxt-link.link(v-else to="/" @click.native="toogleNav") DETLEF SCHNEIDER
 
   nav(:class="{navHidden: showNav}")
-    nuxt-link.link(to="/" @click.native="category(5)") Film
+    nuxt-link.link.filter(to="/" @click.native="category(5)" :class="{ active: active === 5}") Film
     span.dash
-    nuxt-link.link(to="/" @click.native="category(3)") Fashion
+    nuxt-link.link.filter(to="/" @click.native="category(3)" :class="{ active: active === 3}") Fashion
     span.dash
-    nuxt-link.link(to="/" @click.native="category(2)") Advertising
+    nuxt-link.link.filter(to="/" @click.native="category(2)" :class="{ active: active === 2}") Advertising
     span.dash
-    nuxt-link.link(to="/" @click.native="category(4)") Sports
+    nuxt-link.link.filter(to="/" @click.native="category(4)" :class="{ active: active === 4}") Sports
     span.dash
     nuxt-link.link(to="/about" @click.native="toogleNav") About
     span.dash
@@ -31,6 +31,12 @@ export default {
     }
   },
 
+  computed: {
+    active () {
+      return this.$store.state.category
+    }
+  },
+
   async mounted () {
     this.isMobile = window.matchMedia('(max-width: 1024px)')
 
@@ -40,16 +46,20 @@ export default {
     }
   },
 
+
   methods: {
     category (value) {
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
       })
-      this.$store.commit('setCategory', value)
-      this.toogleNav()
+      this.toogleNav(value)
     },
-    toogleNav () {
+    toogleNav (value) {
+      if (this.$route.name !== 'index') {
+        this.$store.commit('setCategory', 'sticky')
+      }
+      this.$store.commit('setCategory', value)
       if (this.isMobile.matches)
         this.showNav = !this.showNav
     }
@@ -87,7 +97,7 @@ header
       color #999
       font-size 14px
 .loaded
-  opacity: 0.1
+  opacity 1
   &:hover
     animation fadein 0.3s
     opacity 1
@@ -98,17 +108,22 @@ nav
     font-size 23px
     letter-spacing 0.207px
     cursor pointer
-    color #000
+    color rgba(black, 0.12)
     &:hover
       color #000
     &:last-child
       margin-right 0
+    &.filter
+      color rgba(black, 0.12)
+      &:hover
+        color #000
 .link.nuxt-link-active
+.link.nuxt-link-active.active
   color #000
 .dash
   height 2px
   width 20px
-  background-color #000
+  background-color rgba(black, 0.12)
   display inline-block
   margin-left .5vw
   margin-right .5vw
@@ -124,6 +139,8 @@ nav
   margin-left 8px
   width 30px
   height auto
+.active
+  color #000
 @media (max-width 512px)
   nav
   .dash
