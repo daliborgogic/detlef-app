@@ -59,11 +59,9 @@ export default {
 .content
   >>> h1
   >>> h2
-    font-size 24px
-  >>> h1
-  >>> h2
   >>> h3
     line-height 1.3
+    font-size 18px
     letter-spacing 4.8px
     margin-top 0
     margin-bottom 16px
