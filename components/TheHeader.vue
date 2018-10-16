@@ -73,10 +73,6 @@ header
   justify-content space-between
   padding-left 20px
   padding-right 20px
-  animation fadein 0.3s
-  // transition all 250ms ease-in
-  // margin-bottom 16px
-  // outline 1px dashed tomato
   z-index 10
   &:hover
     background-color white
@@ -93,6 +89,7 @@ header
 .loaded
   opacity: 0.1
   &:hover
+    animation fadein 0.3s
     opacity 1
 nav
   display flex
@@ -167,7 +164,7 @@ nav
     width 0
 @keyframes fadein
   from
-    opacity 0
+    opacity 0.1
   to
     opacity 1
 </style>
