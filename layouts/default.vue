@@ -89,11 +89,9 @@ export default {
 <style lang="stylus">
 #__nuxt
   font-family -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif
-  font-style 'normal'
   font-weight 400
 #__nuxt.font-loaded
   font-size 1rem
   font-family "Custom Font"
-  font-style 'normal'
   font-weight 400
 </style>
