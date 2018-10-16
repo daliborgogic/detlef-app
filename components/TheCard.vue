@@ -157,7 +157,7 @@ h3
   font-size 24px
   letter-spacing 0.207px
   line-height 1.1
-  font-weight normal
+  font-weight 400
   text-align center
   padding-left 20px
   padding-right 20px
