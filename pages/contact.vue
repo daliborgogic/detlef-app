@@ -49,27 +49,31 @@ export default {
 
 <style lang="stylus" scoped>
 .container
-  font-size 23px
-  line-height 1.3
-  max-width 362px
+  font-size 12px
+  line-height 14.4px
+  max-width 400px
   margin 128px auto 25vh auto
   padding-left 16px
   padding-right 16px
+  text-transform uppercase
 .content
   >>> h1
-    font-size 23px
+  >>> h2
+    font-size 24px
   >>> h1
   >>> h2
   >>> h3
+    line-height 1.3
+    letter-spacing 4.8px
     margin-top 0
     margin-bottom 16px
     font-weight normal
   >>> hr
     display block
     width 32px
-    height 2px
+    height 1px
     border 0
-    border-top 2px solid black
+    border-top 1px solid black
     margin 32px 0
     padding 0
   >>> a

@@ -73,9 +73,8 @@ export default {
   methods: {
     // CSS Font Loading Module Level 3
     async loadFont () {
-      const font = new FontFace('Custom Font', 'url(./fonts/custom.woff)', {
-        style: 'normal',
-        weight: '400'
+      const font = new FontFace('Custom Font', 'url(./fonts/a.woff)', {
+        weight: 400
       })
       await font.load()
 

@@ -32,8 +32,12 @@ div
   margin 128px auto 25vh auto
   padding-left 16px
   padding-right 16px
+  text-transform uppercase
+  font-size 12px
   >>> h1
-    font-size 23px
+    font-size 24px
+    letter-spacing 9.6px
+    line-height 28.8px
   >>> h1
   >>> h2
   >>> h3
@@ -43,9 +47,9 @@ div
   >>> hr
     display block
     width 32px
-    height 2px
+    height 1px
     border 0
-    border-top 2px solid black
+    border-top 1px solid black
     margin 32px 0
     padding 0
   >>> a
