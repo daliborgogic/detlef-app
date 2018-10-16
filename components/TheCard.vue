@@ -154,7 +154,7 @@ h3
   color black
   margin-top 5px
   margin-bottom 0
-  font-size 23px
+  font-size 24px
   letter-spacing 0.207px
   line-height 1.1
   font-weight normal

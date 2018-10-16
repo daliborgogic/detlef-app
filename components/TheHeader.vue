@@ -89,7 +89,7 @@ header
 .loaded
   opacity: 0.1
   &:hover
-    animation fadein 3s
+    animation fadein 0.3s
     opacity 1
 nav
   display flex
