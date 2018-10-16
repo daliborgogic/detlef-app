@@ -3,8 +3,8 @@
   .container
     .bar(ref="bar" v-if="willShow" :class="{active: willShow }")
       div
-        span(v-if="state === 1") New content is available
-        span(v-else) Caching complete. Future visits will work offline
+        span(v-if="state === 1") NEW CONTENT IS AVAILABLE
+        span(v-else) CACHING COMPLETE. FUTURE VISITS WILL WORK OFFLINE
       div
         span.cta(@click="dismiss") DISMISS
         span.cta(v-if="state === 1" @click="reload") REFRESH
