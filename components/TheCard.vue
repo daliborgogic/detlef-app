@@ -154,8 +154,8 @@ h3
   color white
   margin-top 5px
   margin-bottom 0
-  font-size 24px
-  letter-spacing 9.6px
+  font-size 18px
+  letter-spacing 4.8px
   line-height 28.8px
   font-weight 400
   text-align center

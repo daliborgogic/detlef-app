@@ -37,7 +37,7 @@ div
   >>> h1
   >>> h2
   >>> h3
-    font-size 24px
+    font-size 18px
     letter-spacing 4.8px
     margin-top 0
     margin-bottom 16px

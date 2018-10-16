@@ -34,13 +34,13 @@ div
   padding-right 16px
   text-transform uppercase
   font-size 12px
-  >>> h1
-    font-size 24px
-    letter-spacing 9.6px
-    line-height 28.8px
+  line-height 14.4px
   >>> h1
   >>> h2
   >>> h3
+    font-size 18px
+    letter-spacing 4.8px
+    line-height 28.8px
     margin-top 0
     margin-bottom 16px
     font-weight normal

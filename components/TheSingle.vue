@@ -226,9 +226,9 @@ img
   margin 0 auto
   h3
     font-weight 400
-    font-size 24px
+    font-size 18px
+    letter-spacing 4.8px
     text-transform uppercase
-    letter-spacing 9.6px
     line-height 28.8px
   > div
     width 100%

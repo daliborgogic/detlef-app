@@ -91,7 +91,7 @@ header
     outline 0
   > a
     color #000
-    font-size 24px
+    font-size 28px
     letter-spacing 4.8px
     line-height 28.8px
     font-weight 400
@@ -101,13 +101,13 @@ header
 .loaded
   opacity 1
   &:hover
-    animation fadein 0.3s
+    // animation fadein 0.3s
     opacity 1
 nav
   display flex
   align-items center
   .link
-    font-size 24px
+    font-size 18px
     letter-spacing 4.8px
     font-weight 400
     cursor pointer
@@ -124,17 +124,6 @@ nav
 .link.nuxt-link-active
 .link.nuxt-link-active.active
   color #000
-.dash
-  height 1px
-  width 20px
-  background-color rgba(black, 0.12)
-  display inline-block
-  margin-left .5vw
-  margin-right .5vw
-  vertical-align middle
-  transition all 250ms ease-in
-  &:hover
-    color #000
 .button
   cursor pointer
   color #000
