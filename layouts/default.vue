@@ -73,7 +73,10 @@ export default {
   methods: {
     // CSS Font Loading Module Level 3
     async loadFont () {
-      const font = new FontFace('Custom Font', 'url(./fonts/custom.woff)')
+      const font = new FontFace('Custom Font', 'url(./fonts/custom.woff)', {
+        style: 'normal',
+        weight: '400'
+      })
       await font.load()
 
       document.fonts.add(font)
@@ -86,7 +89,11 @@ export default {
 <style lang="stylus">
 #__nuxt
   font-family -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif
+  font-style 'normal'
+  font-weight 400
 #__nuxt.font-loaded
   font-size 1rem
   font-family "Custom Font"
+  font-style 'normal'
+  font-weight 400
 </style>
