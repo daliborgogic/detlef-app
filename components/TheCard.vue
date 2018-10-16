@@ -121,9 +121,8 @@ export default {
 .c
   position relative
   margin-bottom 50px
-
-  transition opacity 250ms ease-in
   &:hover .overlay
+    animation fadein 0.3s
     opacity 1
   &:hover .iconPlay
     opacity 0
@@ -153,11 +152,11 @@ img
 
 h3
   color black
-  margin-top 0
+  margin-top 5px
   margin-bottom 0
   font-size 23px
-  letter-spacing 0.2px
-  line-height 30px
+  letter-spacing 0.207px
+  line-height 1.1
   font-weight normal
   text-align center
   padding-left 20px
@@ -172,4 +171,9 @@ h3
     margin-bottom 16px
   .fix:last-child
     margin-bottom 0
+@keyframes fadein
+  from
+    opacity 0
+  to
+    opacity 1
 </style>
