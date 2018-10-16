@@ -142,7 +142,7 @@ img
 .overlay
   width 100%
   height 100%
-  background-color rgba(255,255,255,0.7)
+  background-color rgba(black, 0.7)
   z-index 4
   display flex
   align-items center
@@ -151,15 +151,16 @@ img
   cursor pointer
 
 h3
-  color black
+  color white
   margin-top 5px
   margin-bottom 0
   font-size 24px
-  letter-spacing 0.207px
-  line-height 1.1
+  letter-spacing 9.6px
+  line-height 28.8px
   font-weight 400
   text-align center
   padding-left 20px
+  text-transform uppercase
   padding-right 20px
 @media (max-width 512px)
   .overlay

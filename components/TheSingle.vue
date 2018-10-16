@@ -25,14 +25,14 @@
   section(:data-slide="count")
     .back
       div
+        h3(v-html="post[0].title")
         .content(v-if="post[0].content" v-html="post[0].content")
-        h3(v-else v-html="post[0].title")
         nuxt-link.cat(v-for="c, index in post[0].categories" to="/" @click.native="categorySet(c)" :key="index") {{ categoryName(c) }}
           span(v-if="post[0].categories.slice(-1)[0] === c")
           span(v-else) ,&nbsp;
         TheSubscribe
         //- Back to Overview
-        nuxt-link.cat(to="/" @click.native="categorySet()") Back to Overview
+        nuxt-link.cat(to="/" @click.native="categorySet()") BACK TO OVERVIEW
 </template>
 
 <script>
@@ -189,7 +189,7 @@ export default {
 
 <style lang="stylus" scoped>
 .cat
-  text-transform capitalize
+  text-transform uppercase
 .div
   position absolute
   top 0
@@ -226,14 +226,17 @@ img
   margin 0 auto
   h3
     font-weight 400
-  // flex-grow 1
+    font-size 24px
+    text-transform uppercase
+    letter-spacing 9.6px
+    line-height 28.8px
   > div
     width 100%
   >>> .content p
     margin 0
-    font-size 23px
-    line-height 1.4
-    letter-spacing 0.171px
+    font-size 12px
+    text-transform uppercase
+    line-height 14.4px
   a
     font-size 13px
     color #000

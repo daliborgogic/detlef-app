@@ -4,19 +4,19 @@ header(ref="header")
   nuxt-link.link(v-else to="/" @click.native="toogleNav") DETLEF SCHNEIDER
 
   nav(:class="{navHidden: showNav}")
-    nuxt-link.link.filter(to="/" @click.native="category(5)" :class="{ active: active === 5}") Film
-    span.dash
-    nuxt-link.link.filter(to="/" @click.native="category(3)" :class="{ active: active === 3}") Fashion
-    span.dash
-    nuxt-link.link.filter(to="/" @click.native="category(2)" :class="{ active: active === 2}") Advertising
-    span.dash
-    nuxt-link.link.filter(to="/" @click.native="category(4)" :class="{ active: active === 4}") Sports
-    span.dash
-    nuxt-link.link(to="/about" @click.native="toogleNav") About
-    span.dash
-    nuxt-link.link(to="/privacy" @click.native="toogleNav") Privacy
-    span.dash
-    nuxt-link.link(to="/contact" @click.native="toogleNav") Contact
+    nuxt-link.link.filter(to="/" @click.native="category(5)" :class="{ active: active === 5}") FILM
+    //- span.dash
+    nuxt-link.link.filter(to="/" @click.native="category(3)" :class="{ active: active === 3}") FASHION
+    //- span.dash
+    nuxt-link.link.filter(to="/" @click.native="category(2)" :class="{ active: active === 2}") ADVERTISING
+    //- span.dash
+    nuxt-link.link.filter(to="/" @click.native="category(4)" :class="{ active: active === 4}") SPORTS
+    //- span.dash
+    nuxt-link.link(to="/about" @click.native="toogleNav") ABOUT
+    //- span.dash
+    nuxt-link.link(to="/privacy" @click.native="toogleNav") PRIVACY
+    //- span.dash
+    nuxt-link.link(to="/contact" @click.native="toogleNav") CONTACT
 </template>
 
 
@@ -91,8 +91,10 @@ header
     outline 0
   > a
     color #000
-    font-size 28px
-    letter-spacing 0.25px
+    font-size 24px
+    letter-spacing 4.8px
+    line-height 28.8px
+    font-weight 400
     span
       color #999
       font-size 14px
@@ -105,10 +107,12 @@ nav
   display flex
   align-items center
   .link
-    font-size 23px
-    letter-spacing 0.207px
+    font-size 24px
+    letter-spacing 4.8px
+    font-weight 400
     cursor pointer
     color rgba(black, 0.12)
+    margin-right 1vw
     &:hover
       color #000
     &:last-child
@@ -121,7 +125,7 @@ nav
 .link.nuxt-link-active.active
   color #000
 .dash
-  height 2px
+  height 1px
   width 20px
   background-color rgba(black, 0.12)
   display inline-block

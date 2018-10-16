@@ -1,6 +1,6 @@
 <template lang="pug">
 .subscribe
-  input(type="email" placeholder="you@example.com" v-model="email" @keyup.up="validateEmail")
+  input(type="email" placeholder="YOU@EXAMPLE.COM" v-model="email" @keyup.up="validateEmail")
   .message
     span.error(v-if="error" v-html="error")
     span(v-if="message" v-html="message")
@@ -138,7 +138,7 @@ button
   height 32px
   padding 0 16px
   color #000
-  font-size 16px
+  font-size 12px
   letter-spacing 0.25px
   font-family "Custom font"
   border none
