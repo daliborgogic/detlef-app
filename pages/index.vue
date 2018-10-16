@@ -139,7 +139,7 @@ export default {
     width 8px
   .grid-sizer
   .item
-    width calc(50% - 4px)
+    width 100%
   .isVideo
     margin-bottom 16px
 @media (min-width 512px) and (max-width 1024px) and (orientation portrait)

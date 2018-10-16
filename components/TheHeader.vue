@@ -71,9 +71,10 @@ header
   display flex
   align-items center
   justify-content space-between
-  padding-left 30px
-  padding-right 30px
-  transition all 250ms ease-in
+  padding-left 20px
+  padding-right 20px
+  animation fadein 0.3s
+  // transition all 250ms ease-in
   // margin-bottom 16px
   // outline 1px dashed tomato
   z-index 10
@@ -84,7 +85,7 @@ header
     outline 0
   > a
     color #000
-    font-size 24px
+    font-size 28px
     letter-spacing 0.25px
     span
       color #999
@@ -94,10 +95,11 @@ header
   &:hover
     opacity 1
 nav
-  display block
+  display flex
+  align-items center
   .link
-    font-size 16px
-    margin-right 0.5vw
+    font-size 23px
+    letter-spacing 0.207px
     cursor pointer
     color #000
     &:hover
@@ -109,7 +111,7 @@ nav
 .dash
   height 2px
   width 20px
-  background-color #999
+  background-color #000
   display inline-block
   margin-left .5vw
   margin-right .5vw
@@ -163,4 +165,9 @@ nav
 @media (min-width 512px) and (max-width 1024px) and (orientation portrait)
   .dash
     width 0
+@keyframes fadein
+  from
+    opacity 0
+  to
+    opacity 1
 </style>

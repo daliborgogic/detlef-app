@@ -1,7 +1,7 @@
 {
   "name": "Detlef Schneider",
   "short_name": "Detlef",
-  "description": "Detlef Schneider's Progressive Web",
+  "description": "Detlef Schneider's Web App",
   "lang": "en",
   "icons": [
     {
@@ -17,7 +17,7 @@
   ],
   "orientation": "portrait",
   "theme_color": "#ffffff",
-  "start_url": ".",
+  "start_url": "/",
   "background_color": "#ffffff",
   "display": "standalone",
   "author": {
