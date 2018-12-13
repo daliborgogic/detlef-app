@@ -236,7 +236,7 @@ img
     margin 0
     font-size 12px
     text-transform uppercase
-    line-height 14.4px
+    line-height 1.8
   a
     font-size 13px
     color #000

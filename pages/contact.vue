@@ -50,7 +50,7 @@ export default {
 <style lang="stylus" scoped>
 .container
   font-size 12px
-  line-height 14.4px
+  line-height 1.8
   max-width 400px
   margin 128px auto 25vh auto
   padding-left 16px
