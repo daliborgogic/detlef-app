@@ -34,6 +34,7 @@ div
   padding-left 16px
   padding-right 16px
   text-transform uppercase
+  line-height 1.8
   >>> h1
   >>> h2
   >>> h3

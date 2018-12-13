@@ -30,9 +30,9 @@ module.exports = {
         https://developers.facebook.com/tools/debug/sharing
       */
       { hid: 'twitter:card', name: 'twitter:card', value: 'summary_large_image' },
-      // { hid: 'og:image', property: 'og:image', content: `https://${CMS_DOMAIN}/wp-content/uploads/2018/08/PDS03_01.jpg` },
-      // { hid: 'og:image:width', property: 'og:image:width', content: '1680' },
-      // { hid: 'og:image:height', property: 'og:image:height', content: '945' },
+      { hid: 'og:image', property: 'og:image', content: `https://${CMS_DOMAIN}/wp-content/uploads/2018/08/PDS03_01.jpg` },
+      { hid: 'og:image:width', property: 'og:image:width', content: '1680' },
+      { hid: 'og:image:height', property: 'og:image:height', content: '945' },
       { hid: 'og:title', property: 'og:title', content: TITLE },
       { hid: 'og:description', property: 'og:description', content: DESCRIPTION },
       { hid: 'og:url', property: 'og:url', content: `https://${APP_DOMAIN}` }
@@ -62,7 +62,7 @@ module.exports = {
 
   build: {
     parallel: true,
-    extractCSS: false,
+    // extractCSS: false,
     cssSourceMap: false,
     styleResources: {
       stylus: './assets/css/variables.styl'
@@ -88,7 +88,7 @@ module.exports = {
   },
 
   render: {
-    resourceHints: false,
+    // resourceHints: false,
     http2: {
       push: true
     }
