@@ -5,6 +5,7 @@ const DESCRIPTION = 'Detlef Schneider is a German born photographer whose work i
 const TITLE = 'Detlef Schneider — Photographer'
 
 module.exports = {
+  modern: true,
   env: { CMS_DOMAIN, APP_DOMAIN },
   head: {
     htmlAttrs: {
@@ -47,9 +48,11 @@ module.exports = {
     ]
   },
 
-  css: [
-    '~assets/css/main.styl'
-  ],
+  css: ['~assets/css/main.styl'],
+
+  modules: ['@nuxtjs/style-resources'],
+
+  styleResources: { stylus: './assets/css/variables.styl' },
 
   plugins: [
     { src: '~/plugins/isotope', ssr: false }
@@ -64,9 +67,6 @@ module.exports = {
     parallel: true,
     // extractCSS: false,
     cssSourceMap: false,
-    styleResources: {
-      stylus: './assets/css/variables.styl'
-    },
     // Extend webpack
     // extend(config, ctx) {
     //   // Run ESLint on save
