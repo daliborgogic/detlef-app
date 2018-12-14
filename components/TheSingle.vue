@@ -18,6 +18,8 @@
         TheLoading
         svg.videoPlaceholder(v-if="$route.path === '/walk-music'" width="754" height="377" viewBox="0 0 754 377" xmlns="http://www.w3.org/2000/svg")
             path(d="M0 0h754v377H0z" fill="#f2f2f2")
+        svg.videoPlaceholder(v-else-if="$route.path === '/square'" width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg")
+            path(d="M0 0h300v300H0z" fill="#f2f2f2")
         svg.videoPlaceholder(v-else width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
             path(d="M0 0h400v225H0z" fill="#f2f2f2")
 
