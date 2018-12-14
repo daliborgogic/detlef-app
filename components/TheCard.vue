@@ -142,7 +142,7 @@ img
 .overlay
   width 100%
   height 100%
-  background-color rgba(white, 0.7)
+  background-color rgba(white, 0.8)
   z-index 4
   display flex
   align-items center
