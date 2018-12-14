@@ -76,7 +76,7 @@ header
   top 0
   left 0
   width 100%
-  background-color rgba(white, 0.8)
+  background-color transparent
   height 64px
   display flex
   align-items center
