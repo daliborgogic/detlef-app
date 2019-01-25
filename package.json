@@ -18,6 +18,10 @@
     "nuxt": "^2.3.4"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.12.1",
+    "eslint-loader": "^2.1.1",
+    "eslint-plugin-vue": "^5.1.0",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "r2": "^2.0.1",

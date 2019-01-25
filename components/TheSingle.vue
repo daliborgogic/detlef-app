@@ -5,13 +5,12 @@
       img(
         ref="img"
         :src="p.img.sizes.w1920"
-        :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
-        :datasrcset="p.img.sizes.w400 + ' 400w, ' + p.img.sizes.w800 + ' 800w, ' + p.img.sizes.w1920 + ' 2000w'"
+        :srcset="p.img.sizes.w400 + ' 400w, ' + p.img.sizes.w800 + ' 800w, ' + p.img.sizes.w1920 + ' 2000w'"
         :alt="p.img.alt_text"
       )
       TheLoading
       svg.placeholder(:height="p.img.height" :viewBox="'0 0 ' +  p.img.width + ' ' + p.img.height" :width="p.img.width" xmlns="http://www.w3.org/2000/svg")
-          path(:d="'M0 0h' + p.img.width + 'v' + p.img.height + 'H0z'" fill="#f2f2f2")
+        path(:d="'M0 0h' + p.img.width + 'v' + p.img.height + 'H0z'" fill="#f2f2f2")
     .s(v-else)
       .videoContainer(ref="videoContainer")
         iframe(ref="video" :src="'https://player.vimeo.com/video/'+p.vimeo+'?color=ffffff&portrait=0&title=0&byline=0&portrait=0'" width="100%"  frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
@@ -83,12 +82,7 @@ export default {
       this.observer = new IntersectionObserver(entries => {
         entries.forEach(async change => {
           if (change.isIntersecting) {
-            const image = change.target.getElementsByTagName('img')[0]
-            if (image) {
-              image.setAttribute('srcset', image.getAttribute('datasrcset'))
-              this.observer.unobserve(image)
-            }
-            if (window.matchMedia('(min-width: 512px)').matches)
+            if (window.matchMedia('(min-width: 569px)').matches)
               this.scrollIt(change.target, 500)
           }
         })
@@ -260,6 +254,13 @@ img
   object-fit cover
   width 100%
   height 100%
+@media (max-width 568px) and (orientation landscape)
+  section
+    height 100vh
+    padding-top 56px
+    padding-bottom 56px
+  .s
+    height 100%
 @media (max-width 512px)
   .s
     padding-left 0

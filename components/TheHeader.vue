@@ -134,7 +134,7 @@ nav
   height auto
 .active
   color #000
-@media (max-width 512px)
+@media (max-width 568px)
   nav
   .dash
     display none

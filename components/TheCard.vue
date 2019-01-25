@@ -8,9 +8,9 @@
       span(v-if="card.categories.includes(5)")
         div.fix
           img(ref="img"
-            :src="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
+            :src="tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
             :srcset="`data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
-            :datasrcset="'https://' + tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
+            :datasrcset="tld + '/wp-content/uploads/' + card.featuredImage.media_details.file"
             alt="")
           TheLoading
           svg.placeholder(width="400" height="225" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg")
@@ -110,7 +110,6 @@ export default {
 }
 </script>
 
-
 <style lang="stylus" scoped>
 .fix
   position relative
@@ -162,7 +161,7 @@ h3
   padding-left 20px
   text-transform uppercase
   padding-right 20px
-@media (max-width 512px)
+@media (max-width 568px)
   .overlay
     background-color transparent
   h3

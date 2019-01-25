@@ -65,20 +65,20 @@ module.exports = {
 
   build: {
     parallel: true,
-    // extractCSS: false,
+    extractCSS: true,
     cssSourceMap: false,
     // Extend webpack
-    // extend(config, ctx) {
-    //   // Run ESLint on save
-    //   if (ctx.isDev && ctx.isClient) {
-    //     config.module.rules.push({
-    //       enforce: 'pre',
-    //       test: /\.(js|vue)$/,
-    //       loader: 'eslint-loader',
-    //       exclude: /(node_modules)/
-    //     })
-    //   }
-    // }
+    extend(config, ctx) {
+      // Run ESLint on save
+      if (ctx.isDev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/
+        })
+      }
+    }
   },
 
   router: {
@@ -88,7 +88,7 @@ module.exports = {
   },
 
   render: {
-    // resourceHints: false,
+    resourceHints: false,
     http2: {
       push: true
     }

@@ -25,7 +25,7 @@ export default {
   },
 
   async asyncData () {
-    const featured = await r2(`https://${process.env.CMS_DOMAIN}/wp-json/wp/v2/posts?per_page=100`).response
+    const featured = await r2(`${process.env.CMS_DOMAIN}/wp-json/wp/v2/posts?per_page=100`).response
     const posts = await featured.json()
 
     const list = posts.map(post => {
@@ -142,7 +142,7 @@ export default {
     width 100%
   .isVideo
     margin-bottom 16px
-@media (min-width 512px) and (max-width 1024px) and (orientation portrait)
+@media (min-width 568px) and (max-width 1024px) and (orientation portrait)
   .container
     padding-left 30px
     padding-right 30px
@@ -151,5 +151,15 @@ export default {
   .grid-sizer
   .item
     width calc(50% - 15px)
+@media (max-width 1024px) and (orientation landscape)
+  .container
+    padding-top 0
+    padding-left 16px
+    padding-right 16px
+  .gutter
+    width 16px
+  .grid-sizer
+  .item
+    width calc(50% - 8px)
 </style>
 

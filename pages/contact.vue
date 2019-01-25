@@ -34,12 +34,12 @@ export default {
       title: 'Contact',
       meta: [
         { hid: 'og:title', property: 'og:title', content: 'Contact — Detlef Schneider — Photographer' },
-        { hid: 'og:url', property: 'og:url', content: `https://${process.env.APP_DOMAIN + this.$route.path}` }
+        { hid: 'og:url', property: 'og:url', content: `${process.env.APP_DOMAIN + this.$route.path}` }
       ]
     }
   },
   async asyncData () {
-    const res = await r2(`https://${process.env.CMS_DOMAIN}/wp-json/wp/v2/pages/17`).response
+    const res = await r2(`${process.env.CMS_DOMAIN}/wp-json/wp/v2/pages/17`).response
     const contact = await res.json()
 
     return { contact }
@@ -88,7 +88,7 @@ export default {
   width 24px
   height auto
   vertical-align middle
-@media (max-width 512px)
+@media (max-width 568px)
   .container
     max-width 100%
 </style>

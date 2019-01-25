@@ -22,7 +22,7 @@ export default {
     const clean = content.replace(/<\/?[^>]+(>|$)/g, '') || title
 
     let meta = [
-      { hid: 'og:url', property: 'og:url', content: `https://${process.env.APP_DOMAIN + this.$route.path}` }
+      { hid: 'og:url', property: 'og:url', content: `${process.env.APP_DOMAIN + this.$route.path}` }
     ]
 
     if (images[0].vimeo) {
@@ -57,7 +57,7 @@ export default {
   },
 
   async asyncData({ params, error }) {
-    const request = await r2(`https://${process.env.CMS_DOMAIN}/wp-json/wp/v2/posts?slug=${params.slug}`).json
+    const request = await r2(`${process.env.CMS_DOMAIN}/wp-json/wp/v2/posts?slug=${params.slug}`).json
 
     if (!Array.isArray(request) || !request.length) {
       // array does not exist, is not an array, or is empty

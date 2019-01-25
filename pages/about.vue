@@ -11,13 +11,13 @@ export default {
       title: 'About',
       meta: [
         { hid: 'og:title', property: 'og:title', content: 'About — Detlef Schneider — Photographer' },
-        { hid: 'og:url', property: 'og:url', content: `https://${process.env.APP_DOMAIN + this.$route.path}` }
+        { hid: 'og:url', property: 'og:url', content: `${process.env.APP_DOMAIN + this.$route.path}` }
       ]
     }
   },
 
   async asyncData () {
-    const res = await r2(`https://${process.env.CMS_DOMAIN}/wp-json/wp/v2/pages/2`).response
+    const res = await r2(`${process.env.CMS_DOMAIN}/wp-json/wp/v2/pages/2`).response
     const about = await res.json()
 
     return { about }

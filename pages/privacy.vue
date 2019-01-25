@@ -12,13 +12,13 @@ export default {
       title: 'Privacy Policy',
       meta: [
         { hid: 'og:title', property: 'og:title', content: 'Privacy Policy — Detlef Schneider — Photographer' },
-        { hid: 'og:url', property: 'og:url', content: `https://${process.env.APP_DOMAIN + this.$route.path}` }
+        { hid: 'og:url', property: 'og:url', content: `${process.env.APP_DOMAIN + this.$route.path}` }
       ]
     }
   },
 
   async asyncData () {
-    const res = await r2(`https://${process.env.CMS_DOMAIN}/wp-json/wp/v2/pages/3`).response
+    const res = await r2(`${process.env.CMS_DOMAIN}/wp-json/wp/v2/pages/3`).response
     const privacy = await res.json()
 
     return { privacy }
